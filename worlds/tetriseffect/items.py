@@ -1,106 +1,128 @@
+from typing import NamedTuple, Dict
 from BaseClasses import Item, ItemClassification
 
 class TECItem(Item):
     game = "Tetris Effect: Connected"
 
+
+
+class TItemInfo(NamedTuple):
+    item_id: int
+    priority: ItemClassification
+
                                     # ID    Progression (0 = none, 1 = useful, 2 = progressive, 3 = trap)
 itemlist = {
-    'The Deep Unlock':              (100,   2),
-    'Pharaoh\'s Code Unlock':       (101,   2),
-    'Karma Wheel Unlock':           (102,   2),
-    'Jellyfish Chorus Unlock':      (103,   2),
-    'Da Vinci Unlock':              (104,   2),
-    'Prayer Circles Unlock':        (105,   2),
-    'Ritual Passion Unlock':        (106,   2),
-    'Deserted Unlock':              (107,   2),
-    'Dolphin Surf Unlock':          (108,   2),
-    'Downtown Jazz Unlock':         (109,   2),
-    'Spirit Canyon Unlock':         (110,   2),
-    'Jewel Veil Unlock':            (111,   2),
-    'Forest Dawn Unlock':           (112,   2),
-    'Kaleidoscope Unlock':          (113,   2),
-    'Turtle Dreams Unlock':         (114,   2),
-    'Celebration Unlock':           (115,   2),
-    'Sunset Breeze Unlock':         (116,   2),
-    'Aurora Peak Unlock':           (117,   2),
-    'Zen Blossoms Unlock':          (118,   2),
-    'Ying & Yang Unlock':           (119,   2),
-    'Hula Soul Unlock':             (120,   2),
-    'Starfall Unlock':              (121,   2),
-    'Balloon High Unlock':          (122,   2),
-    'Mermaid Cove Unlock':          (123,   2),
-    'Orbit Unlock':                 (124,   2),
-    'Stratosphere Unlock':          (125,   2),
-    'Metamorphosis Unlock':         (126,   2),
+    'The Deep Unlock':              TItemInfo(100,   ItemClassification.progression),
+    'Pharaoh\'s Code Unlock':       TItemInfo(101,   ItemClassification.progression),
+    'Karma Wheel Unlock':           TItemInfo(102,   ItemClassification.progression),
+    'Jellyfish Chorus Unlock':      TItemInfo(103,   ItemClassification.progression),
+    'Da Vinci Unlock':              TItemInfo(104,   ItemClassification.progression),
+    'Prayer Circles Unlock':        TItemInfo(105,   ItemClassification.progression),
+    'Ritual Passion Unlock':        TItemInfo(106,   ItemClassification.progression),
+    'Deserted Unlock':              TItemInfo(107,   ItemClassification.progression),
+    'Dolphin Surf Unlock':          TItemInfo(108,   ItemClassification.progression),
+    'Downtown Jazz Unlock':         TItemInfo(109,   ItemClassification.progression),
+    'Spirit Canyon Unlock':         TItemInfo(110,   ItemClassification.progression),
+    'Jewel Veil Unlock':            TItemInfo(111,   ItemClassification.progression),
+    'Forest Dawn Unlock':           TItemInfo(112,   ItemClassification.progression),
+    'Kaleidoscope Unlock':          TItemInfo(113,   ItemClassification.progression),
+    'Turtle Dreams Unlock':         TItemInfo(114,   ItemClassification.progression),
+    'Celebration Unlock':           TItemInfo(115,   ItemClassification.progression),
+    'Sunset Breeze Unlock':         TItemInfo(116,   ItemClassification.progression),
+    'Aurora Peak Unlock':           TItemInfo(117,   ItemClassification.progression),
+    'Zen Blossoms Unlock':          TItemInfo(118,   ItemClassification.progression),
+    'Ying & Yang Unlock':           TItemInfo(119,   ItemClassification.progression),
+    'Hula Soul Unlock':             TItemInfo(120,   ItemClassification.progression),
+    'Starfall Unlock':              TItemInfo(121,   ItemClassification.progression),
+    'Balloon High Unlock':          TItemInfo(122,   ItemClassification.progression),
+    'Mermaid Cove Unlock':          TItemInfo(123,   ItemClassification.progression),
+    'Orbit Unlock':                 TItemInfo(124,   ItemClassification.progression),
+    'Stratosphere Unlock':          TItemInfo(125,   ItemClassification.progression),
+    'Metamorphosis Unlock':         TItemInfo(126,   ItemClassification.progression),
 
 
-    'Area 1 Unlock':                (130,   2),
-    'Area 2 Unlock':                (131,   2),
-    'Area 3 Unlock':                (132,   2),
-    'Area 4 Unlock':                (133,   2),
-    'Area 5 Unlock':                (134,   2),
-    'Area 6 Unlock':                (135,   2),
+    'Effect: Marathon Unlock':              TItemInfo(127,   ItemClassification.progression),
+    'Effect: Zone Marathon Unlock':         TItemInfo(128,   ItemClassification.progression),
+    'Effect: Ultra Unlock':                 TItemInfo(129,   ItemClassification.progression),
+    'Effect: Sprint Unlock':                TItemInfo(130,   ItemClassification.progression),
+    'Effect: Master Unlock':                TItemInfo(131,   ItemClassification.progression),
+    'Effect: Classic Score Attack Unlock':  TItemInfo(132,   ItemClassification.progression),
+    'Effect: Chill Marathon Unlock':        TItemInfo(133,   ItemClassification.progression),
+    'Effect: Quick Play Unlock':            TItemInfo(134,   ItemClassification.progression),
+    'Effect: Playlist (Sea) Unlock':        TItemInfo(135,   ItemClassification.progression),
+    'Effect: Playlist (Wind) Unlock':       TItemInfo(136,   ItemClassification.progression),
+    'Effect: Playlist (World) Unlock':      TItemInfo(137,   ItemClassification.progression),
+    'Effect: All Clear Unlock':             TItemInfo(138,   ItemClassification.progression),
+    'Effect: Combo Unlock':                 TItemInfo(139,   ItemClassification.progression),
+    'Effect: Target Unlock':                TItemInfo(140,   ItemClassification.progression),
+    'Effect: Countdown Unlock':             TItemInfo(141,   ItemClassification.progression),
+    'Effect: Purity Unlock':                TItemInfo(142,   ItemClassification.progression),
+    'Effect: Mystery Unlock':               TItemInfo(143,   ItemClassification.progression),
+
+
+    'Area 1 Unlock':                TItemInfo(150,   ItemClassification.progression),
+    'Area 2 Unlock':                TItemInfo(151,   ItemClassification.progression),
+    'Area 3 Unlock':                TItemInfo(152,   ItemClassification.progression),
+    'Area 4 Unlock':                TItemInfo(153,   ItemClassification.progression),
+    'Area 5 Unlock':                TItemInfo(154,   ItemClassification.progression),
+    'Area 6 Unlock':                TItemInfo(155,   ItemClassification.progression),
     # Since area 7 is just Metamorphosis, it shall be unlocked via it's individual stage unlock
 
-
-    'Effect: Marathon Unlock':              (140,   2),
-    'Effect: Zone Marathon Unlock':         (141,   2),
-    'Effect: Ultra Unlock':                 (142,   2),
-    'Effect: Sprint Unlock':                (143,   2),
-    'Effect: Master Unlock':                (144,   2),
-    'Effect: Classic Score Attack Unlock':  (145,   2),
-    'Effect: Chill Marathon Unlock':        (146,   2),
-    'Effect: Quick Play Unlock':            (147,   2),
-    'Effect: Playlist (Sea) Unlock':        (148,   2),
-    'Effect: Playlist (Wind) Unlock':       (149,   2),
-    'Effect: Playlist (World) Unlock':      (150,   2),
-    'Effect: All Clear Unlock':             (151,   2),
-    'Effect: Combo Unlock':                 (152,   2),
-    'Effect: Target Unlock':                (153,   2),
-    'Effect: Countdown Unlock':             (154,   2),
-    'Effect: Purity Unlock':                (155,   2),
-    'Effect: Mystery Unlock':               (156,   2),
-
-    'Effect: Classic Modes Unlcok':         (157,   2),
-    'Effect: Relax Modes Unlcok':           (158,   2),
-    'Effect: Focus Modes Unlcok':           (159,   2),
-    'Effect: Adventurous Modes Unlcok':     (160,   2),
+    'Effect: Classic Modes Unlock':         TItemInfo(156,   ItemClassification.progression),
+    'Effect: Relax Modes Unlock':           TItemInfo(157,   ItemClassification.progression),
+    'Effect: Focus Modes Unlock':           TItemInfo(158,   ItemClassification.progression),
+    'Effect: Adventurous Modes Unlock':     TItemInfo(159,   ItemClassification.progression),
 
 
     # 161-175 reserved for Connected mode, whenever that happens
 
-    'Zone Unlock':                          (180,   2),
+    'Zone Unlock':                          TItemInfo(180,   ItemClassification.progression),
 
-    'T Mino Piece Unlock':                  (181,   2),
-    'Z Mino Piece Unlock':                  (182,   2),
-    'S Mino Piece Unlock':                  (183,   2),
-    'O Mino Piece Unlock':                  (184,   2),
-    'L Mino Piece Unlock':                  (185,   2),
-    'J Mino Piece Unlock':                  (186,   2),
-    'I Mino Piece Unlock':                  (187,   2),
+    'T Mino Piece Unlock':                  TItemInfo(181,   ItemClassification.progression),
+    'Z Mino Piece Unlock':                  TItemInfo(182,   ItemClassification.progression),
+    'S Mino Piece Unlock':                  TItemInfo(183,   ItemClassification.progression),
+    'O Mino Piece Unlock':                  TItemInfo(184,   ItemClassification.progression),
+    'L Mino Piece Unlock':                  TItemInfo(185,   ItemClassification.progression),
+    'J Mino Piece Unlock':                  TItemInfo(186,   ItemClassification.progression),
+    'I Mino Piece Unlock':                  TItemInfo(187,   ItemClassification.progression),
 
 
-    'Lines Trap':                           (200,   3),
-    'Giant Mino Trap':                      (201,   3),
-    'Broken Trap':                          (202,   3),
-    'Zone Trap':                            (203,   3), # Untested method, may remove
-    'Ghost Piece Trap':                     (204,   3),
-    'Swap Trap':                            (205,   3),
-    'Next Trap':                            (206,   3),
-    #'IRS Trap':                            (207,   3), # Messes up with quick players but idk if it's worth implementing lol
-    'Speed Trap':                           (207,   3),
+    'Lines Trap':                           TItemInfo(200,   ItemClassification.trap),
+    'Giant Mino Trap':                      TItemInfo(201,   ItemClassification.trap),
+    'Broken Mino Trap':                     TItemInfo(202,   ItemClassification.trap),
+    'Zone Trap':                            TItemInfo(203,   ItemClassification.trap), # Untested method, may remove
+    'Ghost Piece Trap':                     TItemInfo(204,   ItemClassification.trap),
+    'Hold Trap':                            TItemInfo(205,   ItemClassification.trap),
+    'Queue Trap':                           TItemInfo(206,   ItemClassification.trap),
+    #'IRS Trap':                            TItemInfo(207,   ItemClassification.trap), # Messes up with quick players but idk if it's worth implementing lol
+    'Speed Trap':                           TItemInfo(207,   ItemClassification.trap),
 
 
 
     # Don't implement these until I figure out a way to prevent scores from getting saved, so it doesn't taint the player's records on their save file
-    'Bonus points':                         (210,   0), 
-    'Zone charge bonus':                    (211,   1),
+    'Bonus points':                         TItemInfo(210,   ItemClassification.useful), 
+    'Zone charge bonus':                    TItemInfo(211,   ItemClassification.useful),
     
-    'Cosmetic effect':                      (212,   0),
-    'Glowup':                               (213,   0),
-    'Fake line clear':                      (214,   0),
-    'Zone sounds':                          (215,   0),
-    'Vibes':                                (216,   0), # These ones actually just do nothing
-    'Feelings':                             (217,   0),
+    'Cosmetic effect':                      TItemInfo(212,   ItemClassification.filler),
+    'Glowup':                               TItemInfo(213,   ItemClassification.filler),
+    'Fake line clear':                      TItemInfo(214,   ItemClassification.filler),
+    'Zone sounds':                          TItemInfo(215,   ItemClassification.filler),
+    'Vibes':                                TItemInfo(216,   ItemClassification.filler), # These ones actually just do nothing
+    'Feelings':                             TItemInfo(217,   ItemClassification.filler),
 
 }
+
+
+item_table = {name: data.item_id for name, data in itemlist.items()}
+zen_levels = ['The Deep Unlock', 'Pharaoh\'s Code Unlock', 'Karma Wheel Unlock', 'Jellyfish Chorus Unlock', 'Da Vinci Unlock', 'Prayer Circles Unlock', 'Ritual Passion Unlock', 'Deserted Unlock', 'Dolphin Surf Unlock',
+              'Downtown Jazz Unlock', 'Spirit Canyon Unlock', 'Jewel Veil Unlock', 'Forest Dawn Unlock', 'Kaleidoscope Unlock', 'Turtle Dreams Unlock', 'Celebration Unlock', 'Sunset Breeze Unlock', 'Aurora Peak Unlock',
+              'Zen Blossoms Unlock', 'Ying & Yang Unlock', 'Hula Soul Unlock', 'Starfall Unlock', 'Balloon High Unlock', 'Mermaid Cove Unlock', 'Orbit Unlock', 'Stratosphere Unlock', 'Metamorphosis Unlock']
+effect_classic_levels = ['Effect: Marathon Unlock', 'Effect: Zone Marathon Unlock', 'Effect: Ultra Unlock', 'Effect: Sprint Unlock', 'Effect: Master Unlock', 'Effect: Classic Score Attack Unlock']
+effect_relax_levels = ['Effect: Chill Marathon Unlock', 'Effect: Quick Play Unlock', 'Effect: Playlist (Sea) Unlock', 'Effect: Playlist (Wind) Unlock', 'Effect: Playlist (World) Unlock']
+effect_focus_levels = ['Effect: All Clear Unlock', 'Effect: Combo Unlock', 'Effect: Target Unlock']
+effect_adventure_levels = ['Effect: Countdown Unlock', 'Effect: Purity Unlock', 'Effect: Mystery Unlock']
+zen_areas = ['Area 1 Unlock', 'Area 2 Unlock', 'Area 3 Unlock', 'Area 4 Unlock', 'Area 5 Unlock', 'Area 6 Unlock']
+effect_groups = ['Effect: Classic Modes Unlock', 'Effect: Relax Modes Unlock', 'Effect: Focus Modes Unlock', 'Effect: Adventurous Modes Unlock']
+tetrimino_items = ['T Mino Piece Unlock', 'Z Mino Piece Unlock', 'S Mino Piece Unlock', 'O Mino Piece Unlock', 'L Mino Piece Unlock', 'J Mino Piece Unlock', 'J Mino Piece Unlock']
+traps = ['Lines Trap', 'Giant Mino Trap', 'Broken Mino Trap', 'Zone Trap', 'Ghost Piece Trap', 'Hold Trap', 'Queue Trap', 'Speed Trap']
+garbage = ['Bonus points', 'Zone charge bonus', 'Cosmetic effect', 'Glowup', 'Fake line clear', 'Zone sounds', 'Vibes', 'Feelings']
