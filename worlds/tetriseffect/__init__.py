@@ -47,8 +47,10 @@ class MyGameWorld(World):
                     effect_items.remove(value) # This will need some kind of validation
                 items_to_create += effect_items # I am realizing now, how will the client know what modes to exclude specifically? I'll have to investigate
 
-        if self.options.is_zonesanity:
+        if self.options.is_start_zone:
             items_to_create += ["Zone Unlock"]
+        else:
+            self.push_precollected(self.create_item("Zone Unlock"))
 
         if self.options.is_minosanity:
             items_to_create += tetrimino_items

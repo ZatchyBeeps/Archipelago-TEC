@@ -49,10 +49,10 @@ class MinoSanity(Toggle):
     As of now there's no logic applied to this. Use at your own caution"""
     display_name = "Minosanity"
 
-class Zonesanity(Toggle):
+class StartWithZone(DefaultOnToggle):
     """The zone is an item in the multiworld that has to be obtained. Makes ranksanity harder.
     Affects the logic of zone trick locations set on the Trick Locations option"""
-    display_name = "Zonesanity"
+    display_name = "Start with Zone"
 
 class EnableDeathLink(Choice):
     """Enable death link for this game. If you die, everyone else with it enabled also dies. Of course, the other way around also applies
@@ -91,7 +91,7 @@ class HiTheseAreGameOptions(PerGameCommonOptions):
     is_ranksanity = EnableRanksanity
     ranksanity_limit = RanksanityMaxRank
     is_minosanity = MinoSanity
-    is_zonesanity = Zonesanity
+    is_start_zone = StartWithZone
     death_link = EnableDeathLink
     trick_locations = TrickLocations
     traps_perc = TrapPercentage
