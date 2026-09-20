@@ -3,13 +3,16 @@ import typing
 from worlds.AutoWorld import World
 from Options import OptionError
 from .options import HiTheseAreGameOptions
-from .items import TECItem, itemlist, zen_levels, zen_areas, effect_adventure_levels, effect_classic_levels, effect_focus_levels, effect_relax_levels, effect_groups, traps, tetrimino_items, garbage
+from . import locations
+
+from .items import TECItem, item_table, itemlist, zen_levels, zen_areas, effect_adventure_levels, effect_classic_levels, effect_focus_levels, effect_relax_levels, effect_groups, traps, tetrimino_items, garbage
 from BaseClasses import Region, Location, Entrance, Item, RegionType, ItemClassification
 
 class MyGameWorld(World):
     game = "Tetris Effect: Connected"
     options_dataclass = HiTheseAreGameOptions
     options: HiTheseAreGameOptions
+    location_name_to_id = item_table
 
     #def generate_early(self):
     #    return super().generate_early()
@@ -19,7 +22,7 @@ class MyGameWorld(World):
 
 
     def get_filler_item_name(self):
-        if self.random.randint(0, 100) >= self.options.traps_perc:
+        if self.random.randint(0, 99) >= self.options.traps_perc:
             return self.random.choice(garbage)
         else:
             return self.random.choice(traps)
@@ -56,9 +59,13 @@ class MyGameWorld(World):
             items_to_create += tetrimino_items
 
         pre_filled_items = len(items_to_create)
-        empty_spaces = len(self.get_region("Menu").locations)
+        empty_spaces = len(self.multiworld.get_unfilled_locations(self.player))
         if pre_filled_items > empty_spaces:
             raise OptionError(f"{self.player}, your Tetris Effect world contains too little locations for the items required. Consider enabling ranksanity or increasing the number of trick locations")
 
+        self.multiworld.itempool += [self.create_item(item) for item in items_to_create]
 
-        # add the fillers and traps
+        self.multiworld.itempool += [self.create_filler() for _ in range(empty_spaces - pre_filled_items)]
+
+    def create_regions(self):
+        locations.create_locations(self)
