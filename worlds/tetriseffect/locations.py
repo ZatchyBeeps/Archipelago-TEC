@@ -5,8 +5,12 @@ from BaseClasses import ItemClassification, Location
 if TYPE_CHECKING:
     from . import TECWorld
 
+from . import items
+
 class TECLocation(Location):
     game = "Tetris Effect: Connected"
+
+
 
 
 class TECLoc_Data(NamedTuple):
@@ -35,14 +39,20 @@ def create_locations(world: TECWorld):
 
         if world.options.is_include_effect:
             for name, data in get_available_effect_ranksanities(world).items():
-                if not can_location_exist(world, name, 0): continue
+                if not can_location_exist(world, name, 1): continue
                 region = world.get_region(data.region)
                 region.locations += TECLocation(world.player, name, data.location_id, region)
 
-    trick_locations: Dict[str, TECLoc_Data]
+    trick_locations: Dict[str, int]
     # Add trick locations
     # Maybe...? 
     trick_locations += {f"Perform {10 * world.options.trick_locations["Perform 10 T-spins"]} T-Spins": 1000 + n for n in range(1, world.options.trick_locations["Perform 10 T-spins"])}
+
+    root.locations += {TECLocation(world.player, name, data.location_id, root) for name, data in trick_locations.items()}
+
+
+    world.get_region("Metamorphosis").add_event("Zen Mode Cleared", "Victory", lambda state: state.has("Metamorphosis Unlock", world.player), TECLocation, items.TECItem)
+
 
 def can_location_exist(world: TECWorld, location: str, type: int = 0):
     match (type):
@@ -73,6 +83,17 @@ def get_available_effect_ranksanities(world: TECWorld) -> dict[str, TECLoc_Data]
     if world.options.ranksanity_limit >= 3: locations += {name: data for name, data in effect_ranksanity_locations() if "S Rank" in data.identifier}
     if world.options.ranksanity_limit >= 4: locations += {name: data for name, data in effect_ranksanity_locations() if "SS Rank" in data.identifier}
     return locations
+
+
+def get_location_table() -> dict[str, int]:
+    result_table = {name: data.location_id for name, data in base_locations.items()}
+    result_table += {name: data.location_id for name, data in effect_mode_locations.items()}
+    result_table += {name: data.location_id for name, data in zen_ranksanity_locations.items()}
+    result_table += {name: data.location_id for name, data in effect_ranksanity_locations.items()}
+    result_table += {"Perform 10 T-spins": 1000 + n for n in range(49)}
+    # Add the rest of the trick locations later
+    return result_table
+
 
 
 # We use the location data to set on which level the location belongs to, and to what area said location goes into
@@ -127,6 +148,8 @@ effect_mode_locations = {
     'Mystery Mode Cleared':              TECLoc_Data( 46, "Mystery Mode", "Adventorous Effect Modes", {"Mystery"}),
 }
 
+# This one is just for reference, we wanna dynamically create these
+# Location id is the start for each one, with a limit of 50 locations each
 misc_locations = {
     "Perform 10 T-spins":                  TECLoc_Data( 1000), 
     "Perform 10 back-to-backs":            TECLoc_Data( 1050), 

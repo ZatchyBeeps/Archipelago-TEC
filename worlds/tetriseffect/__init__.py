@@ -1,18 +1,18 @@
-import settings
-import typing
 from worlds.AutoWorld import World
 from Options import OptionError
-from .options import HiTheseAreGameOptions
-from . import locations
+from .options import HiTheseAreGameOptions, tec_option_groups
+from . import locations, regions
+from rule_builder.rules import Has
 
 from .items import TECItem, item_table, itemlist, zen_levels, zen_areas, effect_adventure_levels, effect_classic_levels, effect_focus_levels, effect_relax_levels, effect_groups, traps, tetrimino_items, garbage
-from BaseClasses import Region, Location, Entrance, Item, RegionType, ItemClassification
 
 class TECWorld(World):
     game = "Tetris Effect: Connected"
     options_dataclass = HiTheseAreGameOptions
     options: HiTheseAreGameOptions
-    location_name_to_id = item_table
+    location_name_to_id = locations.get_location_table()
+    item_name_to_id = item_table
+    option_groups = tec_option_groups
 
     #def generate_early(self):
     #    return super().generate_early()
@@ -68,4 +68,11 @@ class TECWorld(World):
         self.multiworld.itempool += [self.create_filler() for _ in range(empty_spaces - pre_filled_items)]
 
     def create_regions(self):
+        regions.make_regions(self)
         locations.create_locations(self)
+
+    def set_rules(self):
+        self.set_completion_rule(Has("Victory"))
+
+    def fill_slot_data(self):
+        return self.options.as_dict("unlock_method", "is_include_effect", "excluded_modes", "death_link", "is_ranksanity")
