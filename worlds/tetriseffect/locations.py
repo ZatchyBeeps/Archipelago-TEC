@@ -3,7 +3,7 @@ from typing import NamedTuple, TYPE_CHECKING, Dict
 from BaseClasses import ItemClassification, Location
 
 if TYPE_CHECKING:
-    from . import MyGameWorld
+    from . import TECWorld
 
 class TECLocation(Location):
     game = "Tetris Effect: Connected"
@@ -16,7 +16,7 @@ class TECLoc_Data(NamedTuple):
     identifier: list[str]
 
     
-def create_locations(world: MyGameWorld):
+def create_locations(world: TECWorld):
     root = world.get_region("Menu")
     for name, data in base_locations.items():
         region = world.get_region(data.region)
@@ -44,7 +44,7 @@ def create_locations(world: MyGameWorld):
     # Maybe...? 
     trick_locations += {f"Perform {10 * world.options.trick_locations["Perform 10 T-spins"]} T-Spins": 1000 + n for n in range(1, world.options.trick_locations["Perform 10 T-spins"])}
 
-def can_location_exist(world: MyGameWorld, location: str, type: int = 0):
+def can_location_exist(world: TECWorld, location: str, type: int = 0):
     match (type):
         case 0: # Effect mode exclusions
             for mode in world.options.excluded_modes:
@@ -58,7 +58,7 @@ def can_location_exist(world: MyGameWorld, location: str, type: int = 0):
             return True
 
 
-def get_available_ranksanities(world: MyGameWorld) -> dict[str, TECLoc_Data]:
+def get_available_ranksanities(world: TECWorld) -> dict[str, TECLoc_Data]:
     locations = zen_areas_ranksanity_basis
     if world.options.ranksanity_limit >= 1: locations += zen_areas_ranksanity_B
     if world.options.ranksanity_limit >= 2: locations += zen_areas_ranksanity_A
@@ -66,7 +66,7 @@ def get_available_ranksanities(world: MyGameWorld) -> dict[str, TECLoc_Data]:
     if world.options.ranksanity_limit >= 4: locations += zen_areas_ranksanity_SS
     return locations
 
-def get_available_effect_ranksanities(world: MyGameWorld) -> dict[str, TECLoc_Data]:
+def get_available_effect_ranksanities(world: TECWorld) -> dict[str, TECLoc_Data]:
     locations = {name: data for name, data in effect_ranksanity_locations.items() if "E Rank" in data.identifier or "D Rank" in data.identifier or "C Rank" in data.identifier}
     if world.options.ranksanity_limit >= 1: locations += {name: data for name, data in effect_ranksanity_locations() if "B Rank" in data.identifier}
     if world.options.ranksanity_limit >= 2: locations += {name: data for name, data in effect_ranksanity_locations() if "A Rank" in data.identifier}

@@ -8,7 +8,7 @@ from . import locations
 from .items import TECItem, item_table, itemlist, zen_levels, zen_areas, effect_adventure_levels, effect_classic_levels, effect_focus_levels, effect_relax_levels, effect_groups, traps, tetrimino_items, garbage
 from BaseClasses import Region, Location, Entrance, Item, RegionType, ItemClassification
 
-class MyGameWorld(World):
+class TECWorld(World):
     game = "Tetris Effect: Connected"
     options_dataclass = HiTheseAreGameOptions
     options: HiTheseAreGameOptions

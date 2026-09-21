@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, NamedTuple
 from BaseClasses import Entrance, Region
 
 if TYPE_CHECKING:
-    from . import MyGameWorld
+    from . import TECWorld
 
 zen_regions = {
     'The Deep':             1,
@@ -57,7 +57,7 @@ effect_regions = {
     'Mystery':              4,
 }
 
-def make_regions(world: MyGameWorld):
+def make_regions(world: TECWorld):
     root = world.get_region("Menu")
 
     zen_area_one = Region("Area 1", world.player, world.multiworld)
