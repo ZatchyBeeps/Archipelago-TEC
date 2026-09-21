@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 from typing import NamedTuple, TYPE_CHECKING, Dict
 
-from BaseClasses import ItemClassification, Location
+from BaseClasses import Location
 
 if TYPE_CHECKING:
-    from . import TECWorld
+    from .__init__ import TECWorld
 
 from . import items
 
@@ -11,11 +13,12 @@ class TECLocation(Location):
     game = "Tetris Effect: Connected"
 
 
+offset = 57000
 
 
 class TECLoc_Data(NamedTuple):
     location_id: int
-    region: str | None = "Menu"
+    region: str | None
     in_area: str | None
     identifier: list[str]
 
@@ -24,31 +27,31 @@ def create_locations(world: TECWorld):
     root = world.get_region("Menu")
     for name, data in base_locations.items():
         region = world.get_region(data.region)
-        region.locations += TECLocation(world.player, name, data.location_id, region)
+        region.locations.append(TECLocation(world.player, name, data.location_id + offset, region))
 
     if world.options.is_include_effect:
         for name, data in effect_mode_locations.items():
             if not can_location_exist(world, name, 0): continue
             region = world.get_region(data.region)
-            region.locations += TECLocation(world.player, name, data.location_id, region)
+            region.locations.append(TECLocation(world.player, name, data.location_id + offset, region))
 
     if world.options.is_ranksanity:
         for name, data in get_available_ranksanities(world).items():
             region = world.get_region(data.region)
-            region.locations += TECLocation(world.player, name, data.location_id, region)
+            region.locations.append(TECLocation(world.player, name, data.location_id + offset, region))
 
         if world.options.is_include_effect:
             for name, data in get_available_effect_ranksanities(world).items():
                 if not can_location_exist(world, name, 1): continue
                 region = world.get_region(data.region)
-                region.locations += TECLocation(world.player, name, data.location_id, region)
+                region.locations.append( TECLocation(world.player, name, data.location_id + offset, region))
 
     trick_locations: Dict[str, int]
     # Add trick locations
     # Maybe...? 
-    trick_locations += {f"Perform {10 * world.options.trick_locations["Perform 10 T-spins"]} T-Spins": 1000 + n for n in range(1, world.options.trick_locations["Perform 10 T-spins"])}
+    trick_locations = {f"Perform {10 * world.options.tspins_n} T-Spins": 1000 + n + offset for n in range(world.options.tspins_n-1)}
 
-    root.locations += {TECLocation(world.player, name, data.location_id, root) for name, data in trick_locations.items()}
+    root.locations += [TECLocation(world.player, name, data, root) for name, data in trick_locations.items()]
 
 
     world.get_region("Metamorphosis").add_event("Zen Mode Cleared", "Victory", lambda state: state.has("Metamorphosis Unlock", world.player), TECLocation, items.TECItem)
@@ -68,29 +71,29 @@ def can_location_exist(world: TECWorld, location: str, type: int = 0):
             return True
 
 
-def get_available_ranksanities(world: TECWorld) -> dict[str, TECLoc_Data]:
+def get_available_ranksanities(world: TECWorld) -> Dict[str, TECLoc_Data]:
     locations = zen_areas_ranksanity_basis
-    if world.options.ranksanity_limit >= 1: locations += zen_areas_ranksanity_B
-    if world.options.ranksanity_limit >= 2: locations += zen_areas_ranksanity_A
-    if world.options.ranksanity_limit >= 3: locations += zen_areas_ranksanity_S
-    if world.options.ranksanity_limit >= 4: locations += zen_areas_ranksanity_SS
+    if world.options.ranksanity_limit >= 1: locations.update( zen_areas_ranksanity_B)
+    if world.options.ranksanity_limit >= 2: locations.update( zen_areas_ranksanity_A)
+    if world.options.ranksanity_limit >= 3: locations.update( zen_areas_ranksanity_S)
+    if world.options.ranksanity_limit >= 4: locations.update( zen_areas_ranksanity_SS)
     return locations
 
 def get_available_effect_ranksanities(world: TECWorld) -> dict[str, TECLoc_Data]:
     locations = {name: data for name, data in effect_ranksanity_locations.items() if "E Rank" in data.identifier or "D Rank" in data.identifier or "C Rank" in data.identifier}
-    if world.options.ranksanity_limit >= 1: locations += {name: data for name, data in effect_ranksanity_locations() if "B Rank" in data.identifier}
-    if world.options.ranksanity_limit >= 2: locations += {name: data for name, data in effect_ranksanity_locations() if "A Rank" in data.identifier}
-    if world.options.ranksanity_limit >= 3: locations += {name: data for name, data in effect_ranksanity_locations() if "S Rank" in data.identifier}
-    if world.options.ranksanity_limit >= 4: locations += {name: data for name, data in effect_ranksanity_locations() if "SS Rank" in data.identifier}
+    if world.options.ranksanity_limit >= 1: locations.update( {name: data for name, data in effect_ranksanity_locations.items() if "B Rank" in data.identifier})
+    if world.options.ranksanity_limit >= 2: locations.update( {name: data for name, data in effect_ranksanity_locations.items() if "A Rank" in data.identifier})
+    if world.options.ranksanity_limit >= 3: locations.update( {name: data for name, data in effect_ranksanity_locations.items() if "S Rank" in data.identifier})
+    if world.options.ranksanity_limit >= 4: locations.update( {name: data for name, data in effect_ranksanity_locations.items() if "SS Rank" in data.identifier})
     return locations
 
 
 def get_location_table() -> dict[str, int]:
-    result_table = {name: data.location_id for name, data in base_locations.items()}
-    result_table += {name: data.location_id for name, data in effect_mode_locations.items()}
-    result_table += {name: data.location_id for name, data in zen_ranksanity_locations.items()}
-    result_table += {name: data.location_id for name, data in effect_ranksanity_locations.items()}
-    result_table += {"Perform 10 T-spins": 1000 + n for n in range(49)}
+    result_table = {name: data.location_id + offset for name, data in base_locations.items()}
+    result_table.update( {name: data.location_id + offset for name, data in effect_mode_locations.items()})
+    result_table.update( {name: data.location_id + offset for name, data in zen_ranksanity_locations.items()})
+    result_table.update( {name: data.location_id + offset for name, data in effect_ranksanity_locations.items()})
+    result_table.update( {"Perform 10 T-spins": 1000 + n + offset for n in range(49)})
     # Add the rest of the trick locations later
     return result_table
 
@@ -99,71 +102,71 @@ def get_location_table() -> dict[str, int]:
 # We use the location data to set on which level the location belongs to, and to what area said location goes into
 # Through rule definition the multiworld will know if the levels are reachable by having an area, or individually by having the level
 base_locations = {
-    'The Deep Stage Cleared':             TECLoc_Data( 10, "The Deep", "Area 1"),
-    'Pharaoh\'s Code Stage Cleared':      TECLoc_Data( 11, "Pharaoh\'s Code", "Area 1"),
-    'Karma Wheel Stage Cleared':          TECLoc_Data( 12, "Karma Wheel", "Area 1"),
-    'Jellyfish Chorus Stage Cleared':     TECLoc_Data( 13, "Jellyfish Chorus", "Area 2"),
-    'Da Vinci Stage Cleared':             TECLoc_Data( 14, "Da Vinci", "Area 2"),
-    'Prayer Circles Stage Cleared':       TECLoc_Data( 15, "Prayer Circles", "Area 2"),
-    'Ritual Passion Stage Cleared':       TECLoc_Data( 16, "Ritual Passion", "Area 2"),
-    'Deserted Stage Cleared':             TECLoc_Data( 17, "Deserted", "Area 3"),
-    'Dolphin Surf Stage Cleared':         TECLoc_Data( 18, "Dolphin Surf", "Area 3"),
-    'Downtown Jazz Stage Cleared':        TECLoc_Data( 19, "Downtown Jazz", "Area 3"),
-    'Spirit Canyon Stage Cleared':        TECLoc_Data( 10, "Spirit Canyon", "Area 3"),
-    'Jewel Veil Stage Cleared':           TECLoc_Data( 11, "Jewel Veil", "Area 4"),
-    'Forest Dawn Stage Cleared':          TECLoc_Data( 12, "Forest Dawn", "Area 4"),
-    'Kaleidoscope Stage Cleared':         TECLoc_Data( 13, "Kaleidoscope", "Area 4"),
-    'Turtle Dreams Stage Cleared':        TECLoc_Data( 14, "Turtle Dreams", "Area 4"),
-    'Celebration Stage Cleared':          TECLoc_Data( 15, "Celebration", "Area 4"),
-    'Sunset Breeze Stage Cleared':        TECLoc_Data( 16, "Sunset Breeze", "Area 5"),
-    'Aurora Peak Stage Cleared':          TECLoc_Data( 17, "Aurora Peak", "Area 5"),
-    'Zen Blossoms Stage Cleared':         TECLoc_Data( 18, "Zen Blossoms", "Area 5"),
-    'Ying & Yang Stage Cleared':          TECLoc_Data( 19, "Ying & Yang", "Area 5"),
-    'Hula Soul Stage Cleared':            TECLoc_Data( 20, "Hula Soul", "Area 5"),
-    'Starfall Stage Cleared':             TECLoc_Data( 21, "Starfall", "Area 6"),
-    'Balloon High Stage Cleared':         TECLoc_Data( 22, "Balloon High", "Area 6"),
-    'Mermaid Cove Stage Cleared':         TECLoc_Data( 23, "Mermaid Cove", "Area 6"),
-    'Orbit Stage Cleared':                TECLoc_Data( 24, "Orbit", "Area 6"),
-    'Stratosphere Stage Cleared':         TECLoc_Data( 25, "Stratosphere", "Area 6"),
-    'Metamorphosis Stage Cleared':        TECLoc_Data( 26, "Metamorphosis")
+    'The Deep Stage Cleared':             TECLoc_Data( 10, "The Deep", "Area 1", {}),
+    'Pharaoh\'s Code Stage Cleared':      TECLoc_Data( 11, "Pharaoh\'s Code", "Area 1", {}),
+    'Karma Wheel Stage Cleared':          TECLoc_Data( 12, "Karma Wheel", "Area 1", {}),
+    'Jellyfish Chorus Stage Cleared':     TECLoc_Data( 13, "Jellyfish Chorus", "Area 2", {}),
+    'Da Vinci Stage Cleared':             TECLoc_Data( 14, "Da Vinci", "Area 2", {}),
+    'Prayer Circles Stage Cleared':       TECLoc_Data( 15, "Prayer Circles", "Area 2", {}),
+    'Ritual Passion Stage Cleared':       TECLoc_Data( 16, "Ritual Passion", "Area 2", {}),
+    'Deserted Stage Cleared':             TECLoc_Data( 17, "Deserted", "Area 3", {}),
+    'Dolphin Surf Stage Cleared':         TECLoc_Data( 18, "Dolphin Surf", "Area 3", {}),
+    'Downtown Jazz Stage Cleared':        TECLoc_Data( 19, "Downtown Jazz", "Area 3", {}),
+    'Spirit Canyon Stage Cleared':        TECLoc_Data( 20, "Spirit Canyon", "Area 3", {}),
+    'Jewel Veil Stage Cleared':           TECLoc_Data( 21, "Jewel Veil", "Area 4", {}),
+    'Forest Dawn Stage Cleared':          TECLoc_Data( 22, "Forest Dawn", "Area 4", {}),
+    'Kaleidoscope Stage Cleared':         TECLoc_Data( 23, "Kaleidoscope", "Area 4", {}),
+    'Turtle Dreams Stage Cleared':        TECLoc_Data( 24, "Turtle Dreams", "Area 4", {}),
+    'Celebration Stage Cleared':          TECLoc_Data( 25, "Celebration", "Area 4", {}),
+    'Sunset Breeze Stage Cleared':        TECLoc_Data( 26, "Sunset Breeze", "Area 5", {}),
+    'Aurora Peak Stage Cleared':          TECLoc_Data( 27, "Aurora Peak", "Area 5", {}),
+    'Zen Blossoms Stage Cleared':         TECLoc_Data( 28, "Zen Blossoms", "Area 5", {}),
+    'Ying & Yang Stage Cleared':          TECLoc_Data( 29, "Ying & Yang", "Area 5", {}),
+    'Hula Soul Stage Cleared':            TECLoc_Data( 30, "Hula Soul", "Area 5", {}),
+    'Starfall Stage Cleared':             TECLoc_Data( 31, "Starfall", "Area 6", {}),
+    'Balloon High Stage Cleared':         TECLoc_Data( 32, "Balloon High", "Area 6", {}),
+    'Mermaid Cove Stage Cleared':         TECLoc_Data( 33, "Mermaid Cove", "Area 6", {}),
+    'Orbit Stage Cleared':                TECLoc_Data( 34, "Orbit", "Area 6", {}),
+    'Stratosphere Stage Cleared':         TECLoc_Data( 35, "Stratosphere", "Area 6", {}),
+    'Metamorphosis Stage Cleared':        TECLoc_Data( 36, "Metamorphosis", None, {})
 }
 
 effect_mode_locations = {
-    'Marathon Mode Cleared':             TECLoc_Data( 30, "Marathon Mode", "Classic Effect Modes", {"Marathon"}),
-    'Zone Marathon Mode Cleared':        TECLoc_Data( 31, "Zone Marathon Mode", "Classic Effect Modes", {"Zone Marathon"}),
-    'Ultra Mode Cleared':                TECLoc_Data( 32, "Ultra Mode", "Classic Effect Modes", {"Ultra"}),
-    'Sprint Mode Cleared':               TECLoc_Data( 33, "Sprint Mode", "Classic Effect Modes", {"Sprint"}),
-    'Master Mode Cleared':               TECLoc_Data( 34, "Master Mode", "Classic Effect Modes", {"Master"}),
-    'Classic Score Attack Mode Cleared': TECLoc_Data( 35, "Classic Score Attack Mode", "Classic Effect Modes", {"Marathon"}),
-    'Chill Marathon Mode Cleared':       TECLoc_Data( 36, "Chill Marathon Mode", "Relax Effect Modes", {"Chill Marathon"}),
-    'Quick Play Mode Cleared':           TECLoc_Data( 37, "Quick Play Mode", "Relax Effect Modes", {"Quick Play"}),
-    'Playlist (Sea) Mode Cleared':       TECLoc_Data( 38, "Sea Playlist Mode", "Relax Effect Modes", {"Playlist (Sea)"}),
-    'Playlist (Wind) Mode Cleared':      TECLoc_Data( 39, "Wind Playlist Mode", "Relax Effect Modes", {"Playlist (Wind)"}),
-    'Playlist (World) Mode Cleared':     TECLoc_Data( 40, "World Playlist Mode", "Relax Effect Modes", {"Playlist (World)"}),
-    'All Clear Mode Cleared':            TECLoc_Data( 41, "All Clear Mode", "Focus Effect Modes", {"All Clear"}),
-    'Combo Mode Cleared':                TECLoc_Data( 42, "Combo Mode", "Focus Effect Modes", {"Combo"}),
-    'Target Mode Cleared':               TECLoc_Data( 43, "Target Mode", "Focus Effect Modes", {"Focus"}),
-    'Countdown Mode Cleared':            TECLoc_Data( 44, "Countdown Mode", "Adventorous Effect Modes", {"Countdown"}),
-    'Purity Mode Cleared':               TECLoc_Data( 45, "Purity Mode", "Adventorous Effect Modes", {"Purity"}),
-    'Mystery Mode Cleared':              TECLoc_Data( 46, "Mystery Mode", "Adventorous Effect Modes", {"Mystery"}),
+    'Marathon Mode Cleared':             TECLoc_Data( 40, "Marathon Mode", "Classic Effect Modes", {"Marathon"}),
+    'Zone Marathon Mode Cleared':        TECLoc_Data( 41, "Zone Marathon Mode", "Classic Effect Modes", {"Zone Marathon"}),
+    'Ultra Mode Cleared':                TECLoc_Data( 42, "Ultra Mode", "Classic Effect Modes", {"Ultra"}),
+    'Sprint Mode Cleared':               TECLoc_Data( 43, "Sprint Mode", "Classic Effect Modes", {"Sprint"}),
+    'Master Mode Cleared':               TECLoc_Data( 44, "Master Mode", "Classic Effect Modes", {"Master"}),
+    'Classic Score Attack Mode Cleared': TECLoc_Data( 45, "Classic Score Attack Mode", "Classic Effect Modes", {"Marathon"}),
+    'Chill Marathon Mode Cleared':       TECLoc_Data( 46, "Chill Marathon Mode", "Relax Effect Modes", {"Chill Marathon"}),
+    'Quick Play Mode Cleared':           TECLoc_Data( 47, "Quick Play Mode", "Relax Effect Modes", {"Quick Play"}),
+    'Playlist (Sea) Mode Cleared':       TECLoc_Data( 48, "Sea Playlist Mode", "Relax Effect Modes", {"Playlist (Sea)"}),
+    'Playlist (Wind) Mode Cleared':      TECLoc_Data( 49, "Wind Playlist Mode", "Relax Effect Modes", {"Playlist (Wind)"}),
+    'Playlist (World) Mode Cleared':     TECLoc_Data( 50, "World Playlist Mode", "Relax Effect Modes", {"Playlist (World)"}),
+    'All Clear Mode Cleared':            TECLoc_Data( 51, "All Clear Mode", "Focus Effect Modes", {"All Clear"}),
+    'Combo Mode Cleared':                TECLoc_Data( 52, "Combo Mode", "Focus Effect Modes", {"Combo"}),
+    'Target Mode Cleared':               TECLoc_Data( 53, "Target Mode", "Focus Effect Modes", {"Focus"}),
+    'Countdown Mode Cleared':            TECLoc_Data( 54, "Countdown Mode", "Adventorous Effect Modes", {"Countdown"}),
+    'Purity Mode Cleared':               TECLoc_Data( 55, "Purity Mode", "Adventorous Effect Modes", {"Purity"}),
+    'Mystery Mode Cleared':              TECLoc_Data( 56, "Mystery Mode", "Adventorous Effect Modes", {"Mystery"}),
 }
 
 # This one is just for reference, we wanna dynamically create these
 # Location id is the start for each one, with a limit of 50 locations each
 misc_locations = {
-    "Perform 10 T-spins":                  TECLoc_Data( 1000), 
-    "Perform 10 back-to-backs":            TECLoc_Data( 1050), 
-    "Perform 15 Tetris line clears":       TECLoc_Data( 1100), 
-    "Perform a 10 line combo":             TECLoc_Data( 1150), 
-    "Earn an all clear":                   TECLoc_Data( 1200), 
-    "Perform 4 consecutive back-to-backs": TECLoc_Data( 1250), 
-    "Earn a T-spin triple":                TECLoc_Data( 1300), 
-    "Earn an octotris":                    TECLoc_Data( 1350), 
-    "Earn a dodecatris":                   TECLoc_Data( 1400), 
-    "Earn a decahexatris":                 TECLoc_Data( 1450), 
-    "Earn a perfectris":                   TECLoc_Data( 1500), 
-    "Earn a ultimatris":                   TECLoc_Data( 1550), 
-    "Earn a kirbtris":                     TECLoc_Data( 1600)
+    "Perform 10 T-spins":                  TECLoc_Data( 1000, "Menu", None, {}), 
+    "Perform 10 back-to-backs":            TECLoc_Data( 1050, "Menu", None, {}), 
+    "Perform 15 Tetris line clears":       TECLoc_Data( 1100, "Menu", None, {}), 
+    "Perform a 10 line combo":             TECLoc_Data( 1150, "Menu", None, {}), 
+    "Earn an all clear":                   TECLoc_Data( 1200, "Menu", None, {}), 
+    "Perform 4 consecutive back-to-backs": TECLoc_Data( 1250, "Menu", None, {}), 
+    "Earn a T-spin triple":                TECLoc_Data( 1300, "Menu", None, {}), 
+    "Earn an octotris":                    TECLoc_Data( 1350, "Menu", None, {}), 
+    "Earn a dodecatris":                   TECLoc_Data( 1400, "Menu", None, {}), 
+    "Earn a decahexatris":                 TECLoc_Data( 1450, "Menu", None, {}), 
+    "Earn a perfectris":                   TECLoc_Data( 1500, "Menu", None, {}), 
+    "Earn a ultimatris":                   TECLoc_Data( 1550, "Menu", None, {}), 
+    "Earn a kirbtris":                     TECLoc_Data( 1600, "Menu", None, {})
 }
 
 
@@ -350,56 +353,56 @@ zen_ranksanity_locations = {
     'Stratosphere: A Rank':          TECLoc_Data(354, "Stratosphere", "Area 6", {"A Rank"}),
     'Stratosphere: S Rank':          TECLoc_Data(355, "Stratosphere", "Area 6", {"S Rank"}),
     'Stratosphere: SS Rank':         TECLoc_Data(356, "Stratosphere", "Area 6", {"SS Rank"}),
-    'Metamorphosis: E Rank':         TECLoc_Data(360, "Metamorphosis",{"E Rank"}),
-    'Metamorphosis: D Rank':         TECLoc_Data(361, "Metamorphosis", {"D Rank"}),
-    'Metamorphosis: C Rank':         TECLoc_Data(362, "Metamorphosis", {"C Rank"}),
-    'Metamorphosis: B Rank':         TECLoc_Data(363, "Metamorphosis", {"B Rank"}),
-    'Metamorphosis: A Rank':         TECLoc_Data(364, "Metamorphosis", {"A Rank"}),
-    'Metamorphosis: S Rank':         TECLoc_Data(365, "Metamorphosis", {"S Rank"}),
-    'Metamorphosis: SS Rank':        TECLoc_Data(366, "Metamorphosis", {"SS Rank"}),
+    'Metamorphosis: E Rank':         TECLoc_Data(360, "Metamorphosis", None, {"E Rank"}),
+    'Metamorphosis: D Rank':         TECLoc_Data(361, "Metamorphosis", None,  {"D Rank"}),
+    'Metamorphosis: C Rank':         TECLoc_Data(362, "Metamorphosis", None,  {"C Rank"}),
+    'Metamorphosis: B Rank':         TECLoc_Data(363, "Metamorphosis", None,  {"B Rank"}),
+    'Metamorphosis: A Rank':         TECLoc_Data(364, "Metamorphosis", None,  {"A Rank"}),
+    'Metamorphosis: S Rank':         TECLoc_Data(365, "Metamorphosis", None,  {"S Rank"}),
+    'Metamorphosis: SS Rank':        TECLoc_Data(366, "Metamorphosis", None,  {"SS Rank"}),
 
-    'Area 1: E Rank':                TECLoc_Data(540, identifier={"E Rank"}),
-    'Area 1: D Rank':                TECLoc_Data(541, identifier={"D Rank"}),
-    'Area 1: C Rank':                TECLoc_Data(542, identifier={"C Rank"}),
-    'Area 1: B Rank':                TECLoc_Data(543, identifier={"B Rank"}),
-    'Area 1: A Rank':                TECLoc_Data(544, identifier={"A Rank"}),
-    'Area 1: S Rank':                TECLoc_Data(545, identifier={"S Rank"}),
-    'Area 1: SS Rank':               TECLoc_Data(546, identifier={"SS Rank"}),
-    'Area 2: E Rank':                TECLoc_Data(550, identifier={"E Rank"}),
-    'Area 2: D Rank':                TECLoc_Data(551, identifier={"D Rank"}),
-    'Area 2: C Rank':                TECLoc_Data(552, identifier={"C Rank"}),
-    'Area 2: B Rank':                TECLoc_Data(553, identifier={"B Rank"}),
-    'Area 2: A Rank':                TECLoc_Data(554, identifier={"A Rank"}),
-    'Area 2: S Rank':                TECLoc_Data(555, identifier={"S Rank"}),
-    'Area 2: SS Rank':               TECLoc_Data(556, identifier={"SS Rank"}),
-    'Area 3: E Rank':                TECLoc_Data(560, identifier={"E Rank"}),
-    'Area 3: D Rank':                TECLoc_Data(561, identifier={"D Rank"}),
-    'Area 3: C Rank':                TECLoc_Data(562, identifier={"C Rank"}),
-    'Area 3: B Rank':                TECLoc_Data(563, identifier={"B Rank"}),
-    'Area 3: A Rank':                TECLoc_Data(564, identifier={"A Rank"}),
-    'Area 3: S Rank':                TECLoc_Data(565, identifier={"S Rank"}),
-    'Area 3: SS Rank':               TECLoc_Data(566, identifier={"SS Rank"}),
-    'Area 4: E Rank':                TECLoc_Data(570, identifier={"E Rank"}),
-    'Area 4: D Rank':                TECLoc_Data(571, identifier={"D Rank"}),
-    'Area 4: C Rank':                TECLoc_Data(572, identifier={"C Rank"}),
-    'Area 4: B Rank':                TECLoc_Data(573, identifier={"B Rank"}),
-    'Area 4: A Rank':                TECLoc_Data(574, identifier={"A Rank"}),
-    'Area 4: S Rank':                TECLoc_Data(575, identifier={"S Rank"}),
-    'Area 4: SS Rank':               TECLoc_Data(576, identifier={"SS Rank"}),
-    'Area 5: E Rank':                TECLoc_Data(580, identifier={"E Rank"}),
-    'Area 5: D Rank':                TECLoc_Data(581, identifier={"D Rank"}),
-    'Area 5: C Rank':                TECLoc_Data(582, identifier={"C Rank"}),
-    'Area 5: B Rank':                TECLoc_Data(583, identifier={"B Rank"}),
-    'Area 5: A Rank':                TECLoc_Data(584, identifier={"A Rank"}),
-    'Area 5: S Rank':                TECLoc_Data(585, identifier={"S Rank"}),
-    'Area 5: SS Rank':               TECLoc_Data(586, identifier={"SS Rank"}),
-    'Area 6: E Rank':                TECLoc_Data(590, identifier={"E Rank"}),
-    'Area 6: D Rank':                TECLoc_Data(591, identifier={"D Rank"}),
-    'Area 6: C Rank':                TECLoc_Data(592, identifier={"C Rank"}),
-    'Area 6: B Rank':                TECLoc_Data(593, identifier={"B Rank"}),
-    'Area 6: A Rank':                TECLoc_Data(594, identifier={"A Rank"}),
-    'Area 6: S Rank':                TECLoc_Data(595, identifier={"S Rank"}),
-    'Area 6: SS Rank':               TECLoc_Data(596, identifier={"SS Rank"})
+    'Area 1: E Rank':                TECLoc_Data(540, "Menu", "", {"E Rank"}),
+    'Area 1: D Rank':                TECLoc_Data(541, "Menu", "", {"D Rank"}),
+    'Area 1: C Rank':                TECLoc_Data(542, "Menu", "", {"C Rank"}),
+    'Area 1: B Rank':                TECLoc_Data(543, "Menu", "", {"B Rank"}),
+    'Area 1: A Rank':                TECLoc_Data(544, "Menu", "", {"A Rank"}),
+    'Area 1: S Rank':                TECLoc_Data(545, "Menu", "", {"S Rank"}),
+    'Area 1: SS Rank':               TECLoc_Data(546, "Menu", "", {"SS Rank"}),
+    'Area 2: E Rank':                TECLoc_Data(550, "Menu", "", {"E Rank"}),
+    'Area 2: D Rank':                TECLoc_Data(551, "Menu", "", {"D Rank"}),
+    'Area 2: C Rank':                TECLoc_Data(552, "Menu", "", {"C Rank"}),
+    'Area 2: B Rank':                TECLoc_Data(553, "Menu", "", {"B Rank"}),
+    'Area 2: A Rank':                TECLoc_Data(554, "Menu", "", {"A Rank"}),
+    'Area 2: S Rank':                TECLoc_Data(555, "Menu", "", {"S Rank"}),
+    'Area 2: SS Rank':               TECLoc_Data(556, "Menu", "", {"SS Rank"}),
+    'Area 3: E Rank':                TECLoc_Data(560, "Menu", "", {"E Rank"}),
+    'Area 3: D Rank':                TECLoc_Data(561, "Menu", "", {"D Rank"}),
+    'Area 3: C Rank':                TECLoc_Data(562, "Menu", "", {"C Rank"}),
+    'Area 3: B Rank':                TECLoc_Data(563, "Menu", "", {"B Rank"}),
+    'Area 3: A Rank':                TECLoc_Data(564, "Menu", "", {"A Rank"}),
+    'Area 3: S Rank':                TECLoc_Data(565, "Menu", "", {"S Rank"}),
+    'Area 3: SS Rank':               TECLoc_Data(566, "Menu", "", {"SS Rank"}),
+    'Area 4: E Rank':                TECLoc_Data(570, "Menu", "", {"E Rank"}),
+    'Area 4: D Rank':                TECLoc_Data(571, "Menu", "", {"D Rank"}),
+    'Area 4: C Rank':                TECLoc_Data(572, "Menu", "", {"C Rank"}),
+    'Area 4: B Rank':                TECLoc_Data(573, "Menu", "", {"B Rank"}),
+    'Area 4: A Rank':                TECLoc_Data(574, "Menu", "", {"A Rank"}),
+    'Area 4: S Rank':                TECLoc_Data(575, "Menu", "", {"S Rank"}),
+    'Area 4: SS Rank':               TECLoc_Data(576, "Menu", "", {"SS Rank"}),
+    'Area 5: E Rank':                TECLoc_Data(580, "Menu", "", {"E Rank"}),
+    'Area 5: D Rank':                TECLoc_Data(581, "Menu", "", {"D Rank"}),
+    'Area 5: C Rank':                TECLoc_Data(582, "Menu", "", {"C Rank"}),
+    'Area 5: B Rank':                TECLoc_Data(583, "Menu", "", {"B Rank"}),
+    'Area 5: A Rank':                TECLoc_Data(584, "Menu", "", {"A Rank"}),
+    'Area 5: S Rank':                TECLoc_Data(585, "Menu", "", {"S Rank"}),
+    'Area 5: SS Rank':               TECLoc_Data(586, "Menu", "", {"SS Rank"}),
+    'Area 6: E Rank':                TECLoc_Data(590, "Menu", "", {"E Rank"}),
+    'Area 6: D Rank':                TECLoc_Data(591, "Menu", "", {"D Rank"}),
+    'Area 6: C Rank':                TECLoc_Data(592, "Menu", "", {"C Rank"}),
+    'Area 6: B Rank':                TECLoc_Data(593, "Menu", "", {"B Rank"}),
+    'Area 6: A Rank':                TECLoc_Data(594, "Menu", "", {"A Rank"}),
+    'Area 6: S Rank':                TECLoc_Data(595, "Menu", "", {"S Rank"}),
+    'Area 6: SS Rank':               TECLoc_Data(596, "Menu", "", {"SS Rank"})
 }
 
 effect_ranksanity_locations = {
@@ -524,17 +527,17 @@ effect_ranksanity_locations = {
     'Mystery: SS Rank':              TECLoc_Data(536, "Mystery Mode", "Adventorous Effect Modes", {"SS Rank"}),
 }
 
-zen_area_one = {name: data.location_id for name, data in base_locations.items() if data.region == "Area 1"}
-zen_area_two = {name: data.location_id for name, data in base_locations.items() if data.region == "Area 2"}
-zen_area_three = {name: data.location_id for name, data in base_locations.items() if data.region == "Area 3"}
-zen_area_four = {name: data.location_id for name, data in base_locations.items() if data.region == "Area 4"}
-zen_area_five = {name: data.location_id for name, data in base_locations.items() if data.region == "Area 5"}
-zen_area_six = {name: data.location_id for name, data in base_locations.items() if data.region == "Area 6"}
+zen_area_one = {name: data.location_id for name, data in base_locations.items() if data.in_area == "Area 1"}
+zen_area_two = {name: data.location_id for name, data in base_locations.items() if data.in_area == "Area 2"}
+zen_area_three = {name: data.location_id for name, data in base_locations.items() if data.in_area == "Area 3"}
+zen_area_four = {name: data.location_id for name, data in base_locations.items() if data.in_area == "Area 4"}
+zen_area_five = {name: data.location_id for name, data in base_locations.items() if data.in_area == "Area 5"}
+zen_area_six = {name: data.location_id for name, data in base_locations.items() if data.in_area == "Area 6"}
 
-effect_clasic = {name: data.location_id for name, data in effect_mode_locations.items() if data.region == "Classic Effect Modes"}
-effect_clasic = {name: data.location_id for name, data in effect_mode_locations.items() if data.region == "Relax Effect Modes"}
-effect_clasic = {name: data.location_id for name, data in effect_mode_locations.items() if data.region == "Focus Effect Modes"}
-effect_clasic = {name: data.location_id for name, data in effect_mode_locations.items() if data.region == "Adventorous Effect Modes"}
+effect_clasic = {name: data.location_id for name, data in effect_mode_locations.items() if data.in_area == "Classic Effect Modes"}
+effect_relax = {name: data.location_id for name, data in effect_mode_locations.items() if data.in_area == "Relax Effect Modes"}
+effect_focus = {name: data.location_id for name, data in effect_mode_locations.items() if data.in_area == "Focus Effect Modes"}
+effect_adventure = {name: data.location_id for name, data in effect_mode_locations.items() if data.in_area == "Adventorous Effect Modes"}
 
 # The minimum ranksanity was set to be C ranks, so the basis contains from E to C ranks
 zen_areas_ranksanity_basis = {name: data for name, data in zen_ranksanity_locations.items() if "E Rank" in data.identifier or "D Rank" in data.identifier or "C Rank" in data.identifier}

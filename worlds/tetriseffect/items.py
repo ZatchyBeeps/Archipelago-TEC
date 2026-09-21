@@ -41,23 +41,23 @@ itemlist = {
     'Metamorphosis Unlock':         TItemInfo(126,   ItemClassification.progression),
 
 
-    'Effect: Marathon Unlock':              TItemInfo(127,   ItemClassification.progression),
-    'Effect: Zone Marathon Unlock':         TItemInfo(128,   ItemClassification.progression),
-    'Effect: Ultra Unlock':                 TItemInfo(129,   ItemClassification.progression),
-    'Effect: Sprint Unlock':                TItemInfo(130,   ItemClassification.progression),
-    'Effect: Master Unlock':                TItemInfo(131,   ItemClassification.progression),
-    'Effect: Classic Score Attack Unlock':  TItemInfo(132,   ItemClassification.progression),
-    'Effect: Chill Marathon Unlock':        TItemInfo(133,   ItemClassification.progression),
-    'Effect: Quick Play Unlock':            TItemInfo(134,   ItemClassification.progression),
-    'Effect: Playlist (Sea) Unlock':        TItemInfo(135,   ItemClassification.progression),
-    'Effect: Playlist (Wind) Unlock':       TItemInfo(136,   ItemClassification.progression),
-    'Effect: Playlist (World) Unlock':      TItemInfo(137,   ItemClassification.progression),
-    'Effect: All Clear Unlock':             TItemInfo(138,   ItemClassification.progression),
-    'Effect: Combo Unlock':                 TItemInfo(139,   ItemClassification.progression),
-    'Effect: Target Unlock':                TItemInfo(140,   ItemClassification.progression),
-    'Effect: Countdown Unlock':             TItemInfo(141,   ItemClassification.progression),
-    'Effect: Purity Unlock':                TItemInfo(142,   ItemClassification.progression),
-    'Effect: Mystery Unlock':               TItemInfo(143,   ItemClassification.progression),
+    'Effect: Marathon Mode Unlock':              TItemInfo(127,   ItemClassification.progression),
+    'Effect: Zone Marathon Mode Unlock':         TItemInfo(128,   ItemClassification.progression),
+    'Effect: Ultra Mode Unlock':                 TItemInfo(129,   ItemClassification.progression),
+    'Effect: Sprint Mode Unlock':                TItemInfo(130,   ItemClassification.progression),
+    'Effect: Master Mode Unlock':                TItemInfo(131,   ItemClassification.progression),
+    'Effect: Classic Score Attack Mode Unlock':  TItemInfo(132,   ItemClassification.progression),
+    'Effect: Chill Marathon Mode Unlock':        TItemInfo(133,   ItemClassification.progression),
+    'Effect: Quick Play Mode Unlock':            TItemInfo(134,   ItemClassification.progression),
+    'Effect: Playlist (Sea) Mode Unlock':        TItemInfo(135,   ItemClassification.progression),
+    'Effect: Playlist (Wind) Mode Unlock':       TItemInfo(136,   ItemClassification.progression),
+    'Effect: Playlist (World) Mode Unlock':      TItemInfo(137,   ItemClassification.progression),
+    'Effect: All Clear Mode Unlock':             TItemInfo(138,   ItemClassification.progression),
+    'Effect: Combo Mode Unlock':                 TItemInfo(139,   ItemClassification.progression),
+    'Effect: Target Mode Unlock':                TItemInfo(140,   ItemClassification.progression),
+    'Effect: Countdown Mode Unlock':             TItemInfo(141,   ItemClassification.progression),
+    'Effect: Purity Mode Unlock':                TItemInfo(142,   ItemClassification.progression),
+    'Effect: Mystery Mode Unlock':               TItemInfo(143,   ItemClassification.progression),
 
 
     'Area 1 Unlock':                TItemInfo(150,   ItemClassification.progression),
@@ -117,10 +117,10 @@ item_table = {name: data.item_id for name, data in itemlist.items()}
 zen_levels = ['The Deep Unlock', 'Pharaoh\'s Code Unlock', 'Karma Wheel Unlock', 'Jellyfish Chorus Unlock', 'Da Vinci Unlock', 'Prayer Circles Unlock', 'Ritual Passion Unlock', 'Deserted Unlock', 'Dolphin Surf Unlock',
               'Downtown Jazz Unlock', 'Spirit Canyon Unlock', 'Jewel Veil Unlock', 'Forest Dawn Unlock', 'Kaleidoscope Unlock', 'Turtle Dreams Unlock', 'Celebration Unlock', 'Sunset Breeze Unlock', 'Aurora Peak Unlock',
               'Zen Blossoms Unlock', 'Ying & Yang Unlock', 'Hula Soul Unlock', 'Starfall Unlock', 'Balloon High Unlock', 'Mermaid Cove Unlock', 'Orbit Unlock', 'Stratosphere Unlock', 'Metamorphosis Unlock']
-effect_classic_levels = ['Effect: Marathon Unlock', 'Effect: Zone Marathon Unlock', 'Effect: Ultra Unlock', 'Effect: Sprint Unlock', 'Effect: Master Unlock', 'Effect: Classic Score Attack Unlock']
-effect_relax_levels = ['Effect: Chill Marathon Unlock', 'Effect: Quick Play Unlock', 'Effect: Playlist (Sea) Unlock', 'Effect: Playlist (Wind) Unlock', 'Effect: Playlist (World) Unlock']
-effect_focus_levels = ['Effect: All Clear Unlock', 'Effect: Combo Unlock', 'Effect: Target Unlock']
-effect_adventure_levels = ['Effect: Countdown Unlock', 'Effect: Purity Unlock', 'Effect: Mystery Unlock']
+effect_classic_levels = ['Effect: Marathon Mode Unlock', 'Effect: Zone Marathon Mode Unlock', 'Effect: Ultra Mode Unlock', 'Effect: Sprint Mode Unlock', 'Effect: Master Mode Unlock', 'Effect: Classic Score Attack Mode Unlock']
+effect_relax_levels = ['Effect: Chill Marathon Mode Unlock', 'Effect: Quick Play Mode Unlock', 'Effect: Playlist (Sea) Mode Unlock', 'Effect: Playlist (Wind) Mode Unlock', 'Effect: Playlist (World) Mode Unlock']
+effect_focus_levels = ['Effect: All Clear Mode Unlock', 'Effect: Combo Mode Unlock', 'Effect: Target Mode Unlock']
+effect_adventure_levels = ['Effect: Countdown Mode Unlock', 'Effect: Purity Mode Unlock', 'Effect: Mystery Mode Unlock']
 zen_areas = ['Area 1 Unlock', 'Area 2 Unlock', 'Area 3 Unlock', 'Area 4 Unlock', 'Area 5 Unlock', 'Area 6 Unlock']
 effect_groups = ['Effect: Classic Modes Unlock', 'Effect: Relax Modes Unlock', 'Effect: Focus Modes Unlock', 'Effect: Adventurous Modes Unlock']
 tetrimino_items = ['T Mino Piece Unlock', 'Z Mino Piece Unlock', 'S Mino Piece Unlock', 'O Mino Piece Unlock', 'L Mino Piece Unlock', 'J Mino Piece Unlock', 'J Mino Piece Unlock']

@@ -199,26 +199,26 @@ tec_option_groups = [
 
 @dataclass
 class HiTheseAreGameOptions(PerGameCommonOptions):
-    unlock_method = UnlockMethod
-    is_include_effect = IncludeEffectMode
-    excluded_modes = ExcludedEffectModes
-    is_ranksanity = EnableRanksanity
-    ranksanity_limit = RanksanityMaxRank
-    is_minosanity = MinoSanity
-    is_start_zone = StartWithZone
-    death_link = EnableDeathLink
-    #trick_locations = TrickLocations
-    traps_perc = TrapPercentage
-    tspins_n = TSpinsAmmount
-    backtobacks_n = BackToBackAmmouont
-    tetrises_n = TetrisAmmount
-    combos_n = ComboAmmount
-    all_clears_n = AllClearAmmount
-    combo_backtoback_n = ConsBackToBackAmmount
-    tspin_triples_n = TSpinTripleAmmount
-    octotris_n = OctotrisAmmount
-    dodecatris_n = DodecatrisAmmount
-    decahexatris_n = DecahexatrisAmmount
-    perfectris_n = PerfectrisAmmount
-    ultimatris_n = UltimatrisAmmount
-    kirbtris_n = KirbtrisAmmount
+    unlock_method: UnlockMethod
+    is_include_effect: IncludeEffectMode
+    excluded_modes: ExcludedEffectModes
+    is_ranksanity: EnableRanksanity
+    ranksanity_limit: RanksanityMaxRank
+    is_minosanity: MinoSanity
+    is_start_zone: StartWithZone
+    death_link: EnableDeathLink
+    #trick_locations: TrickLocations
+    traps_perc: TrapPercentage
+    tspins_n: TSpinsAmmount
+    backtobacks_n: BackToBackAmmouont
+    tetrises_n: TetrisAmmount
+    combos_n: ComboAmmount
+    all_clears_n: AllClearAmmount
+    combo_backtoback_n: ConsBackToBackAmmount
+    tspin_triples_n: TSpinTripleAmmount
+    octotris_n: OctotrisAmmount
+    dodecatris_n: DodecatrisAmmount
+    decahexatris_n: DecahexatrisAmmount
+    perfectris_n: PerfectrisAmmount
+    ultimatris_n: UltimatrisAmmount
+    kirbtris_n: KirbtrisAmmount

@@ -38,27 +38,28 @@ zen_regions = {
 }
 
 effect_regions = {
-    'Marathon':             1, 
-    'Zone Marathon':        1,
-    'Ultra':                1,
-    'Sprint':               1,
-    'Master':               1,
-    'Classic Score Attack': 1,
-    'Chill Marathon':       2,
-    'Quick Play':           2,
-    'Sea Playlist':         2,
-    'Wind Playlist':        2,
-    'World Playlist':       2,
-    'All Clear':            3,
-    'Combo':                3,
-    'Target':               3,
-    'Countdown':            4,
-    'Purity':               4,
-    'Mystery':              4,
+    'Marathon Mode':             1, 
+    'Zone Marathon Mode':        1,
+    'Ultra Mode':                1,
+    'Sprint Mode':               1,
+    'Master Mode':               1,
+    'Classic Score Attack Mode': 1,
+    'Chill Marathon Mode':       2,
+    'Quick Play Mode':           2,
+    'Sea Playlist Mode':         2,
+    'Wind Playlist Mode':        2,
+    'World Playlist Mode':       2,
+    'All Clear Mode':            3,
+    'Combo Mode':                3,
+    'Target Mode':               3,
+    'Countdown Mode':            4,
+    'Purity Mode':               4,
+    'Mystery Mode':              4,
 }
 
 def make_regions(world: TECWorld):
-    root = world.get_region("Menu")
+    root = Region("Menu", world.player, world.multiworld)
+    world.multiworld.regions += [root]
 
     zen_area_one = Region("Area 1", world.player, world.multiworld)
     zen_area_two = Region("Area 2", world.player, world.multiworld)
@@ -126,17 +127,17 @@ def make_regions(world: TECWorld):
 
         for region in group_regions:
             if region is None: continue
-            world.multiworld.regions += region
+            world.multiworld.regions += [region]
             if world.options.unlock_method == 0:
                 root.connect(region, f"{region.name} Access")
             else:
                 root.connect(region, f"{region.name} Access", lambda state: state.has(f"Effect: {region.name} Unlock", world.player))
             
-        world.multiworld.regions += {region for region, _ in created_effec_regions.items()}
-
 
 
         created_effec_regions = {Region(name, world.player, world.multiworld): area for name, area in effect_regions.items() if (group_regions[area-1] is not None and (not name in world.options.excluded_modes))}
+        world.multiworld.regions += [region for region, _ in created_effec_regions.items()]
+
         for region, area in created_effec_regions.items():
             if world.options.unlock_method == 0:
                 group_regions[area-1].connect(region, f"{region.name} Mode Access", lambda state: state.has(f"Effect: {region.name} Unlock", world.player))

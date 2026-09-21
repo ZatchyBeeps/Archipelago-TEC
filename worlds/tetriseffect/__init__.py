@@ -13,6 +13,7 @@ class TECWorld(World):
     location_name_to_id = locations.get_location_table()
     item_name_to_id = item_table
     option_groups = tec_option_groups
+    origin_region_name = "Menu"
 
     #def generate_early(self):
     #    return super().generate_early()
