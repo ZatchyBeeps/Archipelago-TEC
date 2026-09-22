@@ -3,11 +3,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from rule_builder.options import OptionFilter
-from rule_builder.rules import Has, HasAll, Rule
+from rule_builder.rules import Has, HasAll, Rule, CanReachRegion, HasFromList
 
 from .options import EnableRanksanity
 from .locations import base_locations, effect_mode_locations, zen_ranksanity_locations, effect_ranksanity_locations
 from .regions import zen_regions, get_effect_regions
+from .items import zen_levels
 
 if TYPE_CHECKING:
     from . import TECWorld
@@ -44,23 +45,27 @@ def create_rules(world: TECWorld):
                 world.set_rule(region, requirement_rule)
 
     else:
-        area_one = world.get_entrance("Area 1 Area Access")
-        area_two = world.get_entrance("Area 2 Area Access")
-        area_three = world.get_entrance("Area 3 Area Access")
-        area_four = world.get_entrance("Area 4 Area Access")
-        area_five = world.get_entrance("Area 5 Area Access")
-        area_six = world.get_entrance("Area 6 Area Access")
-
-        world.set_rule(area_one, Has("Area 1 Unlock"))
-        world.set_rule(area_two, Has("Area 2 Unlock"))
-        world.set_rule(area_three, Has("Area 3 Unlock"))
-        world.set_rule(area_four, Has("Area 4 Unlock"))
-        world.set_rule(area_five, Has("Area 5 Unlock"))
-        world.set_rule(area_six, Has("Area 6 Unlock"))
+        for area_num in range(1, 6):
+            entrance = world.get_entrance(f"Area {area_num} Area Access")
+            rule = Has(f"Area {area_num} Unlock")
 
         if world.options.is_include_effect:
             group_list = [name for name in ["Classic", "Relax", "Focus", "Adventorous"] if not name in world.options.excluded_modes]
             for group in group_list:
                 region = world.get_entrance(f"{group} Modes Access")
                 requirement_rule = Has(f"Effect: {group} Modes Unlock")
+
+
+    for name, data in base_locations.items():
+        location = world.get_location(name)
+        rule = CanReachRegion(data.region)
+        world.set_rule(location, rule)
+
+
+    ending_region = world.get_entrance("Metamorphosis Stage Access")
+    ending_rule = Has("Stage Cleared", count=10)
+    ending_stage = Has("Metamorphosis Unlock")
+    completion_rule = ending_rule & ending_stage
+    world.set_rule(ending_region, completion_rule)
+        
 

@@ -28,6 +28,7 @@ def create_locations(world: TECWorld):
     for name, data in base_locations.items():
         region = world.get_region(data.region)
         region.locations.append(TECLocation(world.player, name, data.location_id + offset, region))
+        region.add_event(f"{data.region} Cleared", "Stage Cleared", lambda state: state.can_reach_region(data.region, world.player), TECLocation, items.TECItem, False)
 
     if world.options.is_include_effect:
         for name, data in effect_mode_locations.items():

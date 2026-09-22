@@ -38,7 +38,7 @@ itemlist = {
     'Mermaid Cove Unlock':          TItemInfo(123,   ItemClassification.progression),
     'Orbit Unlock':                 TItemInfo(124,   ItemClassification.progression),
     'Stratosphere Unlock':          TItemInfo(125,   ItemClassification.progression),
-    'Metamorphosis Unlock':         TItemInfo(126,   ItemClassification.progression_skip_balancing),
+    'Metamorphosis Unlock':         TItemInfo(126,   ItemClassification.progression),
 
 
     'Effect: Marathon Mode Unlock':              TItemInfo(127,   ItemClassification.progression),

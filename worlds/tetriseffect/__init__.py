@@ -74,7 +74,13 @@ class TECWorld(World):
 
     def set_rules(self):
         rules.create_rules(self)
-        self.set_completion_rule(Has("Victory"))
+        completion_rule = Has("Victory") & Has("Metamorphosis Unlock")
+        self.set_completion_rule(completion_rule)
+
+        print(self.get_regions())
+        for entrance in self.get_entrances():
+            print(f"{entrance.name} -> {entrance.parent_region.name}")
+        input()
 
     def fill_slot_data(self):
         return self.options.as_dict("unlock_method", "is_include_effect", "excluded_modes", "death_link", "is_ranksanity")
