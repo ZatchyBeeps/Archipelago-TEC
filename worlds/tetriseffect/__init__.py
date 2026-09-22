@@ -1,7 +1,7 @@
 from worlds.AutoWorld import World
 from Options import OptionError
 from .options import HiTheseAreGameOptions, tec_option_groups
-from . import locations, regions
+from . import locations, regions, rules
 from rule_builder.rules import Has
 
 from .items import TECItem, item_table, itemlist, zen_levels, zen_areas, effect_adventure_levels, effect_classic_levels, effect_focus_levels, effect_relax_levels, effect_groups, traps, tetrimino_items, garbage
@@ -73,6 +73,7 @@ class TECWorld(World):
         locations.create_locations(self)
 
     def set_rules(self):
+        rules.create_rules(self)
         self.set_completion_rule(Has("Victory"))
 
     def fill_slot_data(self):

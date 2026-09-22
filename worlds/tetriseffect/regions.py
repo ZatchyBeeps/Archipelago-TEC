@@ -38,24 +38,27 @@ zen_regions = {
 }
 
 effect_regions = {
-    'Marathon Mode':             1, 
-    'Zone Marathon Mode':        1,
-    'Ultra Mode':                1,
-    'Sprint Mode':               1,
-    'Master Mode':               1,
-    'Classic Score Attack Mode': 1,
-    'Chill Marathon Mode':       2,
-    'Quick Play Mode':           2,
-    'Sea Playlist Mode':         2,
-    'Wind Playlist Mode':        2,
-    'World Playlist Mode':       2,
-    'All Clear Mode':            3,
-    'Combo Mode':                3,
-    'Target Mode':               3,
-    'Countdown Mode':            4,
-    'Purity Mode':               4,
-    'Mystery Mode':              4,
+    'Marathon':             1, 
+    'Zone Marathon':        1,
+    'Ultra':                1,
+    'Sprint':               1,
+    'Master':               1,
+    'Classic Score Attack': 1,
+    'Chill Marathon':       2,
+    'Quick Play':           2,
+    'Sea Playlist':         2,
+    'Wind Playlist':        2,
+    'World Playlist':       2,
+    'All Clear':            3,
+    'Combo':                3,
+    'Target':               3,
+    'Countdown':            4,
+    'Purity':               4,
+    'Mystery':              4,
 }
+
+def get_effect_regions(world: TECWorld) -> dict[str, int]:
+    return {f"{name} Mode": area for name, area in effect_regions.items() if not name in world.options.excluded_modes}
 
 def make_regions(world: TECWorld):
     root = Region("Menu", world.player, world.multiworld)
@@ -116,13 +119,13 @@ def make_regions(world: TECWorld):
         focus_region: Region = None
         adventure_region: Region = None
         if not "Classic" in world.options.excluded_modes:
-            classic_region = Region("Classic Modes", world.player, world.multiworld, "Classic Effect Modes")
+            classic_region = Region("Classic Modes", world.player, world.multiworld, "Classic Effects")
         if not "Relax" in world.options.excluded_modes:
-            relax_region = Region("Relax Modes", world.player, world.multiworld, "Relax Effect Modes")
+            relax_region = Region("Relax Modes", world.player, world.multiworld, "Relax Effects")
         if not "Focus" in world.options.excluded_modes:
-            focus_region = Region("Focus Modes", world.player, world.multiworld, "Focus Effect Modes")
+            focus_region = Region("Focus Modes", world.player, world.multiworld, "Focus Effects")
         if not "Adventorous" in world.options.excluded_modes:
-            adventure_region = Region("Adventorous Modes", world.player, world.multiworld, "Adventorous Effect Modes")
+            adventure_region = Region("Adventorous Modes", world.player, world.multiworld, "Adventorous Effects")
         group_regions = [classic_region, relax_region, focus_region, adventure_region]
 
         for region in group_regions:
@@ -135,14 +138,14 @@ def make_regions(world: TECWorld):
             
 
 
-        created_effec_regions = {Region(name, world.player, world.multiworld): area for name, area in effect_regions.items() if (group_regions[area-1] is not None and (not name in world.options.excluded_modes))}
+        created_effec_regions = {Region(name, world.player, world.multiworld): area for name, area in get_effect_regions(world).items() if group_regions[area-1] is not None}
         world.multiworld.regions += [region for region, _ in created_effec_regions.items()]
 
         for region, area in created_effec_regions.items():
             if world.options.unlock_method == 0:
-                group_regions[area-1].connect(region, f"{region.name} Mode Access", lambda state: state.has(f"Effect: {region.name} Unlock", world.player))
+                group_regions[area-1].connect(region, f"{region.name} Access")
             else:
-                group_regions[area-1].connect(region, f"{region.name} Mode Access")
+                group_regions[area-1].connect(region, f"{region.name} Access")
         
 
 
