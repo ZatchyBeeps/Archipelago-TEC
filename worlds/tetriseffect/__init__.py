@@ -1,6 +1,6 @@
 from worlds.AutoWorld import World
 from Options import OptionError
-from .options import HiTheseAreGameOptions, tec_option_groups
+from .options import TECGameOptions, tec_option_groups
 from . import locations, regions, rules
 from rule_builder.rules import Has
 
@@ -8,8 +8,8 @@ from .items import TECItem, item_table, itemlist, zen_levels, zen_areas, effect_
 
 class TECWorld(World):
     game = "Tetris Effect: Connected"
-    options_dataclass = HiTheseAreGameOptions
-    options: HiTheseAreGameOptions
+    options_dataclass = TECGameOptions
+    options: TECGameOptions
     location_name_to_id = locations.get_location_table()
     item_name_to_id = item_table
     option_groups = tec_option_groups

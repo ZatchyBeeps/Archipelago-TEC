@@ -198,7 +198,7 @@ tec_option_groups = [
 
 
 @dataclass
-class HiTheseAreGameOptions(PerGameCommonOptions):
+class TECGameOptions(PerGameCommonOptions):
     unlock_method: UnlockMethod
     is_include_effect: IncludeEffectMode
     excluded_modes: ExcludedEffectModes
