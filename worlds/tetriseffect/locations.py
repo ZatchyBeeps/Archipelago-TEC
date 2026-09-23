@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import NamedTuple, TYPE_CHECKING, Dict
 
 from BaseClasses import Location
+from rule_builder.rules import CanReachRegion, Has
 
 if TYPE_CHECKING:
     from .__init__ import TECWorld
@@ -28,13 +29,15 @@ def create_locations(world: TECWorld):
     for name, data in base_locations.items():
         region = world.get_region(data.region)
         region.locations.append(TECLocation(world.player, name, data.location_id + offset, region))
-        region.add_event(f"{data.region} Cleared", "Stage Cleared", lambda state: state.can_reach_region(data.region, world.player), TECLocation, items.TECItem, False)
+        region.add_event(f"{data.region} Cleared", "Stage Cleared", lambda state: state.can_reach_region(data.region, world.player), TECLocation, items.TECItem, show_in_spoiler=False)
 
     if world.options.is_include_effect:
         for name, data in effect_mode_locations.items():
             if not can_location_exist(world, name, 0): continue
             region = world.get_region(data.region)
             region.locations.append(TECLocation(world.player, name, data.location_id + offset, region))
+            region.add_event(f"Effect: {data.region} Cleared", "Stage Cleared", lambda state: state.can_reach_region(data.region, world.player), TECLocation, items.TECItem, show_in_spoiler=False)
+
 
     if world.options.is_ranksanity:
         for name, data in get_available_ranksanities(world).items():
@@ -50,13 +53,27 @@ def create_locations(world: TECWorld):
     trick_locations: Dict[str, int]
     # Add trick locations
     # Maybe...? 
-    trick_locations = {f"Perform {10 * world.options.tspins_n} T-Spins": 1000 + n + offset for n in range(world.options.tspins_n-1)}
+    trick_locations = {f"Made {10 * (n + 1)} T-Spins": 1000 + n + offset for n in range(world.options.tspins_n)}
+    trick_locations.update({f"Made {10 * (n + 1)} back-to-backs": 1050 + n + offset for n in range(world.options.backtobacks_n)})
+    trick_locations.update({f"Made {15 * (n + 1)} Tetris line clears": 1100 + n + offset for n in range(world.options.tetrises_n)})
+    trick_locations.update({f"Made {10 * (n + 1)} line combos": 1150 + n + offset for n in range(world.options.combos_n)})
+    trick_locations.update({f"Made {1 * (n + 1)} all clear": 1200 + n + offset for n in range(world.options.all_clears_n)})
+    trick_locations.update({f"Made a 4-combo back-to-back {1 * (n + 1)} times": 1250 + n + offset for n in range(world.options.combo_backtoback_n)})
+    trick_locations.update({f"Made {1 * (n + 1)} T-spin triple": 1300 + n + offset for n in range(world.options.tspin_triples_n)})
+    trick_locations.update({f"Made {1 * (n + 1)} octotris": 1350 + n + offset for n in range(world.options.octotris_n)})
+    trick_locations.update({f"Made {1 * (n + 1)} dodecatris": 1400 + n + offset for n in range(world.options.dodecatris_n)})
+    trick_locations.update({f"Made {1 * (n + 1)} decahexatris": 1450 + n + offset for n in range(world.options.decahexatris_n)})
+    trick_locations.update({f"Made {1 * (n + 1)} perfectris": 1500 + n + offset for n in range(world.options.perfectris_n)})
+    trick_locations.update({f"Made {1 * (n + 1)} ultimatris": 1550 + n + offset for n in range(world.options.ultimatris_n)})
+    trick_locations.update({f"Made {1 * (n + 1)} kirbtris": 1600 + n + offset for n in range(world.options.kirbtris_n)})
+
+
 
     root.locations += [TECLocation(world.player, name, data, root) for name, data in trick_locations.items()]
 
+    ending_requirement = Has("Metamorphosis Unlock", world.player)
 
     world.get_region("Metamorphosis").add_event("Zen Mode Cleared", "Victory", lambda state: state.has("Metamorphosis Unlock", world.player), TECLocation, items.TECItem)
-
 
 def can_location_exist(world: TECWorld, location: str, type: int = 0):
     match (type):
@@ -365,48 +382,48 @@ zen_ranksanity_locations = {
     'Metamorphosis: S Rank':         TECLoc_Data(365, "Metamorphosis", None,  {"S Rank"}),
     'Metamorphosis: SS Rank':        TECLoc_Data(366, "Metamorphosis", None,  {"SS Rank"}),
 
-    'Area 1: E Rank':                TECLoc_Data(540, "Menu", "", {"E Rank"}),
-    'Area 1: D Rank':                TECLoc_Data(541, "Menu", "", {"D Rank"}),
-    'Area 1: C Rank':                TECLoc_Data(542, "Menu", "", {"C Rank"}),
-    'Area 1: B Rank':                TECLoc_Data(543, "Menu", "", {"B Rank"}),
-    'Area 1: A Rank':                TECLoc_Data(544, "Menu", "", {"A Rank"}),
-    'Area 1: S Rank':                TECLoc_Data(545, "Menu", "", {"S Rank"}),
-    'Area 1: SS Rank':               TECLoc_Data(546, "Menu", "", {"SS Rank"}),
-    'Area 2: E Rank':                TECLoc_Data(550, "Menu", "", {"E Rank"}),
-    'Area 2: D Rank':                TECLoc_Data(551, "Menu", "", {"D Rank"}),
-    'Area 2: C Rank':                TECLoc_Data(552, "Menu", "", {"C Rank"}),
-    'Area 2: B Rank':                TECLoc_Data(553, "Menu", "", {"B Rank"}),
-    'Area 2: A Rank':                TECLoc_Data(554, "Menu", "", {"A Rank"}),
-    'Area 2: S Rank':                TECLoc_Data(555, "Menu", "", {"S Rank"}),
-    'Area 2: SS Rank':               TECLoc_Data(556, "Menu", "", {"SS Rank"}),
-    'Area 3: E Rank':                TECLoc_Data(560, "Menu", "", {"E Rank"}),
-    'Area 3: D Rank':                TECLoc_Data(561, "Menu", "", {"D Rank"}),
-    'Area 3: C Rank':                TECLoc_Data(562, "Menu", "", {"C Rank"}),
-    'Area 3: B Rank':                TECLoc_Data(563, "Menu", "", {"B Rank"}),
-    'Area 3: A Rank':                TECLoc_Data(564, "Menu", "", {"A Rank"}),
-    'Area 3: S Rank':                TECLoc_Data(565, "Menu", "", {"S Rank"}),
-    'Area 3: SS Rank':               TECLoc_Data(566, "Menu", "", {"SS Rank"}),
-    'Area 4: E Rank':                TECLoc_Data(570, "Menu", "", {"E Rank"}),
-    'Area 4: D Rank':                TECLoc_Data(571, "Menu", "", {"D Rank"}),
-    'Area 4: C Rank':                TECLoc_Data(572, "Menu", "", {"C Rank"}),
-    'Area 4: B Rank':                TECLoc_Data(573, "Menu", "", {"B Rank"}),
-    'Area 4: A Rank':                TECLoc_Data(574, "Menu", "", {"A Rank"}),
-    'Area 4: S Rank':                TECLoc_Data(575, "Menu", "", {"S Rank"}),
-    'Area 4: SS Rank':               TECLoc_Data(576, "Menu", "", {"SS Rank"}),
-    'Area 5: E Rank':                TECLoc_Data(580, "Menu", "", {"E Rank"}),
-    'Area 5: D Rank':                TECLoc_Data(581, "Menu", "", {"D Rank"}),
-    'Area 5: C Rank':                TECLoc_Data(582, "Menu", "", {"C Rank"}),
-    'Area 5: B Rank':                TECLoc_Data(583, "Menu", "", {"B Rank"}),
-    'Area 5: A Rank':                TECLoc_Data(584, "Menu", "", {"A Rank"}),
-    'Area 5: S Rank':                TECLoc_Data(585, "Menu", "", {"S Rank"}),
-    'Area 5: SS Rank':               TECLoc_Data(586, "Menu", "", {"SS Rank"}),
-    'Area 6: E Rank':                TECLoc_Data(590, "Menu", "", {"E Rank"}),
-    'Area 6: D Rank':                TECLoc_Data(591, "Menu", "", {"D Rank"}),
-    'Area 6: C Rank':                TECLoc_Data(592, "Menu", "", {"C Rank"}),
-    'Area 6: B Rank':                TECLoc_Data(593, "Menu", "", {"B Rank"}),
-    'Area 6: A Rank':                TECLoc_Data(594, "Menu", "", {"A Rank"}),
-    'Area 6: S Rank':                TECLoc_Data(595, "Menu", "", {"S Rank"}),
-    'Area 6: SS Rank':               TECLoc_Data(596, "Menu", "", {"SS Rank"})
+    'Area 1: E Rank':                TECLoc_Data(540, "Menu", "Area 1", {"E Rank"}),
+    'Area 1: D Rank':                TECLoc_Data(541, "Menu", "Area 1", {"D Rank"}),
+    'Area 1: C Rank':                TECLoc_Data(542, "Menu", "Area 1", {"C Rank"}),
+    'Area 1: B Rank':                TECLoc_Data(543, "Menu", "Area 1", {"B Rank"}),
+    'Area 1: A Rank':                TECLoc_Data(544, "Menu", "Area 1", {"A Rank"}),
+    'Area 1: S Rank':                TECLoc_Data(545, "Menu", "Area 1", {"S Rank"}),
+    'Area 1: SS Rank':               TECLoc_Data(546, "Menu", "Area 1", {"SS Rank"}),
+    'Area 2: E Rank':                TECLoc_Data(550, "Menu", "Area 2", {"E Rank"}),
+    'Area 2: D Rank':                TECLoc_Data(551, "Menu", "Area 2", {"D Rank"}),
+    'Area 2: C Rank':                TECLoc_Data(552, "Menu", "Area 2", {"C Rank"}),
+    'Area 2: B Rank':                TECLoc_Data(553, "Menu", "Area 2", {"B Rank"}),
+    'Area 2: A Rank':                TECLoc_Data(554, "Menu", "Area 2", {"A Rank"}),
+    'Area 2: S Rank':                TECLoc_Data(555, "Menu", "Area 2", {"S Rank"}),
+    'Area 2: SS Rank':               TECLoc_Data(556, "Menu", "Area 2", {"SS Rank"}),
+    'Area 3: E Rank':                TECLoc_Data(560, "Menu", "Area 3", {"E Rank"}),
+    'Area 3: D Rank':                TECLoc_Data(561, "Menu", "Area 3", {"D Rank"}),
+    'Area 3: C Rank':                TECLoc_Data(562, "Menu", "Area 3", {"C Rank"}),
+    'Area 3: B Rank':                TECLoc_Data(563, "Menu", "Area 3", {"B Rank"}),
+    'Area 3: A Rank':                TECLoc_Data(564, "Menu", "Area 3", {"A Rank"}),
+    'Area 3: S Rank':                TECLoc_Data(565, "Menu", "Area 3", {"S Rank"}),
+    'Area 3: SS Rank':               TECLoc_Data(566, "Menu", "Area 3", {"SS Rank"}),
+    'Area 4: E Rank':                TECLoc_Data(570, "Menu", "Area 4", {"E Rank"}),
+    'Area 4: D Rank':                TECLoc_Data(571, "Menu", "Area 4", {"D Rank"}),
+    'Area 4: C Rank':                TECLoc_Data(572, "Menu", "Area 4", {"C Rank"}),
+    'Area 4: B Rank':                TECLoc_Data(573, "Menu", "Area 4", {"B Rank"}),
+    'Area 4: A Rank':                TECLoc_Data(574, "Menu", "Area 4", {"A Rank"}),
+    'Area 4: S Rank':                TECLoc_Data(575, "Menu", "Area 4", {"S Rank"}),
+    'Area 4: SS Rank':               TECLoc_Data(576, "Menu", "Area 4", {"SS Rank"}),
+    'Area 5: E Rank':                TECLoc_Data(580, "Menu", "Area 5", {"E Rank"}),
+    'Area 5: D Rank':                TECLoc_Data(581, "Menu", "Area 5", {"D Rank"}),
+    'Area 5: C Rank':                TECLoc_Data(582, "Menu", "Area 5", {"C Rank"}),
+    'Area 5: B Rank':                TECLoc_Data(583, "Menu", "Area 5", {"B Rank"}),
+    'Area 5: A Rank':                TECLoc_Data(584, "Menu", "Area 5", {"A Rank"}),
+    'Area 5: S Rank':                TECLoc_Data(585, "Menu", "Area 5", {"S Rank"}),
+    'Area 5: SS Rank':               TECLoc_Data(586, "Menu", "Area 5", {"SS Rank"}),
+    'Area 6: E Rank':                TECLoc_Data(590, "Menu", "Area 6", {"E Rank"}),
+    'Area 6: D Rank':                TECLoc_Data(591, "Menu", "Area 6", {"D Rank"}),
+    'Area 6: C Rank':                TECLoc_Data(592, "Menu", "Area 6", {"C Rank"}),
+    'Area 6: B Rank':                TECLoc_Data(593, "Menu", "Area 6", {"B Rank"}),
+    'Area 6: A Rank':                TECLoc_Data(594, "Menu", "Area 6", {"A Rank"}),
+    'Area 6: S Rank':                TECLoc_Data(595, "Menu", "Area 6", {"S Rank"}),
+    'Area 6: SS Rank':               TECLoc_Data(596, "Menu", "Area 6", {"SS Rank"})
 }
 
 effect_ranksanity_locations = {
@@ -549,3 +566,12 @@ zen_areas_ranksanity_B = {name: data for name, data in zen_ranksanity_locations.
 zen_areas_ranksanity_A = {name: data for name, data in zen_ranksanity_locations.items() if "A Rank" in data.identifier}
 zen_areas_ranksanity_S = {name: data for name, data in zen_ranksanity_locations.items() if "S Rank" in data.identifier}
 zen_areas_ranksanity_SS = {name: data for name, data in zen_ranksanity_locations.items() if "SS Rank" in data.identifier}
+
+def get_areas_ranksanities(world: TECWorld):
+    basis = {name: data for name, data in zen_ranksanity_locations.items() if "Area" in name}
+    result_table = {name: data for name, data in basis.items() if "E Rank" in data.identifier or "D Rank" in data.identifier or "C Rank" in data.identifier}
+    for rank, num in {"B Rank": 1, "A Rank": 2,"S Rank": 3, "SS Rank": 4}.items():
+        if world.options.ranksanity_limit >= num:
+            result_table.update({name:data for name, data in basis.items() if rank in data.identifier})
+        else: break
+    return result_table

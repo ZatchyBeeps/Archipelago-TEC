@@ -3,10 +3,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from rule_builder.options import OptionFilter
-from rule_builder.rules import Has, HasAll, Rule, CanReachRegion, HasFromList
+from rule_builder.rules import Has, HasAll, HasAny, HasAnyCount, Rule, CanReachRegion, HasFromList
 
 from .options import EnableRanksanity
-from .locations import base_locations, effect_mode_locations, zen_ranksanity_locations, effect_ranksanity_locations
+from .locations import base_locations, effect_mode_locations, zen_ranksanity_locations, effect_ranksanity_locations, get_areas_ranksanities
 from .regions import zen_regions, get_effect_regions
 from .items import zen_levels
 
@@ -26,18 +26,15 @@ def create_rules(world: TECWorld):
                     region = world.get_entrance(f"{region_name} Access")
                     requirement_rule = Has(f"Effect: Playlist (Sea) Mode Unlock")
                     world.set_rule(region, requirement_rule)
-                    print(f"Created rule for sea on {region_name} Access")
                     continue
                 elif "Wind" in region_name:
                     region = world.get_entrance(f"{region_name} Access")
                     requirement_rule = Has(f"Effect: Playlist (Wind) Mode Unlock")
-                    print(f"Created rule for wind on {region_name} Access")
                     world.set_rule(region, requirement_rule)
                     continue
                 elif "World" in region_name:
                     region = world.get_entrance(f"{region_name} Access")
                     requirement_rule = Has(f"Effect: Playlist (World) Mode Unlock")
-                    print(f"Created rule for world on {region_name} Access")
                     world.set_rule(region, requirement_rule)
                     continue
                 region = world.get_entrance(f"{region_name} Access")
@@ -56,16 +53,46 @@ def create_rules(world: TECWorld):
                 requirement_rule = Has(f"Effect: {group} Modes Unlock")
 
 
-    for name, data in base_locations.items():
+    # Locations
+    for name, data in get_areas_ranksanities(world).items():
         location = world.get_location(name)
-        rule = CanReachRegion(data.region)
-        world.set_rule(location, rule)
+        difficulty_increase = 1
+        if "A Rank" in name:
+            difficulty_increase = 2
+        elif "S Rank" in name:
+            difficulty_increase = 3
+        elif "SS Rank" in name:
+            difficulty_increase = 4
+
+        if data.in_area == "Area 1":
+            if difficulty_increase == 4: 
+                difficulty_increase = 3
+            elif difficulty_increase == 1: 
+                difficulty_increase = 2 # Prevent it from being 0
+            rule = HasFromList('The Deep Unlock','Pharaoh\'s Code Unlock','Karma Wheel Unlock', count=difficulty_increase-1)
+        elif data.in_area == "Area 2":
+            rule = HasFromList('Jellyfish Chorus Unlock','Da Vinci Unlock','Prayer Circles Unlock','Ritual Passion Unlock', count=difficulty_increase)
+        elif data.in_area == "Area 3":
+            rule = HasFromList('Deserted Unlock','Dolphin Surf Unlock','Downtown Jazz Unlock','Spirit Canyon Unlock', count=difficulty_increase)
+        elif data.in_area == "Area 4":
+            rule = HasFromList('Jewel Veil Unlock','Forest Dawn Unlock','Kaleidoscope Unlock','Turtle Dreams Unlock','Celebration Unlock', count=difficulty_increase)
+        elif data.in_area == "Area 5":
+            rule = HasFromList('Sunset Breeze Unlock','Aurora Peak Unlock','Zen Blossoms Unlock','Ying & Yang Unlock','Hula Soul Unlock', count=difficulty_increase)
+        elif data.in_area == "Area 6":
+            rule = HasFromList('Starfall Unlock','Balloon High Unlock','Mermaid Cove Unlock','Orbit Unlock','Stratosphere Unlock', count=difficulty_increase)
+
+        if "A Rank" in name or "S Rank" in name or "SS Rank" in name:
+            requirement = rule & Has("Zone Unlock")
+        else:
+            requirement = rule
+        world.set_rule(location, requirement)
+
 
 
     ending_region = world.get_entrance("Metamorphosis Stage Access")
-    ending_rule = Has("Stage Cleared", count=10)
+    #ending_rule = Has("Stage Cleared", count=41)
     ending_stage = Has("Metamorphosis Unlock")
-    completion_rule = ending_rule & ending_stage
-    world.set_rule(ending_region, completion_rule)
+    #completion_rule = ending_rule & ending_stage
+    world.set_rule(ending_region, ending_stage)
         
 

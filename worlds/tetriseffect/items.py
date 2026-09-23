@@ -1,5 +1,9 @@
-from typing import NamedTuple, Dict
+from __future__ import annotations
+from typing import NamedTuple, TYPE_CHECKING
 from BaseClasses import Item, ItemClassification
+
+if TYPE_CHECKING:
+    from . import TECWorld
 
 class TECItem(Item):
     game = "Tetris Effect: Connected"
@@ -9,6 +13,8 @@ class TECItem(Item):
 class TItemInfo(NamedTuple):
     item_id: int
     priority: ItemClassification
+
+
 
                                     # ID    Progression (0 = none, 1 = useful, 2 = progressive, 3 = trap)
 itemlist = {
@@ -38,7 +44,7 @@ itemlist = {
     'Mermaid Cove Unlock':          TItemInfo(123,   ItemClassification.progression),
     'Orbit Unlock':                 TItemInfo(124,   ItemClassification.progression),
     'Stratosphere Unlock':          TItemInfo(125,   ItemClassification.progression),
-    'Metamorphosis Unlock':         TItemInfo(126,   ItemClassification.progression),
+    'Metamorphosis Unlock':         TItemInfo(126,   ItemClassification.progression_skip_balancing),
 
 
     'Effect: Marathon Mode Unlock':              TItemInfo(127,   ItemClassification.progression),

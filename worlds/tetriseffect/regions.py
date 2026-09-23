@@ -85,7 +85,6 @@ def make_regions(world: TECWorld):
             root.connect(region_area, f"{region_area.name} Area Access", lambda state: state.has(f"{region_area.name} Unlock", world.player))
     else:
         for region_area in [zen_area_one, zen_area_two, zen_area_three, zen_area_four, zen_area_five, zen_area_six]:
-            print(f"Connecting {region_area.name} to root")
             root.connect(region_area, f"{region_area.name} Area Access")
 
 
