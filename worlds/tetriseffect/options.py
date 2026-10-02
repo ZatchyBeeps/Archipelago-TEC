@@ -106,8 +106,8 @@ class TetrisAmmount(Range):
     default = 10
 
 class ComboAmmount(Range):
-    """How many locations there will be by doing a 10 combo (clear any amount of lines 10 consecutive times)"""
-    display_name = "Achieve 10 line combos"
+    """How many locations there will be by doing an 8 combo (clear any amount of lines 8 consecutive times)"""
+    display_name = "Achieve 8 line combos"
     range_start = 0
     range_end = 50
     default = 5

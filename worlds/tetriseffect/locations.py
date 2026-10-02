@@ -56,7 +56,7 @@ def create_locations(world: TECWorld):
     trick_locations = {f"Made {10 * (n + 1)} T-Spins": 1000 + n + offset for n in range(world.options.tspins_n)}
     trick_locations.update({f"Made {10 * (n + 1)} back-to-backs": 1050 + n + offset for n in range(world.options.backtobacks_n)})
     trick_locations.update({f"Made {15 * (n + 1)} Tetris line clears": 1100 + n + offset for n in range(world.options.tetrises_n)})
-    trick_locations.update({f"Made {10 * (n + 1)} line combos": 1150 + n + offset for n in range(world.options.combos_n)})
+    trick_locations.update({f"Made an 8 line combo {n + 1} times": 1150 + n + offset for n in range(world.options.combos_n)})
     trick_locations.update({f"Made {1 * (n + 1)} all clear": 1200 + n + offset for n in range(world.options.all_clears_n)})
     trick_locations.update({f"Made a 4-combo back-to-back {1 * (n + 1)} times": 1250 + n + offset for n in range(world.options.combo_backtoback_n)})
     trick_locations.update({f"Made {1 * (n + 1)} T-spin triple": 1300 + n + offset for n in range(world.options.tspin_triples_n)})
@@ -114,7 +114,19 @@ def get_location_table() -> dict[str, int]:
     result_table.update( {name: data.location_id + offset for name, data in effect_mode_locations.items()})
     result_table.update( {name: data.location_id + offset for name, data in zen_ranksanity_locations.items()})
     result_table.update( {name: data.location_id + offset for name, data in effect_ranksanity_locations.items()})
-    result_table.update( {"Perform 10 T-spins": 1000 + n + offset for n in range(49)})
+    result_table.update( {f"Made {10 * (n + 1)} T-Spins": 1000 + n + offset for n in range(49)})
+    result_table.update({f"Made {10 * (n + 1)} back-to-backs": 1050 + n + offset for n in range(49)})
+    result_table.update({f"Made {15 * (n + 1)} Tetris line clears": 1100 + n + offset for n in range(49)})
+    result_table.update({f"Made an 8 line combo {n + 1} times": 1150 + n + offset for n in range(49)})
+    result_table.update({f"Made {1 * (n + 1)} all clear": 1200 + n + offset for n in range(49)})
+    result_table.update({f"Made a 4-combo back-to-back {1 * (n + 1)} times": 1250 + n + offset for n in range(49)})
+    result_table.update({f"Made {1 * (n + 1)} T-spin triple": 1300 + n + offset for n in range(49)})
+    result_table.update({f"Made {1 * (n + 1)} octotris": 1350 + n + offset for n in range(49)})
+    result_table.update({f"Made {1 * (n + 1)} dodecatris": 1400 + n + offset for n in range(49)})
+    result_table.update({f"Made {1 * (n + 1)} decahexatris": 1450 + n + offset for n in range(49)})
+    result_table.update({f"Made {1 * (n + 1)} perfectris": 1500 + n + offset for n in range(49)})
+    result_table.update({f"Made {1 * (n + 1)} ultimatris": 1550 + n + offset for n in range(49)})
+    result_table.update({f"Made {1 * (n + 1)} kirbtris": 1600 + n + offset for n in range(49)})
     # Add the rest of the trick locations later
     return result_table
 
