@@ -51,8 +51,6 @@ def create_locations(world: TECWorld):
                 region.locations.append( TECLocation(world.player, name, data.location_id + offset, region))
 
     trick_locations: Dict[str, int]
-    # Add trick locations
-    # Maybe...? 
     trick_locations = {f"Made {10 * (n + 1)} T-Spins": 1000 + n + offset for n in range(world.options.tspins_n)}
     trick_locations.update({f"Made {10 * (n + 1)} back-to-backs": 1050 + n + offset for n in range(world.options.backtobacks_n)})
     trick_locations.update({f"Made {15 * (n + 1)} Tetris line clears": 1100 + n + offset for n in range(world.options.tetrises_n)})
@@ -67,11 +65,7 @@ def create_locations(world: TECWorld):
     trick_locations.update({f"Made {1 * (n + 1)} ultimatris": 1550 + n + offset for n in range(world.options.ultimatris_n)})
     trick_locations.update({f"Made {1 * (n + 1)} kirbtris": 1600 + n + offset for n in range(world.options.kirbtris_n)})
 
-
-
     root.locations += [TECLocation(world.player, name, data, root) for name, data in trick_locations.items()]
-
-    ending_requirement = Has("Metamorphosis Unlock", world.player)
 
     world.get_region("Metamorphosis").add_event("Zen Mode Cleared", "Victory", lambda state: state.has("Metamorphosis Unlock", world.player), TECLocation, items.TECItem)
 
@@ -79,7 +73,6 @@ def can_location_exist(world: TECWorld, location: str, type: int = 0):
     match (type):
         case 0: # Effect mode exclusions
             for mode in world.options.excluded_modes:
-                #print(f"Comparing {mode} with {location} containing {effect_mode_locations[location].identifier}")
                 if mode in effect_mode_locations[location].identifier or mode == effect_mode_locations[location].in_area:
                     return False
             return True
@@ -127,7 +120,6 @@ def get_location_table() -> dict[str, int]:
     result_table.update({f"Made {1 * (n + 1)} perfectris": 1500 + n + offset for n in range(49)})
     result_table.update({f"Made {1 * (n + 1)} ultimatris": 1550 + n + offset for n in range(49)})
     result_table.update({f"Made {1 * (n + 1)} kirbtris": 1600 + n + offset for n in range(49)})
-    # Add the rest of the trick locations later
     return result_table
 
 

@@ -42,7 +42,7 @@ class RanksanityMaxRank(Choice):
     option_a_rank = 2
     option_s_rank = 3
     option_ss_rank = 4
-    default = 3
+    default = 2
 
 class MinoSanity(Toggle):
     """Your mino pieces are items in the multiworld and must be obtained. This can make things like ranksanity considerably harder. 
@@ -106,11 +106,11 @@ class TetrisAmmount(Range):
     default = 10
 
 class ComboAmmount(Range):
-    """How many locations there will be by doing an 8 combo (clear any amount of lines 8 consecutive times)"""
+    """How many locations there will be by doing an 8 combo (clear at least 1 line 8 consecutive times)"""
     display_name = "Achieve 8 line combos"
     range_start = 0
     range_end = 50
-    default = 5
+    default = 3
 
 class AllClearAmmount(Range):
     """How many locations there will be by achieving an All Clear (the game board is emptied by the player)"""
@@ -124,7 +124,7 @@ class ConsBackToBackAmmount(Range):
     display_name = "Do 4 consecutive back-to-backs"
     range_start = 0
     range_end = 50
-    default = 3
+    default = 2
 
 class TSpinTripleAmmount(Range):
     """How many locations there will be by doing a T-Spin triple. T-Spin triples are advanced so make sure you at least know how to set them up"""
@@ -145,21 +145,21 @@ class DodecatrisAmmount(Range):
     display_name = "Do a dodecatris"
     range_start = 0
     range_end = 50
-    default = 15
+    default = 10
 
 class DecahexatrisAmmount(Range):
     """How many locations there will be by finishing a zone with 16 or more lines cleared"""
     display_name = "Do a decahexatris"
     range_start = 0
     range_end = 50
-    default = 5
+    default = 3
 
 class PerfectrisAmmount(Range):
     """How many locations there will be by finishing a zone with 18 or more lines cleared"""
     display_name = "Do a perfectris"
     range_start = 0
     range_end = 50
-    default = 1
+    default = 0
 
 class UltimatrisAmmount(Range):
     """How many locations there will be by finishing a zone with 20 or more lines cleared. This can prove to be really difficult so be mindful when increasing this value"""

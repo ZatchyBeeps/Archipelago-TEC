@@ -1,4 +1,4 @@
-from worlds.AutoWorld import World
+from worlds.AutoWorld import WebWorld, World
 from Options import OptionError
 from .options import TECGameOptions, tec_option_groups
 from . import locations, regions, rules
@@ -6,14 +6,17 @@ from rule_builder.rules import Has
 
 from .items import TECItem, item_table, itemlist, zen_levels, zen_areas, effect_adventure_levels, effect_classic_levels, effect_focus_levels, effect_relax_levels, effect_groups, traps, tetrimino_items, garbage
 
+class TECWorldWeb(WebWorld):
+    option_groups = tec_option_groups
+
 class TECWorld(World):
     game = "Tetris Effect: Connected"
     options_dataclass = TECGameOptions
     options: TECGameOptions
     location_name_to_id = locations.get_location_table()
     item_name_to_id = item_table
-    option_groups = tec_option_groups
     origin_region_name = "Menu"
+    web = TECWorldWeb()
 
     #def generate_early(self):
     #    return super().generate_early()

@@ -1,9 +1,6 @@
 from __future__ import annotations
-from typing import NamedTuple, TYPE_CHECKING
+from typing import NamedTuple
 from BaseClasses import Item, ItemClassification
-
-if TYPE_CHECKING:
-    from . import TECWorld
 
 class TECItem(Item):
     game = "Tetris Effect: Connected"

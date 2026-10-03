@@ -21,6 +21,7 @@ def create_rules(world: TECWorld):
 
         if world.options.is_include_effect:
             for region_name, _ in get_effect_regions(world).items():
+                # Had to do this instead of doing a big set of changes if I changed the names
                 if "Sea" in region_name:
                     region = world.get_entrance(f"{region_name} Access")
                     requirement_rule = Has(f"Effect: Playlist (Sea) Mode Unlock")
@@ -98,12 +99,8 @@ def create_rules(world: TECWorld):
                 continue
 
 
-
-
     ending_region = world.get_entrance("Metamorphosis Stage Access")
-    #ending_rule = Has("Stage Cleared", count=41)
     ending_stage = Has("Metamorphosis Unlock")
-    #completion_rule = ending_rule & ending_stage
     world.set_rule(ending_region, ending_stage)
         
 

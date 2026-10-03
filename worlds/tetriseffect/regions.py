@@ -71,7 +71,6 @@ def make_regions(world: TECWorld):
     zen_area_five = Region("Area 5", world.player, world.multiworld)
     zen_area_six = Region("Area 6", world.player, world.multiworld)
 
-    # This is honestly kinda messy
     zen_created_regions = {Region(name, world.player, world.multiworld): reg for name, reg in zen_regions.items()}
     zen_areas = [zen_area_one, zen_area_two, zen_area_three, zen_area_four, zen_area_five, zen_area_six]
     zen_total_regions = zen_areas
@@ -79,12 +78,11 @@ def make_regions(world: TECWorld):
     world.multiworld.regions += zen_total_regions
 
     # Set up areas first
-    
     if world.options.unlock_method == 1:
         for region_area in zen_areas:
             root.connect(region_area, f"{region_area.name} Area Access", lambda state: state.has(f"{region_area.name} Unlock", world.player))
     else:
-        for region_area in [zen_area_one, zen_area_two, zen_area_three, zen_area_four, zen_area_five, zen_area_six]:
+        for region_area in zen_areas:
             root.connect(region_area, f"{region_area.name} Area Access")
 
 
