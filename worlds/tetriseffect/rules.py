@@ -5,8 +5,7 @@ from typing import TYPE_CHECKING
 from rule_builder.options import OptionFilter
 from rule_builder.rules import Has, HasAll, HasAny, HasAnyCount, Rule, CanReachRegion, HasFromList
 
-from .options import EnableRanksanity
-from .locations import base_locations, effect_mode_locations, zen_ranksanity_locations, effect_ranksanity_locations, get_areas_ranksanities
+from .locations import misc_locations, get_areas_ranksanities
 from .regions import zen_regions, get_effect_regions
 from .items import zen_levels
 
@@ -85,7 +84,19 @@ def create_rules(world: TECWorld):
             requirement = rule & Has("Zone Unlock")
         else:
             requirement = rule
+
+        
         world.set_rule(location, requirement)
+
+    # Prevents a gigantic sphere 1 from just trick locations by evenly requiring one more stage for every 10 of these location
+    for n in range(10, 50):
+        for name, data in misc_locations.items():
+            try:
+                t_location = world.get_location(world.location_id_to_name[data.location_id + n])
+                world.set_rule(t_location, HasFromList('The Deep Unlock','Pharaoh\'s Code Unlock','Karma Wheel Unlock', 'Jellyfish Chorus Unlock','Da Vinci Unlock','Prayer Circles Unlock','Ritual Passion Unlock', 'Deserted Unlock','Dolphin Surf Unlock','Downtown Jazz Unlock','Spirit Canyon Unlock', 'Jewel Veil Unlock','Forest Dawn Unlock','Kaleidoscope Unlock','Turtle Dreams Unlock','Celebration Unlock', 'Sunset Breeze Unlock','Aurora Peak Unlock','Zen Blossoms Unlock','Ying & Yang Unlock','Hula Soul Unlock', 'Starfall Unlock','Balloon High Unlock','Mermaid Cove Unlock','Orbit Unlock','Stratosphere Unlock', count=round(n/10)))
+            except KeyError:
+                continue
+
 
 
 

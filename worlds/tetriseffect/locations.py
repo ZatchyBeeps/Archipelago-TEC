@@ -187,19 +187,19 @@ effect_mode_locations = {
 # This one is just for reference, we wanna dynamically create these
 # Location id is the start for each one, with a limit of 50 locations each
 misc_locations = {
-    "Perform 10 T-spins":                  TECLoc_Data( 1000, "Menu", None, {}), 
-    "Perform 10 back-to-backs":            TECLoc_Data( 1050, "Menu", None, {}), 
-    "Perform 15 Tetris line clears":       TECLoc_Data( 1100, "Menu", None, {}), 
-    "Perform a 10 line combo":             TECLoc_Data( 1150, "Menu", None, {}), 
-    "Earn an all clear":                   TECLoc_Data( 1200, "Menu", None, {}), 
-    "Perform 4 consecutive back-to-backs": TECLoc_Data( 1250, "Menu", None, {}), 
-    "Earn a T-spin triple":                TECLoc_Data( 1300, "Menu", None, {}), 
-    "Earn an octotris":                    TECLoc_Data( 1350, "Menu", None, {}), 
-    "Earn a dodecatris":                   TECLoc_Data( 1400, "Menu", None, {}), 
-    "Earn a decahexatris":                 TECLoc_Data( 1450, "Menu", None, {}), 
-    "Earn a perfectris":                   TECLoc_Data( 1500, "Menu", None, {}), 
-    "Earn a ultimatris":                   TECLoc_Data( 1550, "Menu", None, {}), 
-    "Earn a kirbtris":                     TECLoc_Data( 1600, "Menu", None, {})
+    "Made 10 T-Spins":                  TECLoc_Data( 1000, "Menu", None, {}), 
+    "Made 10 back-to-backs":            TECLoc_Data( 1050, "Menu", None, {}), 
+    "Made 15 Tetris line clears":       TECLoc_Data( 1100, "Menu", None, {}), 
+    "Made an 8 line combo 1 times":             TECLoc_Data( 1150, "Menu", None, {}), 
+    "Made 1 all clear":                   TECLoc_Data( 1200, "Menu", None, {}), 
+    "Made a 4-combo back-to-back 1 times": TECLoc_Data( 1250, "Menu", None, {}), 
+    "Made 1 T-spin triple":                TECLoc_Data( 1300, "Menu", None, {}), 
+    "Made 1 octotris":                    TECLoc_Data( 1350, "Menu", None, {}), 
+    "Made 1 dodecatris":                   TECLoc_Data( 1400, "Menu", None, {}), 
+    "Made 1 decahexatris":                 TECLoc_Data( 1450, "Menu", None, {}), 
+    "Made 1 perfectris":                   TECLoc_Data( 1500, "Menu", None, {}), 
+    "Made 1 ultimatris":                   TECLoc_Data( 1550, "Menu", None, {}), 
+    "Made 1 kirbtris":                     TECLoc_Data( 1600, "Menu", None, {})
 }
 
 
