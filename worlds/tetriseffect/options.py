@@ -45,7 +45,8 @@ class RanksanityMaxRank(Choice):
     default = 2
 
 class MinoSanity(Toggle):
-    """Your mino pieces are items in the multiworld and must be obtained. This can make things like ranksanity considerably harder. 
+    """Unimplemented. Does nothing as of this version of the world.
+    Your mino pieces are items in the multiworld and must be obtained. This can make things like ranksanity considerably harder. 
     As of now there's no logic applied to this. Use at your own caution"""
     display_name = "Minosanity"
 

@@ -186,12 +186,12 @@ misc_locations = {
     "Made 1 all clear":                   TECLoc_Data( 1200, "Menu", None, {}), 
     "Made a 4-combo back-to-back 1 times": TECLoc_Data( 1250, "Menu", None, {}), 
     "Made 1 T-spin triple":                TECLoc_Data( 1300, "Menu", None, {}), 
-    "Made 1 octotris":                    TECLoc_Data( 1350, "Menu", None, {}), 
-    "Made 1 dodecatris":                   TECLoc_Data( 1400, "Menu", None, {}), 
-    "Made 1 decahexatris":                 TECLoc_Data( 1450, "Menu", None, {}), 
-    "Made 1 perfectris":                   TECLoc_Data( 1500, "Menu", None, {}), 
-    "Made 1 ultimatris":                   TECLoc_Data( 1550, "Menu", None, {}), 
-    "Made 1 kirbtris":                     TECLoc_Data( 1600, "Menu", None, {})
+    "Made 1 octotris":                    TECLoc_Data( 1350, "Menu", None, {"Zone"}), 
+    "Made 1 dodecatris":                   TECLoc_Data( 1400, "Menu", None, {"Zone"}), 
+    "Made 1 decahexatris":                 TECLoc_Data( 1450, "Menu", None, {"Zone"}), 
+    "Made 1 perfectris":                   TECLoc_Data( 1500, "Menu", None, {"Zone"}), 
+    "Made 1 ultimatris":                   TECLoc_Data( 1550, "Menu", None, {"Zone"}), 
+    "Made 1 kirbtris":                     TECLoc_Data( 1600, "Menu", None, {"Zone"})
 }
 
 
