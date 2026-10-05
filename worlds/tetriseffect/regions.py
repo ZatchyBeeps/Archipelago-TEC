@@ -82,7 +82,7 @@ def make_regions(world: TECWorld):
         for region_area in zen_areas:
             root.connect(region_area, f"{region_area.name} Area Access", lambda state: state.has(f"{region_area.name} Unlock", world.player))
     else:
-        for region_area in zen_areas:
+        for region_area in [zen_area_one, zen_area_two, zen_area_three, zen_area_four, zen_area_five, zen_area_six]: # For some reason, if changed to zen_areas it will make the logic explode, even tho it's the same damn thing
             root.connect(region_area, f"{region_area.name} Area Access")
 
 
