@@ -3,9 +3,9 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from rule_builder.options import OptionFilter
-from rule_builder.rules import Has, HasAll, HasAny, HasAnyCount, Rule, CanReachRegion, HasFromList
+from rule_builder.rules import Has, HasFromListUnique, HasFromList
 
-from .locations import misc_locations, get_areas_ranksanities
+from .locations import misc_locations, get_areas_ranksanities, offset
 from .regions import zen_regions, get_effect_regions
 from .items import zen_levels
 
@@ -93,8 +93,9 @@ def create_rules(world: TECWorld):
     for n in range(4, 50):
         for name, data in misc_locations.items():
             try:
-                t_location = world.get_location(world.location_id_to_name[data.location_id + n])
-                world.set_rule(t_location, HasFromList('The Deep Unlock','Pharaoh\'s Code Unlock','Karma Wheel Unlock', 'Jellyfish Chorus Unlock','Da Vinci Unlock','Prayer Circles Unlock','Ritual Passion Unlock', 'Deserted Unlock','Dolphin Surf Unlock','Downtown Jazz Unlock','Spirit Canyon Unlock', 'Jewel Veil Unlock','Forest Dawn Unlock','Kaleidoscope Unlock','Turtle Dreams Unlock','Celebration Unlock', 'Sunset Breeze Unlock','Aurora Peak Unlock','Zen Blossoms Unlock','Ying & Yang Unlock','Hula Soul Unlock', 'Starfall Unlock','Balloon High Unlock','Mermaid Cove Unlock','Orbit Unlock','Stratosphere Unlock', count=round(n/4)+1))
+                amount_needed = round(n/4)+1
+                t_location = world.get_location(world.location_id_to_name[data.location_id + n+offset])
+                world.set_rule(t_location, HasFromListUnique('The Deep Unlock','Pharaoh\'s Code Unlock','Karma Wheel Unlock', 'Jellyfish Chorus Unlock','Da Vinci Unlock','Prayer Circles Unlock','Ritual Passion Unlock', 'Deserted Unlock','Dolphin Surf Unlock','Downtown Jazz Unlock','Spirit Canyon Unlock', 'Jewel Veil Unlock','Forest Dawn Unlock','Kaleidoscope Unlock','Turtle Dreams Unlock','Celebration Unlock', 'Sunset Breeze Unlock','Aurora Peak Unlock','Zen Blossoms Unlock','Ying & Yang Unlock','Hula Soul Unlock', 'Starfall Unlock','Balloon High Unlock','Mermaid Cove Unlock','Orbit Unlock','Stratosphere Unlock', count=amount_needed))
             except KeyError:
                 continue
 
