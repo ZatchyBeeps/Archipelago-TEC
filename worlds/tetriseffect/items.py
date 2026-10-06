@@ -59,7 +59,7 @@ itemlist = {
     'Effect: Combo Mode Unlock':                 TItemInfo(139,   ItemClassification.progression),
     'Effect: Target Mode Unlock':                TItemInfo(140,   ItemClassification.progression),
     'Effect: Countdown Mode Unlock':             TItemInfo(141,   ItemClassification.progression),
-    'Effect: Purity Mode Unlock':                TItemInfo(142,   ItemClassification.progression),
+    'Effect: Purify Mode Unlock':                TItemInfo(142,   ItemClassification.progression),
     'Effect: Mystery Mode Unlock':               TItemInfo(143,   ItemClassification.progression),
 
 
@@ -123,7 +123,7 @@ zen_levels = ['The Deep Unlock', 'Pharaoh\'s Code Unlock', 'Karma Wheel Unlock',
 effect_classic_levels = ['Effect: Marathon Mode Unlock', 'Effect: Zone Marathon Mode Unlock', 'Effect: Ultra Mode Unlock', 'Effect: Sprint Mode Unlock', 'Effect: Master Mode Unlock', 'Effect: Classic Score Attack Mode Unlock']
 effect_relax_levels = ['Effect: Chill Marathon Mode Unlock', 'Effect: Quick Play Mode Unlock', 'Effect: Playlist (Sea) Mode Unlock', 'Effect: Playlist (Wind) Mode Unlock', 'Effect: Playlist (World) Mode Unlock']
 effect_focus_levels = ['Effect: All Clear Mode Unlock', 'Effect: Combo Mode Unlock', 'Effect: Target Mode Unlock']
-effect_adventure_levels = ['Effect: Countdown Mode Unlock', 'Effect: Purity Mode Unlock', 'Effect: Mystery Mode Unlock']
+effect_adventure_levels = ['Effect: Countdown Mode Unlock', 'Effect: Purify Mode Unlock', 'Effect: Mystery Mode Unlock']
 zen_areas = ['Area 1 Unlock', 'Area 2 Unlock', 'Area 3 Unlock', 'Area 4 Unlock', 'Area 5 Unlock', 'Area 6 Unlock']
 effect_groups = ['Effect: Classic Modes Unlock', 'Effect: Relax Modes Unlock', 'Effect: Focus Modes Unlock', 'Effect: Adventurous Modes Unlock']
 tetrimino_items = ['T Mino Piece Unlock', 'Z Mino Piece Unlock', 'S Mino Piece Unlock', 'O Mino Piece Unlock', 'L Mino Piece Unlock', 'J Mino Piece Unlock', 'J Mino Piece Unlock']

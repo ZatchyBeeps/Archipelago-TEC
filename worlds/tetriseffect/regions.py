@@ -53,7 +53,7 @@ effect_regions = {
     'Combo':                3,
     'Target':               3,
     'Countdown':            4,
-    'Purity':               4,
+    'Purify':               4,
     'Mystery':              4,
 }
 
