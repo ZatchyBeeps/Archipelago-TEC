@@ -52,9 +52,9 @@ itemlist = {
     'Effect: Classic Score Attack Mode Unlock':  TItemInfo(132,   ItemClassification.progression),
     'Effect: Chill Marathon Mode Unlock':        TItemInfo(133,   ItemClassification.progression),
     'Effect: Quick Play Mode Unlock':            TItemInfo(134,   ItemClassification.progression),
-    'Effect: Playlist (Sea) Mode Unlock':        TItemInfo(135,   ItemClassification.progression),
-    'Effect: Playlist (Wind) Mode Unlock':       TItemInfo(136,   ItemClassification.progression),
-    'Effect: Playlist (World) Mode Unlock':      TItemInfo(137,   ItemClassification.progression),
+    #'Effect: Playlist (Sea) Mode Unlock':        TItemInfo(135,   ItemClassification.progression),
+    #'Effect: Playlist (Wind) Mode Unlock':       TItemInfo(136,   ItemClassification.progression),
+    #'Effect: Playlist (World) Mode Unlock':      TItemInfo(137,   ItemClassification.progression),
     'Effect: All Clear Mode Unlock':             TItemInfo(138,   ItemClassification.progression),
     'Effect: Combo Mode Unlock':                 TItemInfo(139,   ItemClassification.progression),
     'Effect: Target Mode Unlock':                TItemInfo(140,   ItemClassification.progression),
@@ -121,7 +121,10 @@ zen_levels = ['The Deep Unlock', 'Pharaoh\'s Code Unlock', 'Karma Wheel Unlock',
               'Downtown Jazz Unlock', 'Spirit Canyon Unlock', 'Jewel Veil Unlock', 'Forest Dawn Unlock', 'Kaleidoscope Unlock', 'Turtle Dreams Unlock', 'Celebration Unlock', 'Sunset Breeze Unlock', 'Aurora Peak Unlock',
               'Zen Blossoms Unlock', 'Ying & Yang Unlock', 'Hula Soul Unlock', 'Starfall Unlock', 'Balloon High Unlock', 'Mermaid Cove Unlock', 'Orbit Unlock', 'Stratosphere Unlock', 'Metamorphosis Unlock']
 effect_classic_levels = ['Effect: Marathon Mode Unlock', 'Effect: Zone Marathon Mode Unlock', 'Effect: Ultra Mode Unlock', 'Effect: Sprint Mode Unlock', 'Effect: Master Mode Unlock', 'Effect: Classic Score Attack Mode Unlock']
-effect_relax_levels = ['Effect: Chill Marathon Mode Unlock', 'Effect: Quick Play Mode Unlock', 'Effect: Playlist (Sea) Mode Unlock', 'Effect: Playlist (Wind) Mode Unlock', 'Effect: Playlist (World) Mode Unlock']
+effect_relax_levels = [
+    'Effect: Chill Marathon Mode Unlock', 'Effect: Quick Play Mode Unlock', 
+    #'Effect: Playlist (Sea) Mode Unlock', 'Effect: Playlist (Wind) Mode Unlock', 'Effect: Playlist (World) Mode Unlock'
+    ]
 effect_focus_levels = ['Effect: All Clear Mode Unlock', 'Effect: Combo Mode Unlock', 'Effect: Target Mode Unlock']
 effect_adventure_levels = ['Effect: Countdown Mode Unlock', 'Effect: Purify Mode Unlock', 'Effect: Mystery Mode Unlock']
 zen_areas = ['Area 1 Unlock', 'Area 2 Unlock', 'Area 3 Unlock', 'Area 4 Unlock', 'Area 5 Unlock', 'Area 6 Unlock']
