@@ -90,14 +90,15 @@ def create_rules(world: TECWorld):
         world.set_rule(location, requirement)
 
     # Prevents a gigantic sphere 1 from just trick locations by evenly requiring one more stage for every 10 of these location
-    for n in range(4, 50):
+    for n in range(1, 50):
         for name, data in misc_locations.items():
             try:
                 amount_needed = round(n/4)+1
-                t_location = world.get_location(world.location_id_to_name[data.location_id + n+offset])
+                t_location = world.get_location(world.location_id_to_name[data.location_id + n-1+offset])
                 base_rule = HasFromListUnique('The Deep Unlock','Pharaoh\'s Code Unlock','Karma Wheel Unlock', 'Jellyfish Chorus Unlock','Da Vinci Unlock','Prayer Circles Unlock','Ritual Passion Unlock', 'Deserted Unlock','Dolphin Surf Unlock','Downtown Jazz Unlock','Spirit Canyon Unlock', 'Jewel Veil Unlock','Forest Dawn Unlock','Kaleidoscope Unlock','Turtle Dreams Unlock','Celebration Unlock', 'Sunset Breeze Unlock','Aurora Peak Unlock','Zen Blossoms Unlock','Ying & Yang Unlock','Hula Soul Unlock', 'Starfall Unlock','Balloon High Unlock','Mermaid Cove Unlock','Orbit Unlock','Stratosphere Unlock', count=amount_needed)
                 location_r = None
                 if "Zone" in data.identifier:
+                    print("Added zone location rule")
                     location_r = Has("Zone Unlock") & base_rule
                 else:
                     location_r = base_rule
