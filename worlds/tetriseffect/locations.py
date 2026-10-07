@@ -29,14 +29,14 @@ def create_locations(world: TECWorld):
     for name, data in base_locations.items():
         region = world.get_region(data.region)
         region.locations.append(TECLocation(world.player, name, data.location_id + offset, region))
-        region.add_event(f"{data.region} Cleared", "Stage Cleared", lambda state: state.can_reach_region(data.region, world.player), TECLocation, items.TECItem, show_in_spoiler=False)
+        region.add_event(f"{data.region} Cleared", "Stage Cleared", lambda state: state.can_reach_region(data.region, world.player), TECLocation, items.TECItem, show_in_spoiler=True)
 
     if world.options.is_include_effect:
         for name, data in effect_mode_locations.items():
             if not can_location_exist(world, name, 0): continue
             region = world.get_region(data.region)
             region.locations.append(TECLocation(world.player, name, data.location_id + offset, region))
-            region.add_event(f"Effect: {data.region} Cleared", "Stage Cleared", lambda state: state.can_reach_region(data.region, world.player), TECLocation, items.TECItem, show_in_spoiler=False)
+            region.add_event(f"Effect: {data.region} Cleared", "Stage Cleared", lambda state: state.can_reach_region(data.region, world.player), TECLocation, items.TECItem, show_in_spoiler=True)
 
 
     if world.options.is_ranksanity:
@@ -68,6 +68,9 @@ def create_locations(world: TECWorld):
     root.locations += [TECLocation(world.player, name, data, root) for name, data in trick_locations.items()]
 
     world.get_region("Metamorphosis").add_event("Zen Mode Cleared", "Victory", lambda state: state.has("Metamorphosis Unlock", world.player), TECLocation, items.TECItem)
+
+    world.set_rule(world.get_entrance("Metamorphosis Stage Access"),lambda state: state.has("Stage Cleared", world.player, 26))
+
 
 def can_location_exist(world: TECWorld, location: str, type: int = 0):
     match (type):

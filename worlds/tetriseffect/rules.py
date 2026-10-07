@@ -98,7 +98,6 @@ def create_rules(world: TECWorld):
                 base_rule = HasFromListUnique('The Deep Unlock','Pharaoh\'s Code Unlock','Karma Wheel Unlock', 'Jellyfish Chorus Unlock','Da Vinci Unlock','Prayer Circles Unlock','Ritual Passion Unlock', 'Deserted Unlock','Dolphin Surf Unlock','Downtown Jazz Unlock','Spirit Canyon Unlock', 'Jewel Veil Unlock','Forest Dawn Unlock','Kaleidoscope Unlock','Turtle Dreams Unlock','Celebration Unlock', 'Sunset Breeze Unlock','Aurora Peak Unlock','Zen Blossoms Unlock','Ying & Yang Unlock','Hula Soul Unlock', 'Starfall Unlock','Balloon High Unlock','Mermaid Cove Unlock','Orbit Unlock','Stratosphere Unlock', count=amount_needed)
                 location_r = None
                 if "Zone" in data.identifier:
-                    print("Added zone location rule")
                     location_r = Has("Zone Unlock") & base_rule
                 else:
                     location_r = base_rule
@@ -108,7 +107,10 @@ def create_rules(world: TECWorld):
 
 
     ending_region = world.get_entrance("Metamorphosis Stage Access")
-    ending_stage = Has("Metamorphosis Unlock")
+    stages_req = world.options.stages_required
+    if not world.options.is_include_effect and stages_req > 26: stages_req = 26
+    elif len(world.options.excluded_modes.value) + stages_req > 40: stages_req -= len(world.options.excluded_modes.value)
+    ending_stage = Has("Metamorphosis Unlock") & Has("Stage Cleared", stages_req)
     world.set_rule(ending_region, ending_stage)
         
 

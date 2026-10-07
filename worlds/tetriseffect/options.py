@@ -28,6 +28,16 @@ class ExcludedEffectModes(OptionSet):
     valid_keys = {"Marathon", "Zone Marathon", "Ultra", "Sprint", "Master", "Classic Score Attack", "Chill Marathon", "Quick Play", "Sea Playlist", "Wind Playlist", "World Playlist", "All Clear", "Combo", "Target", "Countdown", "Purify", "Mystery", "Classic", "Relax", "Focus", "Adventorous"}
     default = {"Master", "Classic Score Attack"}
 
+class GoalLevelRequiremnt(Range):
+    """Sets how many stages or modes (if effect is enabled) do you have to clear in order to access Metamorphosis.
+    There are 26 stages in Story mode and 14 Effect modes without exclusions, making 40 total possible clears.
+    
+    If Effect is disabled and the value is set above 26, this option will be set to said number, requiring you to play all of Story mode"""
+    display_name="Number of Stages/Modes Cleared to Goal"
+    range_start = 2
+    range_end = 40
+    default = 40
+
 class EnableRanksanity(DefaultOnToggle):
     """Adds locations based on your rank, from E rank to SS rank (max rank can be configured below to accomodate less experienced players).
     Applies to Effect modes if it's enabled"""
@@ -203,6 +213,7 @@ class TECGameOptions(PerGameCommonOptions):
     unlock_method: UnlockMethod
     is_include_effect: IncludeEffectMode
     excluded_modes: ExcludedEffectModes
+    stages_required: GoalLevelRequiremnt
     is_ranksanity: EnableRanksanity
     ranksanity_limit: RanksanityMaxRank
     is_minosanity: MinoSanity

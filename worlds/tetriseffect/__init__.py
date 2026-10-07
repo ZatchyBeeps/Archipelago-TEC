@@ -77,9 +77,14 @@ class TECWorld(World):
 
     def set_rules(self):
         rules.create_rules(self)
-        completion_rule = Has("Victory") & Has("Metamorphosis Unlock")
+        completion_rule = Has("Victory")# & Has("Metamorphosis Unlock")
         self.set_completion_rule(completion_rule)
 
 
     def fill_slot_data(self):
-        return self.options.as_dict("unlock_method", "is_include_effect", "excluded_modes", "death_link", "is_ranksanity", "is_start_zone")
+        datatable = self.options.as_dict("unlock_method", "is_include_effect", "excluded_modes", "death_link", "is_ranksanity", "is_start_zone")
+        stages_to_clear = self.options.stages_required
+        if not self.options.is_include_effect and stages_to_clear > 26: stages_to_clear = 26
+        elif len(self.options.excluded_modes.value) + stages_to_clear > 40: stages_to_clear -= len(self.options.excluded_modes.value)
+        datatable.update({"stages_required": stages_to_clear})
+        return datatable
