@@ -107,9 +107,9 @@ def create_rules(world: TECWorld):
 
 
     ending_region = world.get_entrance("Metamorphosis Stage Access")
-    stages_req = world.options.stages_required
-    if not world.options.is_include_effect and stages_req > 26: stages_req = 26
-    elif len(world.options.excluded_modes.value) + stages_req > 40: stages_req -= len(world.options.excluded_modes.value)
+    stages_req = world.options.stages_required.value
+    if not world.options.is_include_effect.value and stages_req > 26: stages_req = 26
+    elif len(world.options.excluded_modes.value) + stages_req > 43: stages_req -= len(world.options.excluded_modes.value)
     ending_stage = Has("Metamorphosis Unlock") & Has("Stage Cleared", stages_req)
     world.set_rule(ending_region, ending_stage)
         

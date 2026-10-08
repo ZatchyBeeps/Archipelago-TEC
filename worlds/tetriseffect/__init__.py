@@ -54,7 +54,7 @@ class TECWorld(World):
                     effect_items.remove(value) # This will need some kind of validation
                 items_to_create += effect_items # I am realizing now, how will the client know what modes to exclude specifically? I'll have to investigate
 
-        if not self.options.is_start_zone:
+        if not self.options.is_start_zone.value:
             items_to_create += ["Zone Unlock"]
         else:
             self.push_precollected(self.create_item("Zone Unlock"))
@@ -83,8 +83,8 @@ class TECWorld(World):
 
     def fill_slot_data(self):
         datatable = self.options.as_dict("unlock_method", "is_include_effect", "excluded_modes", "death_link", "is_ranksanity", "is_start_zone")
-        stages_to_clear = self.options.stages_required
-        if not self.options.is_include_effect and stages_to_clear > 26: stages_to_clear = 26
-        elif len(self.options.excluded_modes.value) + stages_to_clear > 40: stages_to_clear -= len(self.options.excluded_modes.value)
+        stages_to_clear = self.options.stages_required.value
+        if not self.options.is_include_effect.value and stages_to_clear > 26: stages_to_clear = 26
+        elif len(self.options.excluded_modes.value) + stages_to_clear > 43: stages_to_clear -= len(self.options.excluded_modes.value)
         datatable.update({"stages_required": stages_to_clear})
         return datatable

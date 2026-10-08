@@ -29,14 +29,14 @@ class ExcludedEffectModes(OptionSet):
     default = {"Master", "Classic Score Attack"}
 
 class GoalLevelRequiremnt(Range):
-    """Sets how many stages or modes (if effect is enabled) do you have to clear in order to access Metamorphosis.
-    There are 26 stages in Story mode and 14 Effect modes without exclusions, making 40 total possible clears.
+    """Sets how many stages and modes (if effect is enabled) do you have to clear in order to access Metamorphosis.
+    There are 26 stages in Story mode and 17 Effect modes without exclusions, making 43 total possible clears.
     
     If Effect is disabled and the value is set above 26, this option will be set to said number, requiring you to play all of Story mode"""
-    display_name="Number of Stages/Modes Cleared to Goal"
-    range_start = 2
-    range_end = 40
-    default = 40
+    display_name="Level Clears for Goal Stage"
+    range_start = 1
+    range_end = 43
+    default = 30
 
 class EnableRanksanity(DefaultOnToggle):
     """Adds locations based on your rank, from E rank to SS rank (max rank can be configured below to accomodate less experienced players).
