@@ -18,41 +18,51 @@ class IncludeEffectMode(DefaultOnToggle):
     display_name = "Include Effect Modes"
 
 class ExcludedEffectModes(OptionSet):
-    """Allows you to set which modes in the Effect mode will contain checks.
-    By default, Master mode and Classic Score Attack are in this list. It is discouraged to do master mode unless you know what you're doing
+    """Allows you to set which modes in the Effect mode will contain location 
+    checks in them. By default, Master mode and Classic Score Attack are in 
+    this list. It is discouraged to do master mode unless you know what you're doing
     
-    The available options are: Marathon, Zone Marathon, Ultra, Sprint, Master, Classic Score Attack, Chill Marathon, Quick Play, Sea Playlist, Wind Playlist, World Playlist,
-    All Clear, Combo, Target, Countdown, Purify and Mystery.
-    You may also do the following to exclude an entire group of modes: Classic, Relax, Focus and Adventorous"""
+    The available options are: Marathon, Zone Marathon, Ultra, Sprint, Master, 
+    Classic Score Attack, Chill Marathon, Quick Play, Sea Playlist, Wind Playlist, 
+    World Playlist, All Clear, Combo, Target, Countdown, Purify and Mystery.
+    You may also do the following to exclude an entire group of modes: Classic,
+    Relax, Focus and Adventorous"""
     display_name = "Excluded Effect Modes"
     valid_keys = {"Marathon", "Zone Marathon", "Ultra", "Sprint", "Master", "Classic Score Attack", "Chill Marathon", "Quick Play", "Sea Playlist", "Wind Playlist", "World Playlist", "All Clear", "Combo", "Target", "Countdown", "Purify", "Mystery", "Classic", "Relax", "Focus", "Adventorous"}
     default = {"Master", "Classic Score Attack"}
 
 class GoalLevelRequiremnt(Range):
-    """Sets how many stages and modes (if effect is enabled) do you have to clear in order to access Metamorphosis.
-    There are 26 stages in Story mode and 17 Effect modes without exclusions, making 43 total possible clears.
+    """Sets how many stages and modes (if Effect is enabled) do you have to 
+    clear in order to access Metamorphosis.
+    There are 26 stages in Story mode and 17 Effect modes without exclusions, 
+    making 43 total possible clears.
     
-    If Effect is disabled and the value is set above 26, this option will be set to said number, requiring you to play all of Story mode"""
+    If Effect is disabled and the value is set above 26, this option will be 
+    set to said number, requiring you to play all of Story mode.
+    Otherwise excluded Effect modes are also considered."""
     display_name="Level Clears for Goal Stage"
     range_start = 1
     range_end = 43
     default = 30
 
 class EnableRanksanity(DefaultOnToggle):
-    """Adds locations based on your rank, from E rank to SS rank (max rank can be configured below to accomodate less experienced players).
+    """Adds locations based on your rank, from E rank to SS rank (max rank can 
+    be configured below to accomodate less experienced players).
     Applies to Effect modes if it's enabled"""
     display_name = "Ranksanity"
 
 class RanksanityMaxRank(Choice):
-    """Sets up to what ranks will be counted as locations. 
-    Make sure this is a rank you can consistently obtain in general or you could stale the whole multiworld"""
+    """Sets up to what ranks will be counted as locations.
+
+    Make sure this is a rank you can consistently obtain or you could stale the 
+    whole multiworld"""
     display_name = "Max Rank"
     option_c_rank = 0
     option_b_rank = 1
     option_a_rank = 2
     option_s_rank = 3
     option_ss_rank = 4
-    default = 2
+    default = 0
 
 class MinoSanity(Toggle):
     """Unimplemented. Does nothing as of this version of the world.
@@ -61,12 +71,15 @@ class MinoSanity(Toggle):
     display_name = "Minosanity"
 
 class StartWithZone(DefaultOnToggle):
-    """The zone is an item in the multiworld that has to be obtained. Makes ranksanity harder.
-    Affects the logic of zone trick locations set on the Trick Locations option"""
+    """When false, the zone becomes an item in the multiworld 
+    that has to be obtained for you to use the zone mechanic.
+    Affects the logic of zone trick locations, set on the Trick 
+    Locations section, and area ranks if ranksanity is enabled."""
     display_name = "Start with Zone"
 
 class EnableDeathLink(Choice):
-    """Enable death link for this game. If you die, everyone else with it enabled also dies. Of course, the other way around also applies
+    """Enable death link for this game. If you die, everyone else with it 
+    enabled also dies. Of course, the other way around also applies
     
     - **Enabled:** Normal behaviour. If you get deathlinked, you instantly top out
     - **Painful:** When deathlinked, you receive 10 lines to your board instantly
@@ -81,109 +94,117 @@ class EnableDeathLink(Choice):
 
 
 class TrapPercentage(Range):
-    """Sets a percentage of how many of the filler items in your world will be traps. Setting this to 0 will disable traps"""
+    """Sets a percentage of how many of the filler items in your world will 
+    be traps. Setting this to 0 will disable traps"""
     display_name = "Trap Fill Percentage"
     range_start = 0
     range_end = 100
-    default = 50
-
-class TrickLocations(OptionCounter):
-    """Sets an amount of locations by achieving feats as you play, allowing you to keep sending checks while waiting for a stage unlock.
-    These locations are attempted to be logically evenly distributed through the first spheres of the multiworld 
-    Setting values to 0 disables them"""
-    display_name = "Trick Locations"
-    default = {"Perform 10 T-spins": 5, "Perform 10 back-to-backs": 5, "Perform 15 Tetris line clears": 5, "Perform a 10 line combo": 5, "Earn an all clear": 3, "Perform 4 consecutive back-to-backs": 3, "Earn a T-spin triple": 0, "Earn an octotris": 20, "Earn a dodecatris": 15, "Earn a decahexatris": 7, "Earn a perfectris": 1, "Earn a ultimatris": 0, "Earn a kirbtris": 0}
+    default = 30
 
 
 class TSpinsAmmount(Range):
-    """How many locations there will be by doing 10 t-spins"""
-    display_name = "Do 10 T-Spins"
+    """How many locations there will be by doing 4 t-spins of any kind"""
+    display_name = "Do 4 T-Spins"
     range_start = 0
     range_end = 50
     default = 5
 
 class BackToBackAmmouont(Range):
-    """How many locations there will be for doing 10 back-to-backs. Back-to-backs are counted by doing 2 or more consecutive t-spins, mini t-spin or Tetris"""
-    display_name = "Do 10 back-to-backs"
+    """How many locations there will be for doing 3 back-to-backs. Back-to-backs 
+    are counted by doing 2 or more consecutive t-spins, mini t-spin or Tetris"""
+    display_name = "Do 3 back-to-backs"
     range_start = 0
     range_end = 50
     default = 5
 
 class TetrisAmmount(Range):
-    """How many locations there will be by doing 15 Tetris line clears (4 lines)"""
-    display_name = "Do 15 Tetris line clears"
+    """How many locations there will be by doing 6 Tetris line clears (4 lines)"""
+    display_name = "Do 6 Tetris line clears"
     range_start = 0
     range_end = 50
-    default = 10
+    default = 15
 
 class ComboAmmount(Range):
-    """How many locations there will be by doing an 8 combo (clear at least 1 line 8 consecutive times)"""
-    display_name = "Achieve 8 line combos"
+    """How many locations there will be by doing a 4 combo (clear at least 1 line 
+    4 consecutive times)"""
+    display_name = "Achieve a 4 combo"
     range_start = 0
     range_end = 50
-    default = 3
+    default = 5
 
 class AllClearAmmount(Range):
-    """How many locations there will be by achieving an All Clear (the game board is emptied by the player)"""
+    """How many locations there will be by achieving an All Clear (the game 
+    board is emptied by the player)"""
     display_name = "Achieve an all clear "
     range_start = 0
-    range_end = 50
-    default = 3
+    range_end = 20
+    default = 0
 
 class ConsBackToBackAmmount(Range):
-    """How many locations there will be by achieving a back-to-back 3 combo (do 4 t-spins, mini t-spin or Tetris in a row, the combo starts from the second consecutive clear (hence it being called a 3 combo))"""
+    """How many locations there will be by achieving a back-to-back 3 combo 
+    (do 4 t-spins, mini t-spin or Tetris in a row, the combo starts from 
+    the second consecutive clear (hence it being called a 3 combo))"""
     display_name = "Do 4 consecutive back-to-backs"
     range_start = 0
     range_end = 50
     default = 2
 
 class TSpinTripleAmmount(Range):
-    """How many locations there will be by doing a T-Spin triple. T-Spin triples are advanced so make sure you at least know how to set them up"""
+    """How many locations there will be by doing a T-Spin triple. T-Spin 
+    triples are advanced so make sure you at least know how to set them up"""
     display_name = "Do a T-Spin triple"
     range_start = 0
-    range_end = 50
+    range_end = 20
     default = 0
 
 class OctotrisAmmount(Range):
-    """How many locations there will be by finishing a zone with 8 or more lines cleared"""
+    """How many locations there will be by finishing a zone with 8 or 
+    more lines cleared"""
     display_name = "Do an octotris"
-    range_start = 0
-    range_end = 50
-    default = 20
-
-class DodecatrisAmmount(Range):
-    """How many locations there will be by finishing a zone with 12 or more lines cleared"""
-    display_name = "Do a dodecatris"
     range_start = 0
     range_end = 50
     default = 10
 
+class DodecatrisAmmount(Range):
+    """How many locations there will be by finishing a zone with 12 or 
+    more lines cleared"""
+    display_name = "Do a dodecatris"
+    range_start = 0
+    range_end = 25
+    default = 5
+
 class DecahexatrisAmmount(Range):
-    """How many locations there will be by finishing a zone with 16 or more lines cleared"""
+    """How many locations there will be by finishing a zone with 16 or 
+    more lines cleared"""
     display_name = "Do a decahexatris"
     range_start = 0
-    range_end = 50
-    default = 3
+    range_end = 25
+    default = 1
 
 class PerfectrisAmmount(Range):
-    """How many locations there will be by finishing a zone with 18 or more lines cleared"""
+    """How many locations there will be by finishing a zone with 18 or 
+    more lines cleared"""
     display_name = "Do a perfectris"
     range_start = 0
-    range_end = 50
+    range_end = 20
     default = 0
 
 class UltimatrisAmmount(Range):
-    """How many locations there will be by finishing a zone with 20 or more lines cleared. This can prove to be really difficult so be mindful when increasing this value"""
+    """How many locations there will be by finishing a zone with 20 or 
+    more lines cleared. This can prove to be really difficult so be 
+    mindful when increasing this value"""
     display_name = "Do an ultimatris"
     range_start = 0
-    range_end = 50
+    range_end = 15
     default = 0
 
 class KirbtrisAmmount(Range):
-    """How many locations there will be by finishing a zone with 21 or more lines cleared. If you don't know how to use IRS (the Initial Rotation System) it is strongly encouraged to keep this at 0"""
+    """How many locations there will be by finishing a zone with 21 or 
+    more lines cleared. If you don't know how to use IRS (the Initial 
+    Rotation System) it is strongly encouraged to keep this at 0"""
     display_name = "Do a kirbtris"
     range_start = 0
-    range_end = 50
+    range_end = 10
     default = 0
 
 
@@ -219,14 +240,13 @@ class TECGameOptions(PerGameCommonOptions):
     is_minosanity: MinoSanity
     is_start_zone: StartWithZone
     death_link: EnableDeathLink
-    #trick_locations: TrickLocations
     traps_perc: TrapPercentage
     tspins_n: TSpinsAmmount
     backtobacks_n: BackToBackAmmouont
     tetrises_n: TetrisAmmount
     combos_n: ComboAmmount
     all_clears_n: AllClearAmmount
-    combo_backtoback_n: ConsBackToBackAmmount
+    #combo_backtoback_n: ConsBackToBackAmmount
     tspin_triples_n: TSpinTripleAmmount
     octotris_n: OctotrisAmmount
     dodecatris_n: DodecatrisAmmount
