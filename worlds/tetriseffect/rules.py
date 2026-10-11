@@ -54,40 +54,40 @@ def create_rules(world: TECWorld):
 
 
     # Locations
-    for name, data in get_areas_ranksanities(world).items():
-        location = world.get_location(name)
-        difficulty_increase = 1
-        if "A Rank" in name:
-            difficulty_increase = 2
-        elif "S Rank" in name:
-            difficulty_increase = 3
-        elif "SS Rank" in name:
-            difficulty_increase = 4
-
-        if data.in_area == "Area 1":
-            if difficulty_increase == 4: 
+    if world.options.is_ranksanity.value:
+        for name, data in get_areas_ranksanities(world).items():
+            location = world.get_location(name)
+            difficulty_increase = 1
+            if "A Rank" in name or "B Rank" in name:
+                difficulty_increase = 2
+            elif "S Rank" in name:
                 difficulty_increase = 3
-            elif difficulty_increase == 1: 
-                difficulty_increase = 2 # Prevent it from being 0
-            rule = HasFromList('The Deep Unlock','Pharaoh\'s Code Unlock','Karma Wheel Unlock', count=difficulty_increase-1)
-        elif data.in_area == "Area 2":
-            rule = HasFromList('Jellyfish Chorus Unlock','Da Vinci Unlock','Prayer Circles Unlock','Ritual Passion Unlock', count=difficulty_increase)
-        elif data.in_area == "Area 3":
-            rule = HasFromList('Deserted Unlock','Dolphin Surf Unlock','Downtown Jazz Unlock','Spirit Canyon Unlock', count=difficulty_increase)
-        elif data.in_area == "Area 4":
-            rule = HasFromList('Jewel Veil Unlock','Forest Dawn Unlock','Kaleidoscope Unlock','Turtle Dreams Unlock','Celebration Unlock', count=difficulty_increase)
-        elif data.in_area == "Area 5":
-            rule = HasFromList('Sunset Breeze Unlock','Aurora Peak Unlock','Zen Blossoms Unlock','Ying & Yang Unlock','Hula Soul Unlock', count=difficulty_increase)
-        elif data.in_area == "Area 6":
-            rule = HasFromList('Starfall Unlock','Balloon High Unlock','Mermaid Cove Unlock','Orbit Unlock','Stratosphere Unlock', count=difficulty_increase)
+            elif "SS Rank" in name:
+                difficulty_increase = 4
 
-        if "A Rank" in name or "S Rank" in name or "SS Rank" in name:
-            requirement = rule & Has("Zone Unlock")
-        else:
-            requirement = rule
+            if data.in_area == "Area 1":
+                if difficulty_increase == 4: 
+                    difficulty_increase = 3
+                elif difficulty_increase == 1: 
+                    difficulty_increase = 2 # Prevent it from being 0
+                rule = HasFromList('The Deep Unlock','Pharaoh\'s Code Unlock','Karma Wheel Unlock', count=difficulty_increase-1)
+            elif data.in_area == "Area 2":
+                rule = HasFromList('Jellyfish Chorus Unlock','Da Vinci Unlock','Prayer Circles Unlock','Ritual Passion Unlock', count=difficulty_increase)
+            elif data.in_area == "Area 3":
+                rule = HasFromList('Deserted Unlock','Dolphin Surf Unlock','Downtown Jazz Unlock','Spirit Canyon Unlock', count=difficulty_increase)
+            elif data.in_area == "Area 4":
+                rule = HasFromList('Jewel Veil Unlock','Forest Dawn Unlock','Kaleidoscope Unlock','Turtle Dreams Unlock','Celebration Unlock', count=difficulty_increase)
+            elif data.in_area == "Area 5":
+                rule = HasFromList('Sunset Breeze Unlock','Aurora Peak Unlock','Zen Blossoms Unlock','Ying & Yang Unlock','Hula Soul Unlock', count=difficulty_increase)
+            elif data.in_area == "Area 6":
+                rule = HasFromList('Starfall Unlock','Balloon High Unlock','Mermaid Cove Unlock','Orbit Unlock','Stratosphere Unlock', count=difficulty_increase)
 
-        
-        world.set_rule(location, requirement)
+            if "A Rank" in name or "S Rank" in name or "SS Rank" in name:
+                requirement = rule & Has("Zone Unlock")
+            else:
+                requirement = rule
+
+            world.set_rule(location, requirement)
 
     # Prevents a gigantic sphere 1 from just trick locations by evenly requiring one more stage for every 10 of these location
     for n in range(1, 50):
