@@ -42,7 +42,10 @@ def create_locations(world: TECWorld):
     if world.options.is_ranksanity:
         for name, data in get_available_ranksanities(world).items():
             region = world.get_region(data.region)
-            region.locations.append(TECLocation(world.player, name, data.location_id + offset, region))
+            rank_location = TECLocation(world.player, name, data.location_id + offset, region)
+            region.locations.append(rank_location)
+            if not world.options.is_start_zone.value and ("B Rank" in data.identifier or "A Rank" in data.identifier or "S Rank" in data.identifier or "SS Rank" in data.identifier):
+                world.set_rule(rank_location, lambda state: state.has("Zone Unlock", world.player))
 
         if world.options.is_include_effect:
             for name, data in get_available_effect_ranksanities(world).items():
