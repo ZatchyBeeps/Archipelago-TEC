@@ -99,6 +99,7 @@ itemlist = {
     'Queue Trap':                           TItemInfo(206,   ItemClassification.trap),
     #'IRS Trap':                            TItemInfo(207,   ItemClassification.trap), # Messes up with quick players but idk if it's worth implementing lol
     'Speed Trap':                           TItemInfo(207,   ItemClassification.trap),
+    'Swap Trap':                            TItemInfo(208,   ItemClassification.trap),
 
 
 
@@ -130,5 +131,5 @@ effect_adventure_levels = ['Effect: Countdown Mode Unlock', 'Effect: Purify Mode
 zen_areas = ['Area 1 Unlock', 'Area 2 Unlock', 'Area 3 Unlock', 'Area 4 Unlock', 'Area 5 Unlock', 'Area 6 Unlock']
 effect_groups = ['Effect: Classic Modes Unlock', 'Effect: Relax Modes Unlock', 'Effect: Focus Modes Unlock', 'Effect: Adventurous Modes Unlock']
 tetrimino_items = ['T Mino Piece Unlock', 'Z Mino Piece Unlock', 'S Mino Piece Unlock', 'O Mino Piece Unlock', 'L Mino Piece Unlock', 'J Mino Piece Unlock', 'J Mino Piece Unlock']
-traps = ['Lines Trap', 'Giant Mino Trap', 'Broken Mino Trap', 'Zone Trap', 'Ghost Piece Trap', 'Hold Trap', 'Queue Trap', 'Speed Trap']
+traps = ['Lines Trap', 'Giant Mino Trap', 'Broken Mino Trap', 'Zone Trap', 'Ghost Piece Trap', 'Hold Trap', 'Queue Trap', 'Speed Trap', 'Swap Trap']
 garbage = ['Bonus points', 'Zone charge bonus', 'Cosmetic effect', 'Glowup', 'Fake line clear', 'Zone sounds', 'Vibes', 'Feelings']
