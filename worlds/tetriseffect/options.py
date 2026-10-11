@@ -157,6 +157,20 @@ class TSpinTripleAmmount(Range):
     range_end = 20
     default = 0
 
+class ZoneTricksBehaviour(Choice):
+    """Specifies how zone-related locations will be checked when you complete a zone
+    
+    - **Singular:** When exiting the zone, only the location related to the amount of
+    lines cleared will be sent (ex. a 12 line zone will only send 'Made 1 dodecatris').
+    - **Include Previous:** When exiting the zone, the location related to the amount
+    of lines cleared and all the previous ones will be sent (ex. a 12 line zone will
+    send both 'Made 1 dodecatris' and 'Made 1 octotris')"""
+    display_name = "Zone-Related Location Check Behaviour"
+    rich_text_doc = True
+    option_singular = 0
+    option_include_previous = 1
+    default = 1
+
 class OctotrisAmmount(Range):
     """How many locations there will be by finishing a zone with 8 or 
     more lines cleared"""
@@ -248,6 +262,7 @@ class TECGameOptions(PerGameCommonOptions):
     all_clears_n: AllClearAmmount
     #combo_backtoback_n: ConsBackToBackAmmount
     tspin_triples_n: TSpinTripleAmmount
+    zone_locations_behaviour: ZoneTricksBehaviour
     octotris_n: OctotrisAmmount
     dodecatris_n: DodecatrisAmmount
     decahexatris_n: DecahexatrisAmmount
