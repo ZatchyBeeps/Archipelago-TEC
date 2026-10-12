@@ -58,7 +58,7 @@ effect_regions = {
 }
 
 def get_effect_regions(world: TECWorld) -> dict[str, int]:
-    return {f"{name} Mode": area for name, area in effect_regions.items() if not name in world.options.excluded_modes}
+    return {f"{name} Mode": area for name, area in effect_regions.items() if not name in world.options.excluded_modes.value}
 
 def make_regions(world: TECWorld):
     root = Region("Menu", world.player, world.multiworld)
@@ -78,7 +78,7 @@ def make_regions(world: TECWorld):
     world.multiworld.regions += zen_total_regions
 
     # Set up areas first
-    if world.options.unlock_method == 1:
+    if world.options.unlock_method.value == 1:
         for region_area in zen_areas:
             root.connect(region_area, f"{region_area.name} Area Access", lambda state: state.has(f"{region_area.name} Unlock", world.player))
     else:
@@ -90,22 +90,22 @@ def make_regions(world: TECWorld):
     for region, area in zen_created_regions.items():
         match area:
             case 1:
-                if world.options.unlock_method == 0: zen_area_one.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
+                if world.options.unlock_method.value == 0: zen_area_one.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
                 else: zen_area_one.connect(region, f"{region.name} Stage Access")
             case 2:
-                if world.options.unlock_method == 0: zen_area_two.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
+                if world.options.unlock_method.value == 0: zen_area_two.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
                 else: zen_area_two.connect(region, f"{region.name} Stage Access")
             case 3:
-                if world.options.unlock_method == 0: zen_area_three.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
+                if world.options.unlock_method.value == 0: zen_area_three.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
                 else: zen_area_three.connect(region, f"{region.name} Stage Access")
             case 4:
-                if world.options.unlock_method == 0: zen_area_four.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
+                if world.options.unlock_method.value == 0: zen_area_four.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
                 else: zen_area_four.connect(region, f"{region.name} Stage Access")
             case 5:
-                if world.options.unlock_method == 0: zen_area_five.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
+                if world.options.unlock_method.value == 0: zen_area_five.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
                 else: zen_area_five.connect(region, f"{region.name} Stage Access")
             case 6:
-                if world.options.unlock_method == 0: zen_area_six.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
+                if world.options.unlock_method.value == 0: zen_area_six.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
                 else: zen_area_six.connect(region, f"{region.name} Stage Access")
             case 7:
                 root.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
@@ -116,20 +116,20 @@ def make_regions(world: TECWorld):
         relax_region: Region = None
         focus_region: Region = None
         adventure_region: Region = None
-        if not "Classic" in world.options.excluded_modes:
+        if not "Classic" in world.options.excluded_modes.value:
             classic_region = Region("Classic Modes", world.player, world.multiworld, "Classic Effects")
-        if not "Relax" in world.options.excluded_modes:
+        if not "Relax" in world.options.excluded_modes.value:
             relax_region = Region("Relax Modes", world.player, world.multiworld, "Relax Effects")
-        if not "Focus" in world.options.excluded_modes:
+        if not "Focus" in world.options.excluded_modes.value:
             focus_region = Region("Focus Modes", world.player, world.multiworld, "Focus Effects")
-        if not "Adventorous" in world.options.excluded_modes:
+        if not "Adventorous" in world.options.excluded_modes.value:
             adventure_region = Region("Adventorous Modes", world.player, world.multiworld, "Adventorous Effects")
         group_regions = [classic_region, relax_region, focus_region, adventure_region]
 
         for region in group_regions:
             if region is None: continue
             world.multiworld.regions += [region]
-            if world.options.unlock_method == 0:
+            if world.options.unlock_method.value == 0:
                 root.connect(region, f"{region.name} Access")
             else:
                 root.connect(region, f"{region.name} Access", lambda state: state.has(f"Effect: {region.name} Unlock", world.player))
@@ -140,7 +140,7 @@ def make_regions(world: TECWorld):
         world.multiworld.regions += [region for region, _ in created_effec_regions.items()]
 
         for region, area in created_effec_regions.items():
-            if world.options.unlock_method == 0:
+            if world.options.unlock_method.value == 0:
                 group_regions[area-1].connect(region, f"{region.name} Access")
             else:
                 group_regions[area-1].connect(region, f"{region.name} Access")

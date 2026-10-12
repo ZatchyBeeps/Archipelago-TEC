@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from . import TECWorld
 
 def create_rules(world: TECWorld):
-    if world.options.unlock_method == 0:
+    if world.options.unlock_method.value == 0:
         for region_name, _ in zen_regions.items():
             entrance = world.get_entrance(f"{region_name} Stage Access")
             requirement_rule = Has(f"{region_name} Unlock")
@@ -47,7 +47,7 @@ def create_rules(world: TECWorld):
             rule = Has(f"Area {area_num} Unlock")
 
         if world.options.include_effect:
-            group_list = [name for name in ["Classic", "Relax", "Focus", "Adventorous"] if not name in world.options.excluded_modes]
+            group_list = [name for name in ["Classic", "Relax", "Focus", "Adventorous"] if not name in world.options.excluded_modes.value]
             for group in group_list:
                 region = world.get_entrance(f"{group} Modes Access")
                 requirement_rule = Has(f"Effect: {group} Modes Unlock")

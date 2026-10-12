@@ -41,26 +41,26 @@ class TECWorld(World):
                     items_to_create += effect_classic_levels
                 if not self.options.excluded_modes.value.__contains__("Relax"):
                     items_to_create += effect_relax_levels
-                if not self.options.excluded_modes.__contains__("Focus"):
+                if not self.options.excluded_modes.value.__contains__("Focus"):
                     items_to_create += effect_focus_levels
-                if not self.options.excluded_modes.__contains__("Adventorous"):
+                if not self.options.excluded_modes.value.__contains__("Adventorous"):
                     items_to_create += effect_adventure_levels
         else:
             items_to_create = zen_areas
             self.push_precollected(self.create_item(items_to_create.pop(self.random.randint(0, 4))))
             if self.options.include_effect:
                 effect_items = effect_groups
-                for value in self.options.excluded_modes:
+                for value in self.options.excluded_modes.value:
                     effect_items.remove(value) # This will need some kind of validation
-                items_to_create += effect_items # I am realizing now, how will the client know what modes to exclude specifically? I'll have to investigate
+                items_to_create += effect_items
 
-        if not self.options.start_with_zone.value:
+        if not self.options.start_with_zone:
             items_to_create += ["Zone Unlock"]
         else:
             self.push_precollected(self.create_item("Zone Unlock"))
 
-        if self.options.is_minosanity:
-            items_to_create += tetrimino_items
+        #if self.options.is_minosanity.value:
+        #    items_to_create += tetrimino_items
 
         pre_filled_items = len(items_to_create)
         empty_spaces = len(self.multiworld.get_unfilled_locations(self.player))
@@ -82,9 +82,9 @@ class TECWorld(World):
 
 
     def fill_slot_data(self):
-        datatable = self.options.as_dict("unlock_method", "is_include_effect", "excluded_modes", "death_link", "is_ranksanity", "is_start_zone", "zone_locations_behaviour")
+        datatable = self.options.as_dict("unlock_method", "include_effect", "excluded_modes", "death_link", "enable_ranksanity", "start_with_zone", "zone_locations_behaviour")
         stages_to_clear = self.options.stage_clears_required_to_goal.value
-        if not self.options.include_effect.value and stages_to_clear > 26: stages_to_clear = 26
+        if not self.options.include_effect and stages_to_clear > 26: stages_to_clear = 26
         elif len(self.options.excluded_modes.value) + stages_to_clear > 43: stages_to_clear -= len(self.options.excluded_modes.value)
         datatable.update({"stages_required": stages_to_clear})
         return datatable
