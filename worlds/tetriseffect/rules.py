@@ -58,9 +58,9 @@ def create_rules(world: TECWorld):
         for name, data in get_areas_ranksanities(world).items():
             location = world.get_location(name)
             difficulty_increase = 1
-            if "A Rank" in name or "B Rank" in name:
+            if "C Rank" in name or "B Rank" in name:
                 difficulty_increase = 2
-            elif "S Rank" in name:
+            elif "A Rank" in name or "S Rank" in name:
                 difficulty_increase = 3
             elif "SS Rank" in name:
                 difficulty_increase = 4
