@@ -231,6 +231,7 @@ tec_option_groups = [
         AllClearAmmount,
         ConsBackToBackAmmount,
         TSpinTripleAmmount,
+        ZoneTricksBehaviour,
         OctotrisAmmount,
         DodecatrisAmmount,
         DecahexatrisAmmount,
@@ -246,26 +247,26 @@ tec_option_groups = [
 @dataclass
 class TECGameOptions(PerGameCommonOptions):
     unlock_method: UnlockMethod
-    is_include_effect: IncludeEffectMode
+    include_effect: IncludeEffectMode
     excluded_modes: ExcludedEffectModes
-    stages_required: GoalLevelRequiremnt
-    is_ranksanity: EnableRanksanity
+    stage_clears_required_to_goal: GoalLevelRequiremnt
+    enable_ranksanity: EnableRanksanity
     ranksanity_limit: RanksanityMaxRank
-    is_minosanity: MinoSanity
-    is_start_zone: StartWithZone
+    #is_minosanity: MinoSanity
+    start_with_zone: StartWithZone
     death_link: EnableDeathLink
-    traps_perc: TrapPercentage
-    tspins_n: TSpinsAmmount
-    backtobacks_n: BackToBackAmmouont
-    tetrises_n: TetrisAmmount
-    combos_n: ComboAmmount
-    all_clears_n: AllClearAmmount
+    trap_fill_percentage: TrapPercentage
+    tspin_locations_num: TSpinsAmmount
+    backtoback_locations_num: BackToBackAmmouont
+    tetrisclear_locations_num: TetrisAmmount
+    combo_locations_num: ComboAmmount
+    all_clear_locations_num: AllClearAmmount
     #combo_backtoback_n: ConsBackToBackAmmount
-    tspin_triples_n: TSpinTripleAmmount
+    tspin_triple_locations_num: TSpinTripleAmmount
     zone_locations_behaviour: ZoneTricksBehaviour
-    octotris_n: OctotrisAmmount
-    dodecatris_n: DodecatrisAmmount
-    decahexatris_n: DecahexatrisAmmount
-    perfectris_n: PerfectrisAmmount
-    ultimatris_n: UltimatrisAmmount
-    kirbtris_n: KirbtrisAmmount
+    octotris_locations_num: OctotrisAmmount
+    dodecatris_locations_num: DodecatrisAmmount
+    decahexatris_locations_num: DecahexatrisAmmount
+    perfectris_locations_num: PerfectrisAmmount
+    ultimatris_locations_num: UltimatrisAmmount
+    kirbtris_locations_num: KirbtrisAmmount

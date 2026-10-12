@@ -111,7 +111,7 @@ def make_regions(world: TECWorld):
                 root.connect(region, f"{region.name} Stage Access", lambda state: state.has(f"{region.name} Unlock", world.player))
 
     # Repeat for effect mode (if enabled)
-    if world.options.is_include_effect:
+    if world.options.include_effect:
         classic_region: Region = None
         relax_region: Region = None
         focus_region: Region = None

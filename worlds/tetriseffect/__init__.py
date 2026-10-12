@@ -26,20 +26,20 @@ class TECWorld(World):
 
 
     def get_filler_item_name(self):
-        if self.random.randint(0, 99) >= self.options.traps_perc:
+        if self.random.randint(0, 99) >= self.options.trap_fill_percentage.value:
             return self.random.choice(garbage)
         else:
             return self.random.choice(traps)
 
     def create_items(self):
         items_to_create: list
-        if self.options.unlock_method == 0:
+        if self.options.unlock_method.value == 0:
             items_to_create = zen_levels
             self.push_precollected(self.create_item(items_to_create.pop(self.random.randint(0, 25))))
-            if self.options.is_include_effect:
-                if not self.options.excluded_modes.__contains__("Classic"):
+            if self.options.include_effect:
+                if not self.options.excluded_modes.value.__contains__("Classic"):
                     items_to_create += effect_classic_levels
-                if not self.options.excluded_modes.__contains__("Relax"):
+                if not self.options.excluded_modes.value.__contains__("Relax"):
                     items_to_create += effect_relax_levels
                 if not self.options.excluded_modes.__contains__("Focus"):
                     items_to_create += effect_focus_levels
@@ -48,13 +48,13 @@ class TECWorld(World):
         else:
             items_to_create = zen_areas
             self.push_precollected(self.create_item(items_to_create.pop(self.random.randint(0, 4))))
-            if self.options.is_include_effect:
+            if self.options.include_effect:
                 effect_items = effect_groups
                 for value in self.options.excluded_modes:
                     effect_items.remove(value) # This will need some kind of validation
                 items_to_create += effect_items # I am realizing now, how will the client know what modes to exclude specifically? I'll have to investigate
 
-        if not self.options.is_start_zone.value:
+        if not self.options.start_with_zone.value:
             items_to_create += ["Zone Unlock"]
         else:
             self.push_precollected(self.create_item("Zone Unlock"))
@@ -83,8 +83,8 @@ class TECWorld(World):
 
     def fill_slot_data(self):
         datatable = self.options.as_dict("unlock_method", "is_include_effect", "excluded_modes", "death_link", "is_ranksanity", "is_start_zone", "zone_locations_behaviour")
-        stages_to_clear = self.options.stages_required.value
-        if not self.options.is_include_effect.value and stages_to_clear > 26: stages_to_clear = 26
+        stages_to_clear = self.options.stage_clears_required_to_goal.value
+        if not self.options.include_effect.value and stages_to_clear > 26: stages_to_clear = 26
         elif len(self.options.excluded_modes.value) + stages_to_clear > 43: stages_to_clear -= len(self.options.excluded_modes.value)
         datatable.update({"stages_required": stages_to_clear})
         return datatable

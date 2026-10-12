@@ -19,7 +19,7 @@ def create_rules(world: TECWorld):
             requirement_rule = Has(f"{region_name} Unlock")
             world.set_rule(entrance, requirement_rule)
 
-        if world.options.is_include_effect:
+        if world.options.include_effect:
             for region_name, _ in get_effect_regions(world).items():
                 # Had to do this instead of doing a big set of changes if I changed the names
                 if "Sea" in region_name:
@@ -46,7 +46,7 @@ def create_rules(world: TECWorld):
             entrance = world.get_entrance(f"Area {area_num} Area Access")
             rule = Has(f"Area {area_num} Unlock")
 
-        if world.options.is_include_effect:
+        if world.options.include_effect:
             group_list = [name for name in ["Classic", "Relax", "Focus", "Adventorous"] if not name in world.options.excluded_modes]
             for group in group_list:
                 region = world.get_entrance(f"{group} Modes Access")
@@ -54,7 +54,7 @@ def create_rules(world: TECWorld):
 
 
     # Locations
-    if world.options.is_ranksanity.value:
+    if world.options.enable_ranksanity.value:
         for name, data in get_areas_ranksanities(world).items():
             location = world.get_location(name)
             difficulty_increase = 1
@@ -107,8 +107,8 @@ def create_rules(world: TECWorld):
 
 
     ending_region = world.get_entrance("Metamorphosis Stage Access")
-    stages_req = world.options.stages_required.value
-    if not world.options.is_include_effect.value and stages_req > 26: stages_req = 26
+    stages_req = world.options.stage_clears_required_to_goal.value
+    if not world.options.include_effect.value and stages_req > 26: stages_req = 26
     elif len(world.options.excluded_modes.value) + stages_req > 43: stages_req -= len(world.options.excluded_modes.value)
     ending_stage = Has("Metamorphosis Unlock") & Has("Stage Cleared", stages_req)
     world.set_rule(ending_region, ending_stage)

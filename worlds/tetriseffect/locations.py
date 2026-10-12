@@ -31,7 +31,7 @@ def create_locations(world: TECWorld):
         region.locations.append(TECLocation(world.player, name, data.location_id + offset, region))
         region.add_event(f"{data.region} Cleared", "Stage Cleared", lambda state: state.can_reach_region(data.region, world.player), TECLocation, items.TECItem, show_in_spoiler=True)
 
-    if world.options.is_include_effect:
+    if world.options.include_effect:
         for name, data in effect_mode_locations.items():
             if not can_location_exist(world, name, 0): continue
             region = world.get_region(data.region)
@@ -39,34 +39,34 @@ def create_locations(world: TECWorld):
             region.add_event(f"Effect: {data.region} Cleared", "Stage Cleared", lambda state: state.can_reach_region(data.region, world.player), TECLocation, items.TECItem, show_in_spoiler=True)
 
 
-    if world.options.is_ranksanity:
+    if world.options.enable_ranksanity:
         for name, data in get_available_ranksanities(world).items():
             region = world.get_region(data.region)
             rank_location = TECLocation(world.player, name, data.location_id + offset, region)
             region.locations.append(rank_location)
-            if not world.options.is_start_zone.value and ("B Rank" in data.identifier or "A Rank" in data.identifier or "S Rank" in data.identifier or "SS Rank" in data.identifier):
+            if not world.options.start_with_zone.value and ("B Rank" in data.identifier or "A Rank" in data.identifier or "S Rank" in data.identifier or "SS Rank" in data.identifier):
                 world.set_rule(rank_location, lambda state: state.has("Zone Unlock", world.player))
 
-        if world.options.is_include_effect:
+        if world.options.include_effect:
             for name, data in get_available_effect_ranksanities(world).items():
                 if not can_location_exist(world, name, 1): continue
                 region = world.get_region(data.region)
                 region.locations.append( TECLocation(world.player, name, data.location_id + offset, region))
 
     trick_locations: Dict[str, int]
-    trick_locations = {f"Made {4 * (n + 1)} T-Spins": 1000 + n + offset for n in range(world.options.tspins_n)}
-    trick_locations.update({f"Made {3 * (n + 1)} back-to-backs": 1050 + n + offset for n in range(world.options.backtobacks_n)})
-    trick_locations.update({f"Made {6 * (n + 1)} Tetris line clears": 1100 + n + offset for n in range(world.options.tetrises_n)})
-    trick_locations.update({f"Made a 4 line combo {n + 1} times": 1150 + n + offset for n in range(world.options.combos_n)})
-    trick_locations.update({f"Made {1 * (n + 1)} all clear": 1200 + n + offset for n in range(world.options.all_clears_n)})
+    trick_locations = {f"Made {4 * (n + 1)} T-Spins": 1000 + n + offset for n in range(world.options.tspin_locations_num)}
+    trick_locations.update({f"Made {3 * (n + 1)} back-to-backs": 1050 + n + offset for n in range(world.options.backtoback_locations_num)})
+    trick_locations.update({f"Made {6 * (n + 1)} Tetris line clears": 1100 + n + offset for n in range(world.options.tetrisclear_locations_num)})
+    trick_locations.update({f"Made a 4 line combo {n + 1} times": 1150 + n + offset for n in range(world.options.combo_locations_num)})
+    trick_locations.update({f"Made {1 * (n + 1)} all clear": 1200 + n + offset for n in range(world.options.all_clear_locations_num)})
     #trick_locations.update({f"Made a 4-combo back-to-back {1 * (n + 1)} times": 1250 + n + offset for n in range(world.options.combo_backtoback_n)})
-    trick_locations.update({f"Made {1 * (n + 1)} T-spin triple": 1300 + n + offset for n in range(world.options.tspin_triples_n)})
-    trick_locations.update({f"Made {1 * (n + 1)} octotris": 1350 + n + offset for n in range(world.options.octotris_n)})
-    trick_locations.update({f"Made {1 * (n + 1)} dodecatris": 1400 + n + offset for n in range(world.options.dodecatris_n)})
-    trick_locations.update({f"Made {1 * (n + 1)} decahexatris": 1450 + n + offset for n in range(world.options.decahexatris_n)})
-    trick_locations.update({f"Made {1 * (n + 1)} perfectris": 1500 + n + offset for n in range(world.options.perfectris_n)})
-    trick_locations.update({f"Made {1 * (n + 1)} ultimatris": 1550 + n + offset for n in range(world.options.ultimatris_n)})
-    trick_locations.update({f"Made {1 * (n + 1)} kirbtris": 1600 + n + offset for n in range(world.options.kirbtris_n)})
+    trick_locations.update({f"Made {1 * (n + 1)} T-spin triple": 1300 + n + offset for n in range(world.options.tspin_triple_locations_num)})
+    trick_locations.update({f"Made {1 * (n + 1)} octotris": 1350 + n + offset for n in range(world.options.octotris_locations_num)})
+    trick_locations.update({f"Made {1 * (n + 1)} dodecatris": 1400 + n + offset for n in range(world.options.dodecatris_locations_num)})
+    trick_locations.update({f"Made {1 * (n + 1)} decahexatris": 1450 + n + offset for n in range(world.options.decahexatris_locations_num)})
+    trick_locations.update({f"Made {1 * (n + 1)} perfectris": 1500 + n + offset for n in range(world.options.perfectris_locations_num)})
+    trick_locations.update({f"Made {1 * (n + 1)} ultimatris": 1550 + n + offset for n in range(world.options.ultimatris_locations_num)})
+    trick_locations.update({f"Made {1 * (n + 1)} kirbtris": 1600 + n + offset for n in range(world.options.kirbtris_locations_num)})
 
     root.locations += [TECLocation(world.player, name, data, root) for name, data in trick_locations.items()]
 
