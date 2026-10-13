@@ -82,7 +82,7 @@ def create_rules(world: TECWorld):
             elif data.in_area == "Area 6":
                 rule = HasFromList('Starfall Unlock','Balloon High Unlock','Mermaid Cove Unlock','Orbit Unlock','Stratosphere Unlock', count=difficulty_increase)
 
-            if "A Rank" in name or "S Rank" in name or "SS Rank" in name:
+            if "B Rank" in name or "A Rank" in name or "S Rank" in name or "SS Rank" in name:
                 requirement = rule & Has("Zone Unlock")
             else:
                 requirement = rule
