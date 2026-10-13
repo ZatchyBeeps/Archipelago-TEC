@@ -14,7 +14,7 @@ class UnlockMethod(Choice):
     default = 0
 
 class IncludeEffectMode(DefaultOnToggle):
-    """Determines if the Effect game modes are included and shuffled in the multiworld"""
+    """Set to true if you want the Effect game modes included and shuffled in the multiworld"""
     display_name = "Include Effect Modes"
 
 class ExcludedEffectModes(OptionSet):
@@ -103,7 +103,9 @@ class TrapPercentage(Range):
 
 
 class TSpinsAmmount(Range):
-    """How many locations there will be by doing 4 t-spins of any kind"""
+    """How many locations there will be by doing 4 t-spins of any kind
+    
+    (Note: Trick locations are logically spread to 4 per stage)"""
     display_name = "Do 4 T-Spins"
     range_start = 0
     range_end = 50
@@ -111,14 +113,18 @@ class TSpinsAmmount(Range):
 
 class BackToBackAmmouont(Range):
     """How many locations there will be for doing 3 back-to-backs. Back-to-backs 
-    are counted by doing 2 or more consecutive t-spins, mini t-spin or Tetris"""
+    are counted by doing 2 or more consecutive t-spins, mini t-spin or Tetris
+    
+    (Note: Trick locations are logically spread to 4 per stage)"""
     display_name = "Do 3 back-to-backs"
     range_start = 0
     range_end = 50
     default = 5
 
 class TetrisAmmount(Range):
-    """How many locations there will be by doing 6 Tetris line clears (4 lines)"""
+    """How many locations there will be by doing 6 Tetris line clears (4 lines)
+    
+    (Note: Trick locations are logically spread to 4 per stage)"""
     display_name = "Do 6 Tetris line clears"
     range_start = 0
     range_end = 50
@@ -126,7 +132,9 @@ class TetrisAmmount(Range):
 
 class ComboAmmount(Range):
     """How many locations there will be by doing a 4 combo (clear at least 1 line 
-    4 consecutive times)"""
+    4 consecutive times)
+    
+    (Note: Trick locations are logically spread to 4 per stage)"""
     display_name = "Achieve a 4 combo"
     range_start = 0
     range_end = 50
@@ -134,7 +142,9 @@ class ComboAmmount(Range):
 
 class AllClearAmmount(Range):
     """How many locations there will be by achieving an All Clear (the game 
-    board is emptied by the player)"""
+    board is emptied by the player)
+    
+    (Note: Trick locations are logically spread to 4 per stage)"""
     display_name = "Achieve an all clear "
     range_start = 0
     range_end = 20
@@ -143,7 +153,9 @@ class AllClearAmmount(Range):
 class ConsBackToBackAmmount(Range):
     """How many locations there will be by achieving a back-to-back 3 combo 
     (do 4 t-spins, mini t-spin or Tetris in a row, the combo starts from 
-    the second consecutive clear (hence it being called a 3 combo))"""
+    the second consecutive clear (hence it being called a 3 combo))
+    
+    (Note: Trick locations are logically spread to 4 per stage)"""
     display_name = "Do 4 consecutive back-to-backs"
     range_start = 0
     range_end = 50
@@ -151,7 +163,9 @@ class ConsBackToBackAmmount(Range):
 
 class TSpinTripleAmmount(Range):
     """How many locations there will be by doing a T-Spin triple. T-Spin 
-    triples are advanced so make sure you at least know how to set them up"""
+    triples are advanced so make sure you at least know how to set them up
+    
+    (Note: Trick locations are logically spread to 4 per stage)"""
     display_name = "Do a T-Spin triple"
     range_start = 0
     range_end = 20

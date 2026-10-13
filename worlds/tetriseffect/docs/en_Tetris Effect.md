@@ -16,12 +16,9 @@ The mod can be capable of slightly boosting your score in the form of filler ite
 
 ## What is planned for the mod?
 This mod is still in development and is missing features. This will be a checklist for what needs to be added for being called a stable release, somewhat ordered on priority:
-- Resolve the issue of playlists being a single one
-- Turn the text log into a rich text box to support colors
 - Implement minosanity
 - Add more planned traps
 - Implement filler items actually doing something
-- Make Effect modes give rank checks asynchronously
 - Make the text log fade out when inactive
 - Implement Connected mode
 
@@ -42,7 +39,7 @@ This is a list of issues I already know of
 This is because the mod will make you try to select an available stage as otherwise the game will automatically select your last played stage, which can allow you to play an unobtained level.
 You can fix this by either going back and selecting a difficulty again, or ignoring it and clicking anywhere which will play your furthest obtained level on the story.
 ## Crashes occur when death linked
-This seems to be a memory issue with lua-apclientpp. Trying to update the dll to the latest version which seems to have memory fixes causes the mod to crash upon load, so this is not fixable for now.
+This seems to be a memory issue with lua-apclientpp. Trying to update the dll to the latest version which seems to have memory fixes causes the mod to crash upon load, so this is not fixable for now. Rest assured that this is not a common ocurrence tho
 ## Lines given by traps or death link don't have holes
-While they do are detremental on quantity, they are not permanent. Simply use the zone and they will not only go away when finished but they will also be added to the zone's total ammount of lines cleared.
+While they do are detremental on quantity, they are not permanent. Simply use the zone and they will not only go away when finished but they will also be added to the zone's total ammount of lines cleared. This is obviously not the case if the zone is locked.
 I am still looking on how to add their holes.
