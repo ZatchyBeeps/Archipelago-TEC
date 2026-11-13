@@ -122,6 +122,18 @@ class TrapPercentage(Range):
     default = 30
 
 
+class AllowTricksOnEffectMode(Choice):
+    """Sets if trick locations can be obtained when playing Effect modes
+    Only Marathon will make it so only Marathon and Zone Marathon give them.
+    Except Focus will allow all but All Clear, Combo and Target modes, for
+    if you're looking to do certain tricks normally"""
+    display_name = "Allow Obtaining Trick Locations on Effect Mode"
+    option_disallow = 0
+    option_only_marathon = 1
+    option_except_focus_modes = 2
+    option_allow = 3
+    default = 0
+
 class TSpinsAmmount(Range):
     """How many locations there will be by doing 4 t-spins of any kind
     
@@ -291,6 +303,7 @@ class TECGameOptions(PerGameCommonOptions):
     start_with_zone: StartWithZone
     death_link: EnableDeathLink
     trap_fill_percentage: TrapPercentage
+    allow_tricks_on_effect: AllowTricksOnEffectMode
     tspin_locations_num: TSpinsAmmount
     backtoback_locations_num: BackToBackAmmouont
     tetrisclear_locations_num: TetrisAmmount

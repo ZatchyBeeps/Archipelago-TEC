@@ -84,7 +84,7 @@ class TECWorld(World):
 
 
     def fill_slot_data(self):
-        datatable = self.options.as_dict("unlock_method", "include_effect", "excluded_modes", "death_link", "enable_ranksanity", "start_with_zone", "zone_locations_behaviour")
+        datatable = self.options.as_dict("unlock_method", "include_effect", "excluded_modes", "death_link", "enable_ranksanity", "start_with_zone", "zone_locations_behaviour", "allow_tricks_on_effect")
         stages_to_clear = self.options.stage_clears_required_to_goal.value
         if not self.options.include_effect and stages_to_clear > 26: stages_to_clear = 26
         elif len(self.options.excluded_modes.value) + stages_to_clear > 43: stages_to_clear -= len(self.options.excluded_modes.value)
