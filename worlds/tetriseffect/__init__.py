@@ -32,10 +32,12 @@ class TECWorld(World):
             return self.random.choice(traps)
 
     def create_items(self):
-        items_to_create: list
+        items_to_create = []
         if self.options.unlock_method.value == 0:
-            items_to_create = zen_levels
-            self.push_precollected(self.create_item(items_to_create.pop(self.random.randint(0, 25))))
+            items_to_create: list[str] = list.copy(zen_levels)
+            thing = items_to_create.pop(self.random.randint(0, 25))
+            print("Starting with " + thing + " for player " + self.player_name)
+            self.push_precollected(self.create_item(thing))
             if self.options.include_effect:
                 if not self.options.excluded_modes.value.__contains__("Classic"):
                     items_to_create += effect_classic_levels
