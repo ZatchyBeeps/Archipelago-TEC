@@ -47,7 +47,8 @@ def create_locations(world: TECWorld):
             if not world.options.start_with_zone and ("B Rank" in data.identifier or "A Rank" in data.identifier or "S Rank" in data.identifier or "SS Rank" in data.identifier):
                 world.set_rule(rank_location, lambda state: state.has("Zone Unlock", world.player))
 
-        if world.options.include_effect:
+        if world.options.include_effect and world.options.effect_ranksanity_limit != 5:
+            print("Applying effect ranksanities")
             for name, data in get_available_effect_ranksanities(world).items():
                 if not can_location_exist(world, name, 1): continue
                 region = world.get_region(data.region)
@@ -101,10 +102,10 @@ def get_available_ranksanities(world: TECWorld) -> Dict[str, TECLoc_Data]:
 
 def get_available_effect_ranksanities(world: TECWorld) -> dict[str, TECLoc_Data]:
     locations = {name: data for name, data in effect_ranksanity_locations.items() if "E Rank" in data.identifier or "D Rank" in data.identifier or "C Rank" in data.identifier}
-    if world.options.ranksanity_limit >= 1: locations.update( {name: data for name, data in effect_ranksanity_locations.items() if "B Rank" in data.identifier})
-    if world.options.ranksanity_limit >= 2: locations.update( {name: data for name, data in effect_ranksanity_locations.items() if "A Rank" in data.identifier})
-    if world.options.ranksanity_limit >= 3: locations.update( {name: data for name, data in effect_ranksanity_locations.items() if "S Rank" in data.identifier})
-    if world.options.ranksanity_limit >= 4: locations.update( {name: data for name, data in effect_ranksanity_locations.items() if "SS Rank" in data.identifier})
+    if world.options.effect_ranksanity_limit >= 1: locations.update( {name: data for name, data in effect_ranksanity_locations.items() if "B Rank" in data.identifier})
+    if world.options.effect_ranksanity_limit >= 2: locations.update( {name: data for name, data in effect_ranksanity_locations.items() if "A Rank" in data.identifier})
+    if world.options.effect_ranksanity_limit >= 3: locations.update( {name: data for name, data in effect_ranksanity_locations.items() if "S Rank" in data.identifier})
+    if world.options.effect_ranksanity_limit >= 4: locations.update( {name: data for name, data in effect_ranksanity_locations.items() if "SS Rank" in data.identifier})
     return locations
 
 

@@ -14,7 +14,8 @@ class UnlockMethod(Choice):
     default = 0
 
 class IncludeEffectMode(DefaultOnToggle):
-    """Set to true if you want the Effect game modes included and shuffled in the multiworld"""
+    """Set to true if you want the Effect game modes included and shuffled in the multiworld.
+    To 'clear' and Effect mode, you must obtain a C rank on it."""
     display_name = "Include Effect Modes"
 
 class ExcludedEffectModes(OptionSet):
@@ -48,11 +49,13 @@ class GoalLevelRequiremnt(Range):
 class EnableRanksanity(DefaultOnToggle):
     """Adds locations based on your rank, from E rank to SS rank (max rank can 
     be configured below to accomodate less experienced players).
-    Applies to Effect modes if it's enabled"""
+    Applies to Effect modes if it's enabled. Consider excluding rank 
+    locations if you have trouble with a specific mode, but would not
+    like to exclude the mode entirely"""
     display_name = "Ranksanity"
 
 class RanksanityMaxRank(Choice):
-    """Sets up to what ranks will be counted as locations.
+    """Sets up to what ranks will be counted as locations on the Story mode.
 
     Make sure this is a rank you can consistently obtain or you could stale the 
     whole multiworld"""
@@ -64,17 +67,34 @@ class RanksanityMaxRank(Choice):
     option_ss_rank = 4
     default = 0
 
+class EffectRanksanityMaxRank(Choice):
+    """Sets up to what ranks will be counted as locations on Effect modes.
+    Has no effect if Include Effect Mode is false.
+
+    Make sure this is a rank you can consistently obtain or you could stale the 
+    whole multiworld"""
+    display_name = "Max Rank"
+    option_c_rank = 0
+    option_b_rank = 1
+    option_a_rank = 2
+    option_s_rank = 3
+    option_ss_rank = 4
+    option_disable = 5
+    default = 0
+
 class MinoSanity(Toggle):
     """Unimplemented. Does nothing as of this version of the world.
     Your mino pieces are items in the multiworld and must be obtained. This can make things like ranksanity considerably harder. 
-    As of now there's no logic applied to this. Use at your own caution"""
+    There's no logic applied to this. Use at your own caution"""
     display_name = "Minosanity"
 
 class StartWithZone(DefaultOnToggle):
     """When false, the zone becomes an item in the multiworld 
     that has to be obtained for you to use the zone mechanic.
     Affects the logic of zone trick locations, set on the Trick 
-    Locations section, and area ranks if ranksanity is enabled."""
+    Locations section, and rank locations if ranksanity is enabled.
+    This however can lead to sudden flood of checks to do when obtained
+    which can be grindy. You can use Zone Marathon to do these checks."""
     display_name = "Start with Zone"
 
 class EnableDeathLink(Choice):
@@ -266,6 +286,7 @@ class TECGameOptions(PerGameCommonOptions):
     stage_clears_required_to_goal: GoalLevelRequiremnt
     enable_ranksanity: EnableRanksanity
     ranksanity_limit: RanksanityMaxRank
+    effect_ranksanity_limit: EffectRanksanityMaxRank
     #is_minosanity: MinoSanity
     start_with_zone: StartWithZone
     death_link: EnableDeathLink
