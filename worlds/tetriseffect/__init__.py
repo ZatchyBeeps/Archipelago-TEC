@@ -22,7 +22,13 @@ class TECWorld(World):
     #    return super().generate_early()
 
     def create_item(self, name):
-        return TECItem(name, itemlist[name].priority, itemlist[name].item_id, self.player)
+        item = TECItem(name, itemlist[name].priority, itemlist[name].item_id, self.player)
+        for exclusion in self.options.excluded_modes.value:
+            snippet = "Effect: " + exclusion + " Mode Unlock"
+            if name == snippet:
+                item = TECItem(name, items.ItemClassification.filler, itemlist[name].item_id, self.player)
+                print("Excluded item " + name)
+        return item
 
 
     def get_filler_item_name(self):
@@ -68,6 +74,8 @@ class TECWorld(World):
         empty_spaces = len(self.multiworld.get_unfilled_locations(self.player))
         if pre_filled_items > empty_spaces:
             raise OptionError(f"{self.player}, your Tetris Effect world contains too little locations for the items required. Consider enabling ranksanity or increasing the number of trick locations")
+
+
 
         self.multiworld.itempool += [self.create_item(item) for item in items_to_create]
 
