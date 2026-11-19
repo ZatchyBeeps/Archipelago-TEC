@@ -1,149 +1,59 @@
-# [Archipelago](https://archipelago.gg) ![Discord Shield](https://discordapp.com/api/guilds/731205301247803413/widget.png?style=shield) | [Install](https://github.com/ArchipelagoMW/Archipelago/releases)
+# Tetris Effect: Connected
 
-Archipelago provides a generic framework for developing multiworld capability for game randomizers. In all cases,
-presently, Archipelago is also the randomizer itself.
+This is the Archipelago randomizer for Tetris Effect: Connected. For information on how to setup, visit the [setup guide](/worlds/tetriseffect/docs/setup_en.md)
 
-Currently, the following games are supported:
+## What does randomizing this game do?
+You can expect the following things when randomizing this game:
+### Items
+These will be shuffled in the multiworld and you will need to receive their corresponding item to be able to use them/play them:
+- All levels on the story mode.
+- Optionally all Effect modes, with the ability to exclude the modes you wouldn't like to play.
+- The zone mechanic
+- (Unimplemented) Tetrimino pieces
 
-* The Legend of Zelda: A Link to the Past
-* Factorio
-* Subnautica
-* Risk of Rain 2
-* The Legend of Zelda: Ocarina of Time
-* Timespinner
-* Super Metroid
-* Secret of Evermore
-* Final Fantasy
-* VVVVVV
-* Raft
-* Super Mario 64
-* Meritous
-* Super Metroid/Link to the Past combo randomizer (SMZ3)
-* ChecksFinder
-* Hollow Knight
-* The Witness
-* Sonic Adventure 2: Battle
-* Starcraft 2
-* Dark Souls 3
-* Super Mario World
-* Pokémon Red and Blue
-* Hylics 2
-* Overcooked! 2
-* Zillion
-* Lufia II Ancient Cave
-* Blasphemous
-* Wargroove
-* Stardew Valley
-* The Legend of Zelda
-* The Messenger
-* Kingdom Hearts 2
-* The Legend of Zelda: Link's Awakening DX
-* Adventure
-* DLC Quest
-* Noita
-* Undertale
-* Bumper Stickers
-* Mega Man Battle Network 3: Blue Version
-* Muse Dash
-* DOOM 1993
-* Terraria
-* Lingo
-* Pokémon Emerald
-* DOOM II
-* Shivers
-* Heretic
-* Landstalker: The Treasures of King Nole
-* Final Fantasy Mystic Quest
-* TUNIC
-* Kirby's Dream Land 3
-* Celeste 64
-* Castlevania 64
-* A Short Hike
-* Yoshi's Island
-* Mario & Luigi: Superstar Saga
-* Bomb Rush Cyberfunk
-* Aquaria
-* Yu-Gi-Oh! Ultimate Masters: World Championship Tournament 2006
-* A Hat in Time
-* Old School Runescape
-* Kingdom Hearts 1
-* Mega Man 2
-* Yacht Dice
-* Faxanadu
-* Saving Princess
-* Castlevania: Circle of the Moon
-* Inscryption
-* Civilization VI
-* The Legend of Zelda: The Wind Waker
-* Jak and Daxter: The Precursor Legacy
-* Super Mario Land 2: 6 Golden Coins
-* shapez
-* Paint
-* Celeste (Open World)
-* Choo-Choo Charles
-* APQuest
-* Satisfactory
-* EarthBound
-* Mega Man 3
-* Gauntlet Legends
+### Locations
+The following are things you can do to send checks in the multiworld:
+- Completing a stage or Effect mode
+- Obtaining ranks. The maximum obtainable rank is configurable as to accommodate logic for the player's skill. This locations can also be disabled on your YAML.
+- Doing tricks, such as making a certain amount of Tetris clears and T spins, combos, all clears and T spin triples.
+- Finishing zones with a certain amount of lines, from octotris to kirbtris.
+The amount of trick and zone locations can be configured as to allow for amounts that the player would like to do, and to disable those that they don't feel like doing or are impossible skill-wise.
 
-For setup and instructions check out our [tutorials page](https://archipelago.gg/tutorial/).
-Downloads can be found at [Releases](https://github.com/ArchipelagoMW/Archipelago/releases), including compiled
-windows binaries.
+### Goal
+Your goal is to clear your set amount of level clears in your YAML and clear the final stage of the story mode, Metamorphosis.
+More conditional goals, such as requiring to full clear the story mode, will be added later.
 
-## History
 
-Archipelago is built upon a strong legacy of brilliant hobbyists. We want to honor that legacy by showing it here.
-The repositories which Archipelago is built upon, inspired by, or otherwise owes its gratitude to are:
+## How to set-up
+For information on how to generate and install the mod, head over to [the setup guide.](/worlds/tetriseffect/docs/setup_en.md)
+If you are having trouble, reach out to me in the discord thread and I'll help you!
 
-* [bonta0's MultiWorld](https://github.com/Bonta0/ALttPEntranceRandomizer/tree/multiworld_31)
-* [AmazingAmpharos' Entrance Randomizer](https://github.com/AmazingAmpharos/ALttPEntranceRandomizer)
-* [VT Web Randomizer](https://github.com/sporchia/alttp_vt_randomizer)
-* [Dessyreqt's alttprandomizer](https://github.com/Dessyreqt/alttprandomizer)
-* [Zarby89's](https://github.com/Ijwu/Enemizer/commits?author=Zarby89)
-  and [sosuke3's](https://github.com/Ijwu/Enemizer/commits?author=sosuke3) contributions to Enemizer, which make up the
-  vast majority of Enemizer contributions.
 
-We recognize that there is a strong community of incredibly smart people that have come before us and helped pave the
-path. Just because one person's name may be in a repository title does not mean that only one person made that project
-happen. We can't hope to perfectly cover every single contribution that lead up to Archipelago, but we hope to honor
-them fairly.
+## Things to note
+### Online features and scores
+The mod can be capable of slightly boosting your score in the form of filler items, therefore, offline mode is forcibly on to prevent non realistic entries for the player to the leaderboards. It is nothing big anyways, it will at most give you 1000 points of score, not put you at 999 million or something stupid.
+New personal bests might still get saved as I haven't found a reliable way to prevent saving (altho again, the score boosts are nothing huge).
 
-### Path to the Archipelago
+### What is planned for the mod?
+This mod is still in development and is missing features. This will be a checklist for what needs to be added for being called a stable release, somewhat ordered on priority:
+- Implement minosanity
+- Implement filler items actually doing something
+- Make the text log fade out when inactive
+- Implement Connected mode
 
-Archipelago was directly forked from bonta0's `multiworld_31` branch of ALttPEntranceRandomizer (this project has a
-long legacy of its own, please check it out linked above) on January 12, 2020. The repository was then named to
-_MultiWorld-Utilities_ to better encompass its intended function. As Archipelago matured, then known as
-"Berserker's MultiWorld" by some, we found it necessary to transform our repository into a root level repository
-(as opposed to a 'forked repo') and change the name (which came later) to better reflect our project.
+### How to report a bug
+If you want to report a bug please explain what happened with your log file attached either on the Tetris Effect: Connected thread in the Custom Games channel on the Archipelago server or open a new issue here on GitHub.
+Your log file should be located on `<Game Location>\Tetris Effect Connected\TetrisEffect\Binaries\Win64\ue4ss\UE4SS.log`. Have in mind that the log file gets cleared every time you open the game.
 
-## Running Archipelago
 
-For most people, all you need to do is head over to
-the [releases page](https://github.com/ArchipelagoMW/Archipelago/releases), then download and run the appropriate
-installer, or AppImage for Linux-based systems.
+## How do I return to the normal game?
+There are 3 options to do this. See the [Returning back to the normal game](https://github.com/ZatchyBeeps/Archipelago-TEC/blob/main/worlds/tetriseffect/docs/setup_en.md#Returning-back-to-the-normal-game) section on the setup docs.
 
-If you are a developer or are running on a platform with no compiled releases available, please see our doc on
-[running Archipelago from source](docs/running%20from%20source.md).
 
-## Related Repositories
-
-This project makes use of multiple other projects. We wouldn't be here without these other repositories and the
-contributions of their developers, past and present.
-
-* [z3randomizer](https://github.com/ArchipelagoMW/z3randomizer)
-* [Enemizer](https://github.com/Ijwu/Enemizer)
-* [Ocarina of Time Randomizer](https://github.com/TestRunnerSRL/OoT-Randomizer)
-
-## Contributing
-
-To contribute to Archipelago, including the WebHost, core program, or by adding a new game, see our
-[Contributing guidelines](/docs/contributing.md).
-
-## FAQ
-
-For Frequently asked questions, please see the website's [FAQ Page](https://archipelago.gg/faq/en/).
-
-## Code of Conduct
-
-Please refer to our [code of conduct](/docs/code_of_conduct.md).
+## Know issues
+This is a list of issues I already know of
+### Unlock by groups causes generation errors
+This issue is acknowledged and I'm trying to fix it, altho this is requiring a rewrite that is currently in progress
+## Lines given by traps or death link don't have holes
+While they can be detrimental on quantity, they are not permanent. Simply use the zone and they will not only go away when finished but they will also be added to the zone's total amount of lines cleared. This is obviously not the case if the zone is locked so unfortunately you would slowly get screwed in this case.
+I am still looking on how to add their holes.

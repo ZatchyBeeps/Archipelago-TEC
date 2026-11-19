@@ -24,20 +24,20 @@ If you are the one to generate the multiworld or are planning to do a single pla
 ## Connecting
 This is as straightforward as launching the game, getting to the main menu and inputting the connection details, then pressing connect! Enjoy your randomized game!
 
-# Returning back to the normal game
+## Returning back to the normal game
 You have 3 options to remove the mod from the game
-## Disabling UE4SS via a command argument
+### Disabling UE4SS via a command argument
 On your game launcher, open the game's properties and look for a launch options section. Then add `--disable-ue4ss` into it.
 This will launch the game unmodded without uninstalling UE4SS or the client mod, allowing you to play the mod again by removing the launch options whenever you want.
-## Disabling the mod
+### Disabling the mod
 Go to `<Game Location>\Tetris Effect Connected\TetrisEffect\Binaries\Win64\ue4ss\Mods` and open `mods.txt`. Then change `TetrisEffectArchipelago` and `BPModLoaderMod` to 0. Have in mind that this does not disable UE4SS itself.
-## Uninstall UE4SS
+### Uninstall UE4SS
 Go to `<Game Location>\Tetris Effect Connected\TetrisEffect\Binaries\Win64\` and delete `dwmapi.dll`. You may also delete the ue4ss folder in the same location if wanted. If you wanna play the mod again, you'll need to install everything again.
 
 # Detailed UE4SS installation guide
 Having issues installing the mod loader, you don't quite understand the UE4SS installation guide or it seems like it doesn't load it? Follow along this guide to see if you installed it correctly:
 ## - The files
-As previously mentiones, the **experimental version** is required for the mod to work properly. If you downloaded the V3.0.1 release please go back and download the latest experimental version instead. [Click here to go to the release.](https://github.com/UE4SS-RE/RE-UE4SS/releases/tag/experimental-latest) If you're questioning what file to download, download the file that goes by `UE4SS_v3.0.1-XXXX-XXXXXXXXX.zip`
+As previously mentioned, the **experimental version** is required for the mod to work properly. If you downloaded the V3.0.1 release please go back and download the latest experimental version instead. [Click here to go to the release.](https://github.com/UE4SS-RE/RE-UE4SS/releases/tag/experimental-latest) If you're questioning what file to download, download the file that goes by `UE4SS_v3.0.1-XXXX-XXXXXXXXX.zip`
 ## - The game location
 Let's now locate the game executable. You can open your game launcher and look for an option to browse the game files, or you can find them manually. For example, in Steam you might end up in `C:\Program Files (x86)\Steam\steamapps\common\Tetris Effect Connected\`
 The executable here **is not** the game executable, this is where you'll place the mod folder but in order to install UE4SS we need to go a bit deeper.
