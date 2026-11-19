@@ -177,7 +177,7 @@ effect_mode_locations = {
     'Playlist (World) Mode Cleared':     TECLoc_Data( 50, "World Playlist Mode", "Relax Effect Modes", {"Playlist (World)"}),
     'All Clear Mode Cleared':            TECLoc_Data( 51, "All Clear Mode", "Focus Effect Modes", {"All Clear"}),
     'Combo Mode Cleared':                TECLoc_Data( 52, "Combo Mode", "Focus Effect Modes", {"Combo"}),
-    'Target Mode Cleared':               TECLoc_Data( 53, "Target Mode", "Focus Effect Modes", {"Focus"}),
+    'Target Mode Cleared':               TECLoc_Data( 53, "Target Mode", "Focus Effect Modes", {"Target"}),
     'Countdown Mode Cleared':            TECLoc_Data( 54, "Countdown Mode", "Adventorous Effect Modes", {"Countdown"}),
     'Purify Mode Cleared':               TECLoc_Data( 55, "Purify Mode", "Adventorous Effect Modes", {"Purify"}),
     'Mystery Mode Cleared':              TECLoc_Data( 56, "Mystery Mode", "Adventorous Effect Modes", {"Mystery"}),
