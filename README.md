@@ -28,6 +28,8 @@ More conditional goals, such as requiring to full clear the story mode, will be 
 For information on how to generate and install the mod, head over to [the setup guide.](/worlds/tetriseffect/docs/setup_en.md)
 If you are having trouble, reach out to me in the discord thread and I'll help you!
 
+## AI disclosure
+No AI has been used in any way! and I do not plan on using it. This integration is pure hand made dedication
 
 ## Things to note
 ### Online features and scores
