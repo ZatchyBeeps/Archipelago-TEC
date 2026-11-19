@@ -97,4 +97,5 @@ class TECWorld(World):
         if not self.options.include_effect and stages_to_clear > 26: stages_to_clear = 26
         elif len(self.options.excluded_modes.value) + stages_to_clear > 43: stages_to_clear -= len(self.options.excluded_modes.value)
         datatable.update({"stages_required": stages_to_clear})
+        datatable.update({"seed": self.multiworld.seed})
         return datatable
